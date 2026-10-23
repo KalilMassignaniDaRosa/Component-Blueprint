@@ -1,0 +1,49 @@
+{#- Demo e estados de AUTOCOMPLETE (combobox com lista de sugestões, padrão WAI-ARIA APG).
+    Comportamento em static/js/demos/autocomplete.js -#}
+
+{% macro demo() %}
+<div class="bancada" data-demo-auto>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · cidade de entrega</span>
+  </div>
+  <div class="bancada__area">
+    <div class="campo-form campos">
+      <label class="campo-form__rotulo" for="auto-cidade">Cidade</label>
+      <div class="combo">
+        <input class="entrada" id="auto-cidade" type="text" role="combobox" autocomplete="off"
+               spellcheck="false" aria-autocomplete="list" aria-expanded="false"
+               aria-controls="auto-lista" aria-describedby="auto-dica" data-entrada>
+        <ul class="lista-opcoes" id="auto-lista" role="listbox" aria-label="Cidades sugeridas" data-lista hidden></ul>
+      </div>
+      <p class="campo-form__dica" id="auto-dica">Digite ao menos 2 letras. Use ↓ para percorrer as sugestões.</p>
+      {#- Contagem anunciada ao leitor de tela, com atraso para não falar a cada tecla -#}
+      <p class="sr-only" role="status" data-contagem></p>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Experimente “sao”, “bel” ou “rio”.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <ul class="lista-opcoes lista-opcoes--estatica">
+        <li class="opcao"><span><mark>São</mark> Paulo</span><span class="opcao__detalhe">SP</span></li>
+        <li class="opcao is-ativa"><span><mark>São</mark> José dos Campos</span><span class="opcao__detalhe">SP</span></li>
+        <li class="opcao"><span><mark>São</mark> Luís</span><span class="opcao__detalhe">MA</span></li>
+      </ul>
+    </div>
+    <figcaption><strong>Com sugestões</strong>O trecho digitado fica marcado; a sugestão ativa tem anel e fundo.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <ul class="lista-opcoes lista-opcoes--estatica">
+        <li class="opcao opcao--vazia">Nenhuma cidade encontrada para “xyz”.</li>
+      </ul>
+    </div>
+    <figcaption><strong>Sem resultados</strong>Diz claramente que não achou, em vez de mostrar uma lista vazia.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

@@ -1,0 +1,94 @@
+{%- from "_macros.html" import icone -%}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Guia Visual de Componentes de IHC{% endblock %}</title>
+  <meta name="description" content="{% block descricao %}Referência visual e interativa dos componentes de interface: quando usar, quando evitar, acessibilidade e princípios de IHC.{% endblock %}">
+  <meta name="color-scheme" content="light dark">
+
+  {#- Script síncrono e minúsculo: aplica o tema salvo ANTES da pintura,
+      evitando o "flash" de tema errado. É um arquivo (não inline) por causa da CSP. #}
+  <script src="{{ url_for('static', filename='js/tema-inicial.js') }}"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/tokens.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+  {%- for arquivo in ["navegacao", "entrada", "feedback", "organizacao"] %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/componentes/' ~ arquivo ~ '.css') }}">
+  {%- endfor %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/guia.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+
+  <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block cabeca %}{% endblock %}
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  {#- NAVBAR: o componente "navbar" em uso real -#}
+  <header class="topo">
+    <div class="topo__barra container">
+      <a class="marca" href="{{ url_for('index') }}">
+        <span class="marca__selo" aria-hidden="true">IHC</span>
+        <span>Guia<span class="marca__nome-longo"> Visual de Componentes</span></span>
+      </a>
+
+      <div class="topo__acoes">
+        <button type="button" class="btn btn--terciario btn--pequeno" data-tema-btn
+                aria-describedby="tema-dica">
+          <span data-tema-icone="system">{{ icone("sistema") }}</span>
+          <span data-tema-icone="light" hidden>{{ icone("sol") }}</span>
+          <span data-tema-icone="dark" hidden>{{ icone("lua") }}</span>
+          <span><span class="so-largo">Tema: </span><span data-tema-rotulo>sistema</span></span>
+        </button>
+        <span id="tema-dica" class="sr-only">Alterna entre sistema, claro e escuro</span>
+
+        <button type="button" class="btn btn--secundario btn--pequeno topo__menu-btn"
+                aria-expanded="false" aria-controls="nav-principal" data-menu-btn>
+          {{ icone("menu") }} Menu
+        </button>
+      </div>
+
+      <nav id="nav-principal" class="topo__nav" aria-label="Principal">
+        <ul>
+          {%- set atual = request.endpoint %}
+          {%- for endpoint, rotulo in nav_principal %}
+          {%- set ativo = atual == endpoint or (endpoint == 'index' and atual == 'componente') %}
+          <li><a href="{{ url_for(endpoint) }}"{% if ativo %} aria-current="page"{% endif %}>{{ rotulo }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {#- BREADCRUMB: o componente "breadcrumbs" em uso real -#}
+  {% if trilha %}
+  <nav class="trilha" aria-label="Trilha de navegação">
+    <ol class="container">
+      {% for rotulo, url in trilha %}
+      <li>
+        {%- if url %}<a href="{{ url }}">{{ rotulo }}</a>
+        {%- else %}<span aria-current="page">{{ rotulo }}</span>{% endif -%}
+      </li>
+      {% endfor %}
+    </ol>
+  </nav>
+  {% endif %}
+
+  <main id="conteudo" tabindex="-1">
+    {% block conteudo %}{% endblock %}
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo container">
+      <p>Guia Visual de Componentes de IHC. Um guia vivo para estudar interfaces.</p>
+      <p>Feito com Flask, HTML, CSS e JS puros. Sem rastreadores.</p>
+    </div>
+  </footer>
+
+  {#- Região única para anúncios a leitores de tela (copiar, filtros…) -#}
+  <div id="anuncios" class="sr-only" role="status" aria-live="polite"></div>
+</body>
+</html>

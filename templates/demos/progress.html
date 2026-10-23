@@ -1,0 +1,61 @@
+{#- Demo e estados de PROGRESS BAR. Comportamento em static/js/demos/progress.js -#}
+
+{% macro barra(rotulo, valor, detalhe, classe="", indeterminado=false) %}
+<div class="progresso {{ classe }}">
+  <div class="progresso__topo"><span>{{ rotulo }}</span><span class="progresso__valor">{{ "" if indeterminado else valor ~ "%" }}</span></div>
+  <progress max="100" {% if not indeterminado %}value="{{ valor }}"{% endif %} aria-label="{{ rotulo }}"></progress>
+  <p class="progresso__detalhe">{{ detalhe }}</p>
+</div>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-progress>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · enviar fotos</span>
+    <label class="switch"><input type="checkbox" role="switch" data-falhar> Simular falha</label>
+  </div>
+  <div class="bancada__area">
+    <div class="progresso" data-progresso>
+      <div class="progresso__topo">
+        <span id="prog-rotulo">Envio de 8 fotos</span>
+        <span class="progresso__valor" data-valor aria-hidden="true">0%</span>
+      </div>
+      <progress max="100" value="0" aria-labelledby="prog-rotulo" data-barra></progress>
+      <p class="progresso__detalhe" data-detalhe>Pronto para enviar.</p>
+    </div>
+    <div class="fila secao__corpo">
+      <button type="button" class="btn btn--primario" data-iniciar>Enviar fotos</button>
+      <button type="button" class="btn btn--secundario" data-cancelar disabled>Cancelar</button>
+    </div>
+    {#- Só os marcos são anunciados (25%, 50%…), não cada 1% -#}
+    <p class="sr-only" role="status" data-anuncio></p>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off"></p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ barra("Envio", 0, "Pronto para enviar.") }}</div>
+    <figcaption><strong>Vazio</strong>Trilho visível com borda, valor 0% em texto.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ barra("Preparando", 0, "Calculando o tamanho…", indeterminado=true) }}</div>
+    <figcaption><strong>Indeterminado</strong>Sem value: “ocupado, mas não sei quanto falta”.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ barra("Envio", 62, "5 de 8 fotos · cerca de 20 s restantes") }}</div>
+    <figcaption><strong>Em andamento</strong>Porcentagem + contagem + tempo estimado.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ barra("Envio", 100, "8 fotos enviadas.", "progresso--sucesso") }}</div>
+    <figcaption><strong>Concluído</strong>Cor de sucesso e texto que confirma.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ barra("Envio", 37, "Falhou na foto 4. As 3 primeiras foram salvas.", "progresso--erro") }}</div>
+    <figcaption><strong>Erro</strong>Para onde parou e o que já foi salvo.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

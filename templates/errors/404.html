@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}Página não encontrada · Guia Visual de Componentes de IHC{% endblock %}
+{% block conteudo %}
+<div class="container pagina-simples">
+  <p class="rotulo-tec">Erro 404</p>
+  <h1>Esta prancha não está no arquivo.</h1>
+  <p>O endereço pode ter mudado, ou o componente ainda está em preparo.</p>
+  <div class="fila"><a class="btn btn--primario" href="{{ url_for('index') }}">Ver todos os componentes</a></div>
+</div>
+{% endblock %}

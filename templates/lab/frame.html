@@ -1,0 +1,48 @@
+{#- Base dos frames do laboratório. Página isolada: NÃO herda base.html nem o
+    CSS do site, para que cada biblioteca apareça como ela é. Roda dentro de
+    <iframe sandbox="allow-scripts">, em origem opaca, com a CSP do frame
+    (laboratorio.py). Cada arquivo do CDN vem com integrity (SRI). -#}
+<!doctype html>
+<html lang="pt-BR" {% block atributos_html %}{% endblock %}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ lib.nome }} · Laboratório</title>
+  {%- if lib.importmap %}
+  {#- Precisa vir antes de qualquer módulo. O "integrity" cobre os módulos que a
+      biblioteca importa em cascata; o hash deste bloco está na CSP do frame. #}
+  <script type="importmap">{{ lib.importmap }}</script>
+  {%- endif %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/lab-frame.css') }}">
+  {%- for f in lib.folhas %}
+  <link rel="stylesheet" href="{{ f.url }}" integrity="{{ f.sri }}" crossorigin="anonymous">
+  {%- endfor %}
+  {%- for s in lib.scripts %}
+  <script src="{{ s.url }}" integrity="{{ s.sri }}" crossorigin="anonymous" defer></script>
+  {%- endfor %}
+  {%- for s in lib.scripts_modulo %}
+  <script type="module" src="{{ s.url }}" integrity="{{ s.sri }}" crossorigin="anonymous"></script>
+  {%- endfor %}
+  <script src="{{ url_for('static', filename='js/lab/frame.js') }}" defer></script>
+  {%- for arquivo in lib.scripts_locais %}
+  <script src="{{ url_for('static', filename='js/lab/' ~ arquivo) }}" defer{% if lib.csp.nonce_estilo %} nonce="{{ csp_nonce() }}"{% endif %}></script>
+  {%- endfor %}
+</head>
+<body class="lab-frame {% block classe_body %}{% endblock %}">
+  <main class="lab-grade">
+    <section class="lab-celula" aria-labelledby="lab-botao">
+      <p class="lab-rotulo" id="lab-botao">Botão</p>
+      {% block botao %}{% endblock %}
+    </section>
+    <section class="lab-celula" aria-labelledby="lab-modal">
+      <p class="lab-rotulo" id="lab-modal">Modal</p>
+      {% block modal %}{% endblock %}
+    </section>
+    <section class="lab-celula" aria-labelledby="lab-tabs">
+      <p class="lab-rotulo" id="lab-tabs">Tabs</p>
+      {% block tabs %}{% endblock %}
+    </section>
+  </main>
+  {% block depois %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "lab/frame.html" %}
+{% import "lab/_textos.html" as t %}
+{#- O tema (setTheme) vem de static/js/lab/fluent.js e o "abrir" do dialog de
+    static/js/lab/frame.js. A tablist liga cada tab ao painel pelo aria-controls. -#}
+
+{% block classe_body %}lab-fluent{% endblock %}
+
+{% block botao %}
+<div class="lab-fila">
+  <fluent-button appearance="primary">{{ t.primario }}</fluent-button>
+  <fluent-button>{{ t.secundario }}</fluent-button>
+  <fluent-button appearance="outline">{{ t.destrutivo }}</fluent-button>
+  <fluent-button appearance="primary" disabled>{{ t.desabilitado }}</fluent-button>
+</div>
+<p class="lab-nota">Sem variante de perigo: “{{ t.destrutivo }}” usa appearance="outline".</p>
+{% endblock %}
+
+{% block modal %}
+<fluent-button appearance="primary" data-abrir="dlg">{{ t.abrir_modal }}</fluent-button>
+{% endblock %}
+
+{% block tabs %}
+<fluent-tablist aria-label="{{ t.abas_rotulo }}">
+  {%- for id, rotulo, _ in t.abas %}
+  <fluent-tab id="aba-{{ id }}" aria-controls="painel-{{ id }}">{{ rotulo }}</fluent-tab>
+  {%- endfor %}
+</fluent-tablist>
+{%- for id, _, texto in t.abas %}
+<div id="painel-{{ id }}" role="tabpanel" aria-labelledby="aba-{{ id }}" class="lab-espaco"{% if not loop.first %} hidden{% endif %}>{{ texto }}</div>
+{%- endfor %}
+{% endblock %}
+
+{% block depois %}
+<fluent-dialog id="dlg" type="modal" aria-labelledby="dlg-titulo">
+  <fluent-dialog-body>
+    <h2 slot="title" id="dlg-titulo" class="lab-titulo-modal">{{ t.modal_titulo }}</h2>
+    <p>{{ t.modal_texto }}</p>
+    <fluent-button slot="action" data-fechar>{{ t.modal_cancelar }}</fluent-button>
+    <fluent-button slot="action" appearance="primary" data-fechar>{{ t.modal_confirmar }}</fluent-button>
+  </fluent-dialog-body>
+</fluent-dialog>
+{% endblock %}

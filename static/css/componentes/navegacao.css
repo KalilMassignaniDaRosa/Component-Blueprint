@@ -1,0 +1,585 @@
+/* ==========================================================================
+   Componentes de NAVEGAÇÃO (versões das demos)
+   breadcrumbs · menu dropdown · navbar · sidebar · paginação · stepper
+   (tabs ficam em components.css, porque também são usadas pelo site)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   BREADCRUMBS
+   -------------------------------------------------------------------------- */
+.migalhas ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--t-sm);
+}
+.migalhas li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-1);
+}
+/* separador decorativo: vem do CSS, o leitor de tela não lê */
+.migalhas li + li::before {
+  content: "›";
+  padding-inline: var(--e-1);
+  color: var(--c-tinta-suave);
+}
+.migalhas a,
+.migalhas__recolher {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 var(--e-2);
+  border-radius: var(--raio-sm);
+  color: var(--c-acento);
+}
+.migalhas a:hover,
+.migalhas a.is-hover {
+  background: var(--c-acento-suave);
+  text-decoration-thickness: 2px;
+}
+.migalhas a.is-foco,
+.migalhas__recolher.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 2px;
+}
+.migalhas [aria-current="page"] {
+  padding: 0 var(--e-2);
+  font-weight: 600;
+  color: var(--c-tinta);
+}
+.migalhas__recolher {
+  border: 1px dashed var(--c-linha-forte);
+  background: none;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+.migalhas__recolher:hover {
+  background: var(--c-acento-suave);
+}
+
+/* --------------------------------------------------------------------------
+   MENU DROPDOWN (menu button)
+   -------------------------------------------------------------------------- */
+.menu-botao {
+  position: relative;
+  display: inline-block;
+}
+.menu-botao .btn[aria-expanded="true"] .icone--gira {
+  transform: rotate(180deg);
+}
+.icone--gira {
+  transition: transform var(--dur) var(--curva);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 14rem;
+  margin: 0;
+  padding: var(--e-1);
+  list-style: none;
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+  box-shadow: var(--sombra-2);
+}
+.menu--estatico {
+  position: static;
+  box-shadow: var(--sombra-1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .menu:not(.menu--estatico):not([hidden]) {
+    animation: surgir var(--dur) var(--curva);
+  }
+}
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--e-3);
+  border: 0;
+  border-radius: var(--raio);
+  background: none;
+  color: var(--c-tinta);
+  font: inherit;
+  font-size: var(--t-sm);
+  text-align: left;
+  cursor: pointer;
+}
+.menu__item:hover,
+.menu__item:focus-visible,
+.menu__item.is-hover,
+.menu__item.is-foco {
+  background: var(--c-acento-suave);
+  color: var(--c-acento-forte);
+  outline: none;
+}
+.menu__item:focus-visible,
+.menu__item.is-foco {
+  box-shadow: inset 0 0 0 2px var(--c-foco);
+}
+.menu__item[aria-disabled="true"] {
+  color: var(--c-tinta-suave);
+  cursor: not-allowed;
+}
+.menu__item[aria-disabled="true"]:hover {
+  background: none;
+}
+.menu__item--perigo {
+  color: var(--c-perigo);
+}
+.menu__item--perigo:hover,
+.menu__item--perigo:focus-visible {
+  background: var(--c-perigo-suave);
+  color: var(--c-perigo);
+}
+.menu__atalho {
+  margin-left: auto;
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  color: var(--c-tinta-suave);
+}
+.menu__separador {
+  height: 1px;
+  margin: var(--e-1) var(--e-2);
+  background: var(--c-linha);
+}
+
+/* --------------------------------------------------------------------------
+   NAVBAR (mini site dentro da bancada)
+   Container query: a navbar reage à largura do "site", não da tela.
+   -------------------------------------------------------------------------- */
+.mini-site {
+  container: mini-site / inline-size;
+  max-width: 100%;
+  margin-inline: auto;
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  background: var(--c-fundo);
+  overflow: hidden;
+  transition: max-width var(--dur-lenta) var(--curva);
+}
+.mini-site.is-estreito {
+  max-width: 22rem;
+}
+.mini-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-4);
+  padding: var(--e-3) var(--e-4);
+  border-bottom: 1px solid var(--c-linha);
+  background: var(--c-superficie);
+}
+.mini-nav__marca {
+  margin-right: auto;
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  color: var(--c-tinta);
+  text-decoration: none;
+}
+.mini-nav__lista {
+  display: flex;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mini-nav__lista a {
+  display: flex;
+  align-items: center;
+  min-height: var(--alvo-min);
+  padding: 0 var(--e-3);
+  border-radius: var(--raio);
+  color: var(--c-tinta);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  text-decoration: none;
+}
+.mini-nav__lista a:hover,
+.mini-nav__lista a.is-hover {
+  background: var(--c-superficie-2);
+}
+.mini-nav__lista a.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 2px;
+}
+.mini-nav__lista a[aria-current="page"] {
+  box-shadow: inset 0 -3px 0 var(--c-acento);
+  font-weight: 700;
+}
+.mini-nav__menu {
+  display: none;
+}
+.mini-site__conteudo {
+  padding: var(--e-6) var(--e-4);
+  color: var(--c-tinta-suave);
+}
+.mini-site__conteudo h3 {
+  color: var(--c-tinta);
+  font-size: var(--t-xl);
+}
+
+@container mini-site (max-width: 30rem) {
+  .mini-nav__menu {
+    display: inline-flex;
+  }
+  .mini-nav__lista {
+    flex-basis: 100%;
+    flex-direction: column;
+  }
+  .mini-nav:not(.is-aberto) .mini-nav__lista {
+    display: none;
+  }
+  .mini-nav__lista a[aria-current="page"] {
+    box-shadow: inset 3px 0 0 var(--c-acento);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SIDEBAR (painel de aplicativo)
+   -------------------------------------------------------------------------- */
+.app-painel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: 22rem;
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  overflow: hidden;
+  background: var(--c-fundo);
+}
+.app-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  width: 13.5rem;
+  padding: var(--e-3) var(--e-2);
+  border-right: 1px solid var(--c-linha);
+  background: var(--c-superficie);
+  transition: width var(--dur-lenta) var(--curva);
+}
+.app-lateral ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.app-lateral__sub {
+  padding-left: var(--e-6) !important;
+}
+.app-link,
+.app-grupo {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--e-3);
+  border: 0;
+  border-radius: var(--raio);
+  background: none;
+  color: var(--c-tinta);
+  font: inherit;
+  font-size: var(--t-sm);
+  text-align: left;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.app-link:hover,
+.app-grupo:hover,
+.app-link.is-hover {
+  background: var(--c-superficie-2);
+}
+.app-link.is-foco,
+.app-grupo.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: -3px;
+}
+.app-link[aria-current="page"] {
+  background: var(--c-acento-suave);
+  color: var(--c-acento-forte);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--c-acento);
+}
+.app-grupo {
+  font-weight: 600;
+}
+.app-grupo .icone--gira {
+  margin-left: auto;
+}
+.app-grupo[aria-expanded="true"] .icone--gira {
+  transform: rotate(180deg);
+}
+.app-lateral__rodape {
+  margin-top: auto;
+  padding-top: var(--e-2);
+  border-top: 1px solid var(--c-linha);
+}
+.app-conteudo {
+  padding: var(--e-5);
+}
+.app-conteudo h3 {
+  font-size: var(--t-xl);
+}
+.app-conteudo p {
+  margin-top: var(--e-2);
+  color: var(--c-tinta-suave);
+}
+
+/* Recolhida: só ícones. O texto continua lá para o leitor de tela. */
+.app-lateral.is-recolhida {
+  width: 3.75rem;
+}
+.app-lateral.is-recolhida .app-rotulo,
+.app-lateral.is-recolhida .icone--gira {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.app-lateral.is-recolhida .app-lateral__sub {
+  padding-left: 0 !important;
+}
+.app-lateral.is-recolhida .app-link,
+.app-lateral.is-recolhida .app-grupo {
+  justify-content: center;
+  padding: 0;
+}
+@media (max-width: 36rem) {
+  .app-lateral {
+    width: 3.75rem;
+  }
+  .app-lateral .app-rotulo,
+  .app-lateral .icone--gira {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .app-lateral .app-lateral__sub {
+    padding-left: 0 !important;
+  }
+  .app-lateral .app-link,
+  .app-lateral .app-grupo {
+    justify-content: center;
+    padding: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   PAGINAÇÃO
+   -------------------------------------------------------------------------- */
+.paginacao ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.paginacao__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-1);
+  min-width: var(--alvo-min);
+  min-height: var(--alvo-min);
+  padding: 0 var(--e-2);
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio);
+  background: var(--c-superficie);
+  color: var(--c-tinta);
+  font: 500 var(--t-sm) / 1 var(--fonte-mono);
+  cursor: pointer;
+  text-decoration: none;
+}
+.paginacao__item:hover,
+.paginacao__item.is-hover {
+  border-color: var(--c-tinta);
+  background: var(--c-superficie-2);
+}
+.paginacao__item.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 2px;
+}
+.paginacao__item[aria-current="page"] {
+  border-color: var(--c-tinta);
+  background: var(--c-tinta);
+  color: var(--c-fundo);
+  font-weight: 700;
+}
+.paginacao__item:disabled,
+.paginacao__item[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.paginacao__reticencias {
+  min-width: 1.5rem;
+  text-align: center;
+  color: var(--c-tinta-suave);
+}
+.paginacao__seta-texto {
+  font-family: var(--fonte-texto);
+}
+@media (max-width: 30rem) {
+  .paginacao__seta-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+.resultados {
+  display: grid;
+  gap: var(--e-2);
+  margin: var(--e-3) 0 var(--e-5);
+  padding: 0;
+  list-style: none;
+}
+.resultados li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-3);
+  padding: var(--e-3) var(--e-4);
+  border: 1px solid var(--c-linha);
+  border-radius: var(--raio);
+  background: var(--c-superficie);
+  font-size: var(--t-sm);
+}
+.resultados__titulo {
+  font-size: var(--t-md);
+}
+
+/* --------------------------------------------------------------------------
+   STEPPER
+   -------------------------------------------------------------------------- */
+.stepper {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--e-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: etapa;
+}
+.stepper__etapa {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--e-2);
+  text-align: center;
+  font-size: var(--t-sm);
+  color: var(--c-tinta-suave);
+}
+/* linha que liga uma etapa à próxima */
+.stepper__etapa + .stepper__etapa::before {
+  content: "";
+  position: absolute;
+  top: 1.1rem;
+  right: calc(50% + 1.5rem);
+  left: calc(-50% + 1.5rem);
+  height: 2px;
+  background: var(--c-linha-forte);
+}
+.stepper__etapa.is-feita + .stepper__etapa::before,
+.stepper__etapa.is-feita + .stepper__etapa.is-feita::before {
+  background: var(--c-acento);
+}
+.stepper__marca {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid var(--c-linha-forte);
+  border-radius: 50%;
+  background: var(--c-superficie);
+  font: 700 var(--t-sm) / 1 var(--fonte-mono);
+  color: var(--c-tinta-suave);
+}
+.stepper__etapa.is-feita .stepper__marca {
+  border-color: var(--c-acento);
+  background: var(--c-acento);
+  color: var(--c-sobre-acento);
+}
+.stepper__etapa[aria-current="step"] {
+  color: var(--c-tinta);
+  font-weight: 700;
+}
+.stepper__etapa[aria-current="step"] .stepper__marca {
+  border-color: var(--c-acento);
+  border-width: 3px;
+  color: var(--c-acento);
+  box-shadow: 0 0 0 4px var(--c-acento-suave);
+}
+.stepper__etapa.is-erro .stepper__marca {
+  border-color: var(--c-perigo);
+  color: var(--c-perigo);
+}
+.stepper__voltar {
+  display: grid;
+  justify-items: center;
+  gap: var(--e-2);
+  padding: var(--e-1);
+  border: 0;
+  border-radius: var(--raio);
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.stepper__voltar:hover .stepper__nome {
+  text-decoration: underline;
+}
+.stepper__estado {
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  font-weight: 400;
+  color: var(--c-tinta-suave);
+}
+
+.etapa-painel {
+  margin-top: var(--e-6);
+  padding: var(--e-5);
+  border: 1px solid var(--c-linha);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+}
+.etapa-painel h3 {
+  font-size: var(--t-xl);
+}
+.etapa-painel > p {
+  margin-top: var(--e-2);
+  color: var(--c-tinta-suave);
+}
+.etapa-acoes {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-3);
+  margin-top: var(--e-5);
+}
+@media (max-width: 30rem) {
+  .stepper__nome {
+    font-size: var(--t-xs);
+  }
+  .stepper__estado {
+    display: none;
+  }
+}

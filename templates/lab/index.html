@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icone %}
+{% block titulo %}Laboratório de bibliotecas · Guia Visual de Componentes de IHC{% endblock %}
+{% block descricao %}Botão, modal e tabs renderizados por oito bibliotecas de interface, cada uma isolada no próprio iframe, com prós e contras.{% endblock %}
+
+{% block cabeca %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/laboratorio.css') }}">
+<script type="module" src="{{ url_for('static', filename='js/laboratorio.js') }}"></script>
+{% endblock %}
+
+{% block conteudo %}
+{%- set prontas = bibliotecas | rejectattr("pendencia") | list %}
+<div class="container lab">
+  <header class="lab__topo">
+    <p class="rotulo-tec">Laboratório · {{ prontas | length }} de {{ bibliotecas | length }} bibliotecas no ar</p>
+    <h1>Laboratório de bibliotecas</h1>
+    <p class="lab__intro">
+      Os mesmos três componentes em cada biblioteca, com o visual e o comportamento
+      que ela traz de fábrica. Compare com as pranchas do guia:
+      <a href="{{ url_for('componente', slug='botoes') }}">Botões</a>,
+      <a href="{{ url_for('componente', slug='modal') }}">Modal</a> e
+      <a href="{{ url_for('componente', slug='tabs') }}">Tabs</a>.
+    </p>
+
+    <div class="aviso aviso--info lab__isolamento">
+      <span>{{ icone("info") }}</span>
+      <p>
+        Cada biblioteca roda num iframe próprio com <code>sandbox="allow-scripts"</code>:
+        sem acesso a esta página, a cookies ou a armazenamento. Os arquivos vêm do jsDelivr
+        em versão fixa e o navegador confere o hash de cada um (SRI) antes de executar.
+        Nenhuma biblioteca recebe <code>'unsafe-eval'</code>; quando alguma precisa relaxar a CSP,
+        o aviso aparece junto do frame dela e a liberação vale só ali.
+      </p>
+    </div>
+
+    <nav class="lab__indice" aria-label="Bibliotecas do laboratório">
+      <ul class="chips__lista">
+        {%- for lib in bibliotecas %}
+        <li><a class="chip" href="#lib-{{ lib.id }}">{{ lib.nome }}{% if lib.pendencia %} <span class="lab__pendente-marca">· pendente</span>{% endif %}</a></li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </header>
+
+  {% for lib in bibliotecas %}
+  <section class="lib" id="lib-{{ lib.id }}" aria-labelledby="lib-{{ lib.id }}-titulo">
+    <div class="lib__cabecalho">
+      <h2 class="lib__titulo" id="lib-{{ lib.id }}-titulo">{{ lib.nome }}</h2>
+      <ul class="lib__meta" role="list">
+        <li>{{ lib.tipo }}</li>
+        {%- for nome, versao in lib.versoes %}
+        <li><code>{{ nome }}@{{ versao }}</code></li>
+        {%- endfor %}
+        <li>{{ lib.licenca }}</li>
+        {%- if not lib.pendencia %}
+        <li>{{ lib.arquivos }} arquivo{{ "s" if lib.arquivos != 1 }} · {{ lib.kb | int }} KB sem compressão</li>
+        {%- endif %}
+        <li><a href="{{ lib.site }}" rel="noopener noreferrer">Documentação {{ icone("externo") }}<span class="sr-only"> (site externo)</span></a></li>
+      </ul>
+    </div>
+
+    {%- if lib.pendencia %}
+    <div class="aviso aviso--erro lib__aviso">
+      <span>{{ icone("alerta") }}</span>
+      <p><strong>Pendente.</strong> {{ lib.pendencia }}</p>
+    </div>
+    {%- else %}
+    {%- if lib.csp.estilo_inline or lib.csp.nonce_estilo or lib.csp.fetch_data %}
+    <div class="aviso aviso--alerta lib__aviso">
+      <span>{{ icone("alerta") }}</span>
+      <p>
+        <strong>CSP relaxada só neste frame:</strong>
+        {%- if lib.csp.estilo_inline %} <code>style-src 'unsafe-inline'</code>.{% endif %}
+        {%- if lib.csp.nonce_estilo %} <code>style-src 'nonce-…'</code> (só tags &lt;style&gt; com o nonce da página).{% endif %}
+        {%- if lib.csp.fetch_data %} <code>connect-src data:</code> (leitura de ícones embutidos, sem rede).{% endif %}
+      </p>
+    </div>
+    {%- endif %}
+    {%- if lib.observacao %}
+    <p class="lib__observacao">{{ lib.observacao }}</p>
+    {%- endif %}
+
+    <div class="lib__palco">
+      <iframe class="lib__frame" data-lab
+              src="{{ url_for('lab_frame_' ~ lib.id) }}"
+              title="{{ lib.nome }}: botão, modal e tabs"
+              sandbox="allow-scripts"
+              loading="lazy"
+              referrerpolicy="no-referrer"></iframe>
+    </div>
+    <p class="lib__abrir"><a href="{{ url_for('lab_frame_' ~ lib.id) }}" target="_blank" rel="noopener">Abrir o frame sozinho {{ icone("externo") }}<span class="sr-only"> (nova aba)</span></a></p>
+    {%- endif %}
+
+    <div class="duas-colunas lib__avaliacao">
+      <div class="lista-marcada lista-marcada--sim">
+        <h3>{{ icone("check") }} Prós</h3>
+        <ul>{% for item in lib.pros %}<li>{{ item }}</li>{% endfor %}</ul>
+      </div>
+      <div class="lista-marcada lista-marcada--nao">
+        <h3>{{ icone("fechar") }} Contras</h3>
+        <ul>{% for item in lib.contras %}<li>{{ item }}</li>{% endfor %}</ul>
+      </div>
+    </div>
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

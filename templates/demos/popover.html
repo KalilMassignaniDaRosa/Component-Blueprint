@@ -1,0 +1,71 @@
+{#- Demo e estados de POPOVER. Usa o atributo nativo "popover" (abre/fecha, clique fora
+    e Esc já vêm prontos). static/js/demos/popover.js só posiciona e cuida do foco. -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-popover>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · catálogo de produtos</span>
+  </div>
+  <div class="bancada__area">
+    <div class="fila fila--separada">
+      <p data-resumo-filtro>Mostrando: todas as cores</p>
+      <div class="fila">
+        <button type="button" class="btn btn--secundario" popovertarget="pop-filtros" data-gatilho>
+          {{ icone("filtro") }} Filtros
+        </button>
+        <button type="button" class="btn btn--secundario" popovertarget="pop-compartilhar" data-gatilho>
+          {{ icone("compartilhar") }} Compartilhar
+        </button>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Abra um popover; feche com Esc, clique fora ou pelos botões.</p>
+
+  <div class="pop" id="pop-filtros" popover role="dialog" aria-labelledby="pop-filtros-titulo">
+    <p class="pop__titulo" id="pop-filtros-titulo">Filtrar por cor</p>
+    <fieldset class="pop__corpo chips" aria-labelledby="pop-filtros-titulo">
+      {% for cor in ["Azul", "Verde", "Preto", "Branco"] %}
+      <label class="escolha"><input type="checkbox" value="{{ cor }}" data-cor> <span>{{ cor }}</span></label>
+      {% endfor %}
+    </fieldset>
+    <div class="pop__acoes">
+      <button type="button" class="btn btn--terciario btn--pequeno" popovertarget="pop-filtros" popovertargetaction="hide">Cancelar</button>
+      <button type="button" class="btn btn--primario btn--pequeno" data-aplicar>Aplicar</button>
+    </div>
+  </div>
+
+  <div class="pop" id="pop-compartilhar" popover role="dialog" aria-labelledby="pop-comp-titulo">
+    <p class="pop__titulo" id="pop-comp-titulo">Compartilhar</p>
+    <div class="pop__corpo">
+      <label class="campo-form__rotulo" for="pop-link">Link</label>
+      <input class="entrada" id="pop-link" type="text" readonly value="https://exemplo.com/p/48213">
+    </div>
+    <div class="pop__acoes">
+      <button type="button" class="btn btn--primario btn--pequeno" data-copiar-link>{{ icone("copiar") }} Copiar link</button>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <button type="button" class="btn btn--secundario" tabindex="-1">{{ icone("filtro") }} Filtros</button>
+    </div>
+    <figcaption><strong>Fechado</strong>O botão expõe aria-expanded="false" automaticamente.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="pop pop--estatico">
+        <p class="pop__titulo">Filtrar por cor</p>
+        <div class="pop__corpo"><label class="escolha"><input type="checkbox" tabindex="-1" checked> <span>Azul</span></label><label class="escolha"><input type="checkbox" tabindex="-1"> <span>Verde</span></label></div>
+        <div class="pop__acoes"><span class="btn btn--primario btn--pequeno">Aplicar</span></div>
+      </div>
+    </div>
+    <figcaption><strong>Aberto</strong>Conteúdo interativo, com título, borda e sombra que o separam da página.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

@@ -1,0 +1,65 @@
+{#- Demo e estados de CARDS. O "card inteiro clicável" é só CSS (stretched link);
+    os cards da home deste guia usam a mesma técnica. static/js/demos/cards.js
+    só impede que os links de exemplo saiam da página. -#}
+
+{% macro cartao(titulo, meta, preco, variante="", clicavel=true, acoes=false, esgotado=false, classe="") %}
+<article class="cartao {{ variante }} {{ 'cartao--clicavel' if clicavel }} {{ 'cartao--esgotado' if esgotado }} {{ classe }}">
+  <div class="cartao__imagem" role="img" aria-label="Foto ilustrativa de {{ titulo }}"></div>
+  <div class="cartao__corpo">
+    <h3 class="cartao__titulo">
+      {%- if clicavel %}<a href="#" data-falso>{{ titulo }}</a>{% else %}{{ titulo }}{% endif -%}
+    </h3>
+    <p class="cartao__meta">{{ meta }}</p>
+    <p class="cartao__preco">{{ preco }}</p>
+  </div>
+  {% if acoes %}
+  <div class="cartao__acoes">
+    <button type="button" class="btn btn--secundario btn--pequeno" aria-label="Ver detalhes de {{ titulo }}" data-acao>Detalhes</button>
+    <button type="button" class="btn btn--primario btn--pequeno" aria-label="{{ (titulo ~ ' esgotado') if esgotado else ('Adicionar ' ~ titulo ~ ' ao carrinho') }}" data-acao {% if esgotado %}disabled{% endif %}>{{ "Esgotado" if esgotado else "Comprar" }}</button>
+  </div>
+  {% endif %}
+</article>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-cards>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · vitrine</span>
+  </div>
+  <div class="bancada__area">
+    <p class="rotulo-tec">1. Card inteiro clicável (um só link)</p>
+    <ul class="cartoes secao__corpo">
+      <li>{{ cartao("Luminária Arco", "Iluminação · 4,8 ★", "R$ 349") }}</li>
+      <li>{{ cartao("Vaso Terra", "Decoração · 4,6 ★", "R$ 89", "cartao--b") }}</li>
+      <li>{{ cartao("Manta Lã Crua", "Têxteis · 4,9 ★", "R$ 199", "cartao--c") }}</li>
+    </ul>
+
+    <p class="rotulo-tec secao__corpo">2. Card com várias ações (só os botões são clicáveis)</p>
+    <ul class="cartoes secao__corpo">
+      <li>{{ cartao("Cadeira Ergo 2", "Escritório · 4,7 ★", "R$ 1.290", clicavel=false, acoes=true) }}</li>
+      <li>{{ cartao("Mesa Elevação", "Escritório · 4,5 ★", "R$ 2.490", "cartao--b", clicavel=false, acoes=true, esgotado=true) }}</li>
+    </ul>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Use Tab: no grupo 1 cada card é UMA parada; no grupo 2, cada botão é uma parada.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, texto in [
+    ("Normal", "", "Borda de 3:1: o limite do card é visível."),
+    ("Hover", "is-hover", "Sombra deslocada indica “posso clicar aqui”."),
+    ("Foco", "is-foco", "O anel envolve o card inteiro, não só o título."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ cartao("Vaso Terra", "Decoração", "R$ 89", classe=classe) }}</div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ cartao("Mesa Elevação", "Escritório", "R$ 2.490", clicavel=false, acoes=true, esgotado=true) }}</div>
+    <figcaption><strong>Indisponível</strong>Imagem em cinza + botão “Esgotado” desabilitado: o motivo está escrito.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

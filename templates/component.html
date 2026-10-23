@@ -1,0 +1,152 @@
+{#- Template ÚNICO para todas as pranchas de componente.
+    O conteúdo vem de data/componentes/<categoria>.py; a parte visual de cada um
+    (demo e estados) vem de templates/demos/<slug>.html. -#}
+{% extends "base.html" %}
+{% from "_macros.html" import icone, titulo_secao %}
+{% import "demos/" ~ c.slug ~ ".html" as demo %}
+
+{% block titulo %}{{ c.nome }} · Guia Visual de Componentes de IHC{% endblock %}
+{% block descricao %}{{ c.resumo }}{% endblock %}
+
+{% block cabeca %}
+{% if c.script %}
+<script type="module" src="{{ url_for('static', filename='js/demos/' ~ c.slug ~ '.js') }}"></script>
+{% endif %}
+{% endblock %}
+
+{% block conteudo %}
+{% set secoes = [
+  ("o-que-e", "O que é"),
+  ("quando", "Quando usar"),
+  ("demo", "Demonstração"),
+  ("estados", "Estados"),
+  ("no-seu-projeto", "No seu projeto"),
+  ("principios", "Princípios de IHC"),
+] %}
+<div class="prancha container">
+
+  {#- SIDEBAR: o componente "sidebar" em uso real -#}
+  <aside class="prancha__lateral">
+    <details class="sidebar" data-sidebar>
+      <summary>Todos os componentes</summary>
+      <nav class="sidebar__nav" aria-label="Componentes">
+        {% for chave, cat_item in categorias.items() %}
+        <p class="sidebar__grupo rotulo-tec cat-{{ chave }}">
+          <span class="glifo" aria-hidden="true">{{ cat_item.glifo }}</span> {{ cat_item.nome }}
+        </p>
+        <ul>
+          {% for item in componentes if item.categoria == chave %}
+          <li><a href="{{ url_for('componente', slug=item.slug) }}"{% if item.slug == c.slug %} aria-current="page"{% endif %}>{{ item.nome }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endfor %}
+      </nav>
+    </details>
+  </aside>
+
+  <article class="prancha__corpo cat-{{ c.categoria }}" aria-labelledby="titulo-componente">
+    <header class="prancha__cabecalho">
+      <p class="prancha__meta rotulo-tec">
+        <span>Prancha Nº {{ '%02d' % c.numero }}</span>
+        <span><span class="glifo" aria-hidden="true">{{ categoria.glifo }}</span> {{ categoria.nome }}</span>
+      </p>
+      <h1 class="prancha__titulo" id="titulo-componente">{{ c.nome }}</h1>
+    </header>
+
+    {# 01 — O que é #}
+    <section class="secao" id="o-que-e" aria-labelledby="o-que-e-titulo">
+      {{ titulo_secao("o-que-e", "01", "O que é") }}
+      <p class="prancha__resumo">{{ c.resumo }}</p>
+    </section>
+
+    {# 02 — Quando usar / evitar #}
+    <section class="secao" id="quando" aria-labelledby="quando-titulo">
+      {{ titulo_secao("quando", "02", "Quando usar e quando evitar") }}
+      <div class="secao__corpo duas-colunas">
+        <div class="lista-marcada lista-marcada--sim">
+          <h3>{{ icone("check") }} Use quando</h3>
+          <ul>{% for item in c.quando_usar %}<li>{{ item }}</li>{% endfor %}</ul>
+        </div>
+        <div class="lista-marcada lista-marcada--nao">
+          <h3>{{ icone("fechar") }} Evite quando</h3>
+          <ul>{% for item in c.quando_evitar %}<li>{{ item }}</li>{% endfor %}</ul>
+        </div>
+      </div>
+    </section>
+
+    {# 03 — Demo ao vivo #}
+    <section class="secao" id="demo" aria-labelledby="demo-titulo">
+      {{ titulo_secao("demo", "03", "Demonstração ao vivo") }}
+      <p class="secao__intro">Funciona de verdade. Experimente com o mouse e depois só com o teclado.</p>
+      <div class="secao__corpo">{{ demo.demo() }}</div>
+    </section>
+
+    {# 04 — Estados #}
+    <section class="secao" id="estados" aria-labelledby="estados-titulo">
+      {{ titulo_secao("estados", "04", "Estados") }}
+      <p class="secao__intro">Cada estado congelado para comparação. São só ilustrações: não respondem a clique.</p>
+      <div class="secao__corpo">{{ demo.estados() }}</div>
+    </section>
+
+    {# 05 — Checklist para quem vai aplicar o componente em OUTRO site #}
+    <section class="secao" id="no-seu-projeto" aria-labelledby="no-seu-projeto-titulo">
+      {{ titulo_secao("no-seu-projeto", "05", "Ao usar no seu projeto") }}
+      <p class="secao__intro">Checklist rápido para quando você for aplicar este componente no seu próprio site.</p>
+      <ul class="secao__corpo checklist">
+        {% for tema, texto in c.checklist %}
+        <li><span class="rotulo-tec">{{ tema }}</span><span>{{ texto }}</span></li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    {# 06 — Princípios #}
+    <section class="secao" id="principios" aria-labelledby="principios-titulo">
+      {{ titulo_secao("principios", "06", "Princípios de IHC") }}
+      <div class="secao__corpo principios">
+        {% for p in c.principios %}
+        <div class="principio">
+          <p class="rotulo-tec">Princípio {{ loop.index }}</p>
+          <h3>{{ p.nome }}</h3>
+          <p>{{ p.texto }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% if c.referencias %}
+      <h3 class="rotulo-tec secao__intro">Para aprofundar</h3>
+      <ul class="referencias">
+        {% for rotulo, url in c.referencias %}
+        <li><a href="{{ url }}" rel="noopener noreferrer" target="_blank">{{ rotulo }} {{ icone("externo") }}<span class="sr-only"> (abre em nova aba)</span></a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </section>
+
+    {#- PAGINAÇÃO entre pranchas -#}
+    <nav class="vizinhos" aria-label="Outras pranchas">
+      {% if anterior %}
+      <a href="{{ url_for('componente', slug=anterior.slug) }}" rel="prev">
+        <span class="rotulo-tec">← Anterior</span>
+        <span class="vizinhos__nome">{{ anterior.nome }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if proximo %}
+      <a class="vizinhos__proximo" href="{{ url_for('componente', slug=proximo.slug) }}" rel="next">
+        <span class="rotulo-tec">Próximo →</span>
+        <span class="vizinhos__nome">{{ proximo.nome }}</span>
+      </a>
+      {% endif %}
+    </nav>
+  </article>
+
+  <nav class="prancha__indice" aria-label="Nesta prancha">
+    <div class="indice" data-indice>
+      <p class="rotulo-tec">Nesta prancha</p>
+      <ol>
+        {% for id, rotulo in secoes %}
+        <li><a href="#{{ id }}"><span class="num">{{ '%02d' % loop.index }}</span> {{ rotulo }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </nav>
+</div>
+{% endblock %}

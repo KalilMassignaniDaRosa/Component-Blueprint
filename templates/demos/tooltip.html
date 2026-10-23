@@ -1,0 +1,56 @@
+{#- Demo e estados de TOOLTIP. Comportamento em static/js/demos/tooltip.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-tooltip>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · editor de texto</span>
+  </div>
+  <div class="bancada__area">
+    {#- Botões só com ícone: o tooltip É o nome acessível (aria-labelledby) -#}
+    <div class="fila" role="toolbar" aria-label="Formatação">
+      {% for id, ic, rotulo, atalho in [("tt-copiar", "copiar", "Copiar", "Ctrl+C"), ("tt-link", "compartilhar", "Inserir link", "Ctrl+K"), ("tt-limpar", "lixeira", "Apagar seleção", "Del")] %}
+      <span class="dica" data-dica>
+        <button type="button" class="btn btn--secundario btn--icone" aria-labelledby="{{ id }}">{{ icone(ic) }}</button>
+        <span class="dica__balao" role="tooltip" id="{{ id }}" hidden>{{ rotulo }} <kbd>{{ atalho }}</kbd></span>
+      </span>
+      {% endfor %}
+    </div>
+
+    {#- Termo explicado: o tooltip é uma DESCRIÇÃO extra (aria-describedby) -#}
+    <p class="secao__corpo">
+      O arquivo será salvo em
+      <span class="dica" data-dica>
+        <button type="button" class="termo" aria-describedby="tt-utf8">UTF-8</button>
+        <span class="dica__balao" role="tooltip" id="tt-utf8" hidden>Codificação de texto que aceita acentos e emojis.</span>
+      </span>
+      por padrão.
+    </p>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Passe o mouse ou navegue com Tab. Esc fecha o tooltip sem tirar o foco.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <button type="button" class="btn btn--secundario btn--icone" tabindex="-1">{{ icone("copiar") }}</button>
+    </div>
+    <figcaption><strong>Oculto</strong>Antes do hover ou do foco. O nome acessível já existe, mesmo escondido.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="dica__balao dica__balao--estatico">Copiar <kbd>Ctrl+C</kbd></span>
+    </div>
+    <figcaption><strong>Visível</strong>Alto contraste (texto claro em fundo escuro), curto e com o atalho.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="dica__balao dica__balao--estatico">Codificação de texto que aceita acentos e emojis.</span>
+    </div>
+    <figcaption><strong>Descrição</strong>Texto um pouco mais longo, ainda sem links nem botões. Isso já seria um popover.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

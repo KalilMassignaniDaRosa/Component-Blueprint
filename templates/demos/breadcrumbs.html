@@ -1,0 +1,68 @@
+{#- Demo e estados de BREADCRUMBS. Comportamento em static/js/demos/breadcrumbs.js -#}
+
+{% macro demo() %}
+<div class="bancada" data-demo-breadcrumbs>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · loja online</span>
+  </div>
+  <div class="bancada__area">
+    <p class="rotulo-tec">Trilha completa</p>
+    <nav class="migalhas" aria-label="Trilha de exemplo">
+      <ol>
+        <li><a href="#" data-falso>Início</a></li>
+        <li><a href="#" data-falso>Eletrônicos</a></li>
+        <li><a href="#" data-falso>Áudio</a></li>
+        <li><span aria-current="page">Fone XZ-200</span></li>
+      </ol>
+    </nav>
+
+    <p class="rotulo-tec secao__corpo">Trilha longa, recolhida</p>
+    {#- Os níveis do meio ficam ocultos atrás do botão "…" até a pessoa pedir -#}
+    <nav class="migalhas" aria-label="Trilha de exemplo, longa">
+      <ol>
+        <li><a href="#" data-falso>Início</a></li>
+        <li data-recolher-item>
+          <button type="button" class="migalhas__recolher" aria-expanded="false"
+                  aria-label="Mostrar 3 níveis ocultos" data-recolher>…</button>
+        </li>
+        <li data-oculto hidden><a href="#" data-falso>Eletrônicos</a></li>
+        <li data-oculto hidden><a href="#" data-falso>Áudio</a></li>
+        <li data-oculto hidden><a href="#" data-falso>Fones de ouvido</a></li>
+        <li><a href="#" data-falso>Sem fio</a></li>
+        <li><span aria-current="page">Fone XZ-200</span></li>
+      </ol>
+    </nav>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Clique num nível ou no “…”.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, texto in [
+    ("Normal", "", "Link azul sublinhado: é clicável e leva àquele nível."),
+    ("Hover", "is-hover", "Fundo leve e sublinhado mais grosso."),
+    ("Foco", "is-foco", "Anel de foco visível ao navegar com Tab."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <nav class="migalhas"><ol><li><a href="#" class="{{ classe }}" tabindex="-1">Eletrônicos</a></li></ol></nav>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <nav class="migalhas"><ol><li><span aria-current="page">Fone XZ-200</span></li></ol></nav>
+    </div>
+    <figcaption><strong>Página atual</strong>Texto em negrito, sem link: clicar nele não levaria a lugar nenhum.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <nav class="migalhas"><ol><li><a href="#" tabindex="-1">Início</a></li><li><span class="migalhas__recolher">…</span></li><li><span aria-current="page">Fone</span></li></ol></nav>
+    </div>
+    <figcaption><strong>Recolhida</strong>Em telas estreitas, os níveis do meio viram um botão “…”.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

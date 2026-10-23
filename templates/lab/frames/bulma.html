@@ -1,0 +1,58 @@
+{% extends "lab/frame.html" %}
+{% import "lab/_textos.html" as t %}
+{#- Bulma é só CSS. Abrir/fechar o modal (classe is-active), Esc, foco e as
+    tabs são do nosso static/js/lab/frame.js. -#}
+
+{% block atributos_html %}data-theme="light"{% endblock %}
+
+{% block botao %}
+<div class="buttons">
+  <button type="button" class="button is-primary">{{ t.primario }}</button>
+  <button type="button" class="button">{{ t.secundario }}</button>
+  <button type="button" class="button is-danger">{{ t.destrutivo }}</button>
+  <button type="button" class="button is-primary" disabled>{{ t.desabilitado }}</button>
+</div>
+{% endblock %}
+
+{% block modal %}
+<button type="button" class="button is-danger" data-abrir="dlg" aria-haspopup="dialog">{{ t.abrir_modal }}</button>
+{% endblock %}
+
+{% block tabs %}
+<div data-lab-tabs>
+  <div class="tabs">
+    <ul role="tablist" aria-label="{{ t.abas_rotulo }}" data-ativa="is-active">
+      {%- for id, rotulo, _ in t.abas %}
+      <li role="presentation"{% if loop.first %} class="is-active"{% endif %}>
+        <a role="tab" id="aba-{{ id }}" aria-controls="painel-{{ id }}"
+           aria-selected="{{ 'true' if loop.first else 'false' }}" tabindex="{{ 0 if loop.first else -1 }}">{{ rotulo }}</a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+  {%- for id, _, texto in t.abas %}
+  <div class="content" role="tabpanel" id="painel-{{ id }}" aria-labelledby="aba-{{ id }}" tabindex="0"{% if not loop.first %} hidden{% endif %}>
+    <p>{{ texto }}</p>
+  </div>
+  {%- endfor %}
+</div>
+{% endblock %}
+
+{% block depois %}
+<div class="modal" id="dlg" role="dialog" aria-modal="true" aria-labelledby="dlg-titulo">
+  <div class="modal-background" data-fechar></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <h2 class="modal-card-title" id="dlg-titulo">{{ t.modal_titulo }}</h2>
+      <button type="button" class="delete" aria-label="Fechar" data-fechar></button>
+    </header>
+    <section class="modal-card-body"><p>{{ t.modal_texto }}</p></section>
+    <footer class="modal-card-foot">
+      <div class="buttons">
+        <button type="button" class="button" data-fechar>{{ t.modal_cancelar }}</button>
+        <button type="button" class="button is-danger" data-fechar>{{ t.modal_confirmar }}</button>
+      </div>
+    </footer>
+  </div>
+</div>
+{% endblock %}

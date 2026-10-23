@@ -1,0 +1,79 @@
+{#- Demo e estados de DATE PICKER. Calendário em <dialog> com grade navegável,
+    seguindo o exemplo "Date Picker Dialog" da WAI-ARIA APG.
+    Comportamento em static/js/demos/date-picker.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-data>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · agendar visita técnica</span>
+  </div>
+  <div class="bancada__area">
+    <div class="duas-colunas">
+      {#- 1. Nativo -#}
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="data-nativa">Data <span class="campo-form__opcional">(input nativo)</span></label>
+        <input class="entrada" id="data-nativa" type="date" data-nativa>
+        <p class="campo-form__dica">O navegador cuida do calendário e do formato.</p>
+      </div>
+
+      {#- 2. Personalizado: digitar OU escolher no calendário -#}
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="data-texto">Data da visita</label>
+        <div class="campo-data">
+          <input class="entrada" id="data-texto" type="text" inputmode="numeric" autocomplete="off"
+                 placeholder="dd/mm/aaaa" aria-describedby="data-dica data-erro" data-texto>
+          <button type="button" class="btn btn--secundario btn--icone" aria-label="Escolher data no calendário"
+                  aria-haspopup="dialog" data-abrir>{{ icone("calendario") }}</button>
+        </div>
+        <p class="campo-form__dica" id="data-dica">Formato dd/mm/aaaa. Fins de semana indisponíveis.</p>
+        <p class="campo-form__erro" id="data-erro" data-erro hidden></p>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Abra o calendário e navegue só com o teclado.</p>
+
+  <dialog class="dialogo calendario" aria-label="Escolher data" data-calendario>
+    <div class="calendario__topo">
+      <button type="button" class="btn btn--terciario btn--icone" aria-label="Mês anterior" data-mes="-1">{{ icone("chevron-esq") }}</button>
+      <h2 class="calendario__mes" id="cal-mes" aria-live="polite" data-titulo-mes></h2>
+      <button type="button" class="btn btn--terciario btn--icone" aria-label="Próximo mês" data-mes="1">{{ icone("chevron-dir") }}</button>
+    </div>
+    <table class="calendario__grade" role="grid" aria-labelledby="cal-mes">
+      <thead>
+        <tr>
+          {% for curto, longo in [("D","domingo"),("S","segunda"),("T","terça"),("Q","quarta"),("Q","quinta"),("S","sexta"),("S","sábado")] %}
+          <th scope="col" abbr="{{ longo }}">{{ curto }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody data-dias></tbody>
+    </table>
+    <p class="calendario__ajuda">Setas: dia · Page Up/Down: mês · Home/End: semana · Esc: fechar</p>
+    <div class="fila secao__corpo">
+      <button type="button" class="btn btn--secundario btn--pequeno" data-fechar>Cancelar</button>
+    </div>
+  </dialog>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, attrs, texto in [
+    ("Normal", "", "", "Número em mono, alinhado na grade."),
+    ("Hoje", "dia--hoje", "", "Anel tracejado: forma, não só cor."),
+    ("Foco", "is-foco", "", "Anel de foco sólido do cursor do teclado."),
+    ("Selecionado", "", "selected", "Fundo cheio + negrito; aria-selected=\"true\"."),
+    ("Indisponível", "", "disabled", "Riscado e sem ação; aria-disabled=\"true\"."),
+    ("Outro mês", "dia--fora", "", "Dias de preenchimento, mais apagados."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="dia {{ classe }}" {% if attrs == 'selected' %}aria-selected="true"{% endif %} {% if attrs == 'disabled' %}aria-disabled="true"{% endif %}>14</span>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endmacro %}

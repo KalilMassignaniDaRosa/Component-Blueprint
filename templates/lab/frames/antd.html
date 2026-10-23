@@ -1,0 +1,17 @@
+{% extends "lab/frame.html" %}
+{% import "lab/_textos.html" as t %}
+{#- Ant Design é React: os três exemplos são montados por static/js/lab/antd.js
+    a partir dos textos abaixo (JSON inerte, o navegador não o executa). -#}
+
+{% block botao %}<div data-antd="botoes"></div>{% endblock %}
+{% block modal %}<div data-antd="modal"></div>{% endblock %}
+{% block tabs %}<div data-antd="tabs"></div>{% endblock %}
+
+{% block depois %}
+<script type="application/json" id="textos">{{ {
+  "primario": t.primario, "secundario": t.secundario, "destrutivo": t.destrutivo,
+  "desabilitado": t.desabilitado, "abrir_modal": t.abrir_modal, "modal_titulo": t.modal_titulo,
+  "modal_texto": t.modal_texto, "modal_cancelar": t.modal_cancelar, "modal_confirmar": t.modal_confirmar,
+  "abas_rotulo": t.abas_rotulo, "abas": t.abas,
+} | tojson }}</script>
+{% endblock %}

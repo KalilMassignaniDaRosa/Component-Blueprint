@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Tokens de design: a "prancha de laboratório"
+   Papel quente + tinta de caneta azul + marca-texto amarelo.
+   Toda cor usada nos componentes vem daqui (nada de hex solto no resto do CSS).
+   Contrastes conferidos (WCAG 2.2): texto ≥ 5.5:1, bordas de controles ≥ 3:1.
+   ========================================================================== */
+
+/* Fontes servidas pelo próprio site (sem CDN; a CSP fica só 'self').
+   Licença SIL Open Font License 1.1, veja static/fonts/LICENSE.txt */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("../fonts/bricolage-grotesque-latin.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/ibm-plex-sans-latin.woff2") format("woff2");
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/ibm-plex-sans-latin-italic.woff2") format("woff2");
+  font-weight: 100 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../fonts/jetbrains-mono-latin.woff2") format("woff2");
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Tipografia */
+  --fonte-titulo: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --fonte-texto: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --fonte-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  /* Escala tipográfica (razão ~1.25, fluida nos títulos) */
+  --t-xs: 0.75rem;
+  --t-sm: 0.875rem;
+  --t-md: 1rem;
+  --t-lg: 1.125rem;
+  --t-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --t-2xl: clamp(1.6rem, 1.3rem + 1.3vw, 2.25rem);
+  --t-3xl: clamp(2.2rem, 1.5rem + 3.2vw, 4rem);
+
+  /* Espaçamento: base de 4px */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 0.75rem;
+  --e-4: 1rem;
+  --e-5: 1.5rem;
+  --e-6: 2rem;
+  --e-7: 3rem;
+  --e-8: 4rem;
+  --e-9: 6rem;
+
+  --raio-sm: 4px;
+  --raio: 6px;
+  --raio-lg: 10px;
+
+  --largura-max: 84rem;
+  --alvo-min: 44px; /* tamanho mínimo de alvo de toque */
+
+  /* Movimento */
+  --dur-rapida: 120ms;
+  --dur: 180ms;
+  --dur-lenta: 260ms;
+  --curva: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  /* Cores: tema claro */
+  --c-fundo: #f4f0e6;          /* papel */
+  --c-superficie: #fbf9f4;     /* folha por cima do papel */
+  --c-superficie-2: #ece6d8;   /* área rebaixada (bancada, código) */
+  --c-tinta: #17171c;          /* texto principal: 15.7:1 */
+  --c-tinta-suave: #5a5650;    /* texto secundário: 6.4:1 */
+  --c-linha: #d9d2c3;          /* divisórias decorativas */
+  --c-linha-forte: #8c8577;    /* bordas de controles: 3.2:1 */
+  --c-grade: rgb(38 56 201 / 0.07); /* papel milimetrado */
+
+  --c-acento: #2638c9;         /* caneta azul: 7.4:1 */
+  --c-acento-forte: #1b2a9e;
+  --c-acento-suave: #e3e6fb;
+  --c-sobre-acento: #ffffff;   /* 8.4:1 */
+
+  --c-marca-texto: #f6dd4a;    /* destaque; a tinta por cima dá 13:1 */
+  --c-sobre-marca: #17171c;
+
+  --c-perigo: #b42318;
+  --c-perigo-forte: #8f1b12;
+  --c-perigo-suave: #fbe5e1;
+  --c-sobre-perigo: #ffffff;
+  --c-sucesso: #1d6b45;
+  --c-sucesso-suave: #dff1e6;
+  --c-aviso: #8a5300;
+  --c-aviso-suave: #fbefd6;
+
+  --c-foco: #2638c9;
+  --c-backdrop: rgb(16 19 27 / 0.55);
+
+  /* Matiz de cada categoria (sempre acompanhado do glifo) */
+  --c-cat-navegacao: #2638c9;
+  --c-cat-entrada: #1d6b45;
+  --c-cat-feedback: #8a5300;
+  --c-cat-organizacao: #6b3fa0;
+
+  --sombra-1: 0 1px 0 rgb(23 23 28 / 0.06), 0 1px 3px rgb(23 23 28 / 0.08);
+  --sombra-2: 0 2px 0 rgb(23 23 28 / 0.05), 0 12px 32px -8px rgb(23 23 28 / 0.22);
+}
+
+/* Tema escuro: "blueprint noturno".
+   Aplicado quando o sistema prefere escuro e a pessoa não escolheu claro… */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --c-fundo: #10131b;
+    --c-superficie: #171b26;
+    --c-superficie-2: #0b0e14;
+    --c-tinta: #ece8de;
+    --c-tinta-suave: #a39f96;
+    --c-linha: #2c3242;
+    --c-linha-forte: #5b6378;
+    --c-grade: rgb(154 168 255 / 0.06);
+    --c-acento: #9aa8ff;
+    --c-acento-forte: #c0c9ff;
+    --c-acento-suave: #1f2650;
+    --c-sobre-acento: #10131b;
+    --c-marca-texto: #e2c64a;
+    --c-sobre-marca: #10131b;
+    --c-perigo: #ff8b7b;
+    --c-perigo-forte: #ffb3a8;
+    --c-perigo-suave: #3a1714;
+    --c-sobre-perigo: #10131b;
+    --c-sucesso: #6fd39c;
+    --c-sucesso-suave: #12301f;
+    --c-aviso: #f0be55;
+    --c-aviso-suave: #33270c;
+    --c-foco: #9aa8ff;
+    --c-backdrop: rgb(0 0 0 / 0.7);
+    --c-cat-navegacao: #9aa8ff;
+    --c-cat-entrada: #6fd39c;
+    --c-cat-feedback: #f0be55;
+    --c-cat-organizacao: #c9a6ff;
+    --sombra-1: 0 1px 0 rgb(0 0 0 / 0.3);
+    --sombra-2: 0 16px 40px -8px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* …ou quando a pessoa escolheu escuro explicitamente no botão de tema. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-fundo: #10131b;
+  --c-superficie: #171b26;
+  --c-superficie-2: #0b0e14;
+  --c-tinta: #ece8de;
+  --c-tinta-suave: #a39f96;
+  --c-linha: #2c3242;
+  --c-linha-forte: #5b6378;
+  --c-grade: rgb(154 168 255 / 0.06);
+  --c-acento: #9aa8ff;
+  --c-acento-forte: #c0c9ff;
+  --c-acento-suave: #1f2650;
+  --c-sobre-acento: #10131b;
+  --c-marca-texto: #e2c64a;
+  --c-sobre-marca: #10131b;
+  --c-perigo: #ff8b7b;
+  --c-perigo-forte: #ffb3a8;
+  --c-perigo-suave: #3a1714;
+  --c-sobre-perigo: #10131b;
+  --c-sucesso: #6fd39c;
+  --c-sucesso-suave: #12301f;
+  --c-aviso: #f0be55;
+  --c-aviso-suave: #33270c;
+  --c-foco: #9aa8ff;
+  --c-backdrop: rgb(0 0 0 / 0.7);
+  --c-cat-navegacao: #9aa8ff;
+  --c-cat-entrada: #6fd39c;
+  --c-cat-feedback: #f0be55;
+  --c-cat-organizacao: #c9a6ff;
+  --sombra-1: 0 1px 0 rgb(0 0 0 / 0.3);
+  --sombra-2: 0 16px 40px -8px rgb(0 0 0 / 0.6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-rapida: 0ms;
+    --dur: 0ms;
+    --dur-lenta: 0ms;
+  }
+}

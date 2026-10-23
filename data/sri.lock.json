@@ -1,0 +1,430 @@
+{
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.2SO23SX3.js": {
+    "sri": "sha384-JWV02/qtdYCEYx7lsXpu7nxEUzOTQS6e6/av7zvoPvTjP6oj28uoN/PdDmNx0LUT",
+    "bytes": 1581
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.3H2FQERJ.js": {
+    "sri": "sha384-RSfzmH/35l8mnxYkNDfJoO9cCUXmTRt7pUAItObpLUdnEAAIrEKnK775LF2Evd2b",
+    "bytes": 642
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.3MSWQ3RG.js": {
+    "sri": "sha384-Lu3z7nOxtjiUvKdS7VUFgbi1f8Pi00qXeZNi/Iut03cstNqeXjqmIONYWdmUtWbl",
+    "bytes": 385
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.3NKIHICW.js": {
+    "sri": "sha384-6yk+adJscva4+URCC8tQJ5JzeGLdelr4Lp56GhmkOa1yHqEiCH3z9TtZSIWI/Et4",
+    "bytes": 284
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.4ZAKP7NY.js": {
+    "sri": "sha384-wgDSU2ogtu7AmLR7H4MwwHWhxZb8shp+e1r4FU4bxns7mYDYunkjWz1dNcUMYk/Q",
+    "bytes": 261
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.5VKLVAP2.js": {
+    "sri": "sha384-8a/4vd2EgPuFe620suMJb9X0u/lPbBs0TFhXiI9uf8Fw5KWGOGOb5Gg9fj9BXPZi",
+    "bytes": 9976
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.5ZSSLK3M.js": {
+    "sri": "sha384-dBp33QCyW8AsBxZj8cMajFocE6ejpCl0svVY94TBAATz57CGo3wBvZWL+iPjFFHs",
+    "bytes": 1408
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.BKE5EYM3.js": {
+    "sri": "sha384-WKHKmPStoLAO0moGpTnA7cxapUEQDmxhHs/e+1YpyFH2kqshyqrzEpNTo4jqZzXL",
+    "bytes": 10602
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.D5HA4OFX.js": {
+    "sri": "sha384-BW6DxjyHNal8l1YNKqFs69KEb/OJJtrqThYU9dgvsdjMV8QZq8IisDqJdMltdqgE",
+    "bytes": 6348
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.DITA2S5A.js": {
+    "sri": "sha384-bSM7mzp1m2rSWUTIlSp0Kb3/eN0R8pcYMAUwXQnwh7F8zSDUKXrtVQf86UstW29f",
+    "bytes": 3155
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.DL7HG4WM.js": {
+    "sri": "sha384-V/TbFGjYuxPf3YyWol/qsl5j2dm1GD2cro2C5/8kQNjru7eFBeE/AuGdV1sH/9ep",
+    "bytes": 526
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.EFUXUR2V.js": {
+    "sri": "sha384-vprHnN5y6nuCQdmwKNIiBU7cOIvJue8Gu//eMelS4kiX94JErCl9G1n9ydLk8VZi",
+    "bytes": 762
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.H23DVATU.js": {
+    "sri": "sha384-RndEN5pAQ+j204WoGn0SseW55mO7mMhnFBcBx6I9npnOoOsUGiQILK2/k10iOGXZ",
+    "bytes": 735
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.HGBRCPUS.js": {
+    "sri": "sha384-HfsJB+hq15zCM3sJoTeEk7nelyx1xLuYzczvUGx1IBkZ1/IZcInxm7/aLZQd5Etb",
+    "bytes": 1524
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.HJQBZY2G.js": {
+    "sri": "sha384-LC0h5alW5kz9S6tDF2Nv1SJ7LnyK1ar1lnVScyH3ByjaBT8lVS7P00wcMKK/L6Tb",
+    "bytes": 12578
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.HOKYDFUG.js": {
+    "sri": "sha384-8gF+7LLuNNn/BQC58FR3/zaMvTfNYfUMysc10f7mgizOWtPESJRTyAoVT9rYVuq4",
+    "bytes": 4113
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.IOZQCLLD.js": {
+    "sri": "sha384-yQ2tXdf0aVcICtWz3t9Zcdf3V4O6bH8nB+E8EC71gZugUWGUYfnR5JEqwDCTiHyn",
+    "bytes": 406
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.JB5Y2AN3.js": {
+    "sri": "sha384-+xPbQWyYMH8VUqWJpulyJLez0FuAPHMHA3pX3+Ewq0cgSJHAFofUMU4RWt2KQQu1",
+    "bytes": 625
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.JHZRD2LV.js": {
+    "sri": "sha384-By2OvMB/gJ4QHvwy6boqwrlaMiqgEPfF0kmvlKCS3iKMQaxPjTymnAPvNv2NKadO",
+    "bytes": 3116
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.K5Q2EBKV.js": {
+    "sri": "sha384-ur/swm3B8T4xmnLezm/jMP2Z3uAQ6Pr56rOh4GV2eCQzYYRqBZWvPG+wVi1jAw/T",
+    "bytes": 3306
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.KH7MR2OK.js": {
+    "sri": "sha384-/DZKKKVUQXKGMCyTsOE9eEuM3Irs+WtD79kbbjCjsSy09Trzd2a9SGPZVyyuzwca",
+    "bytes": 2154
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.KKI7M5DP.js": {
+    "sri": "sha384-bkD+1jtRh850o1H6pdtdBZqZtwFrstUgMIpc3z7dsYplNIhxkdWG1GBb0jDkb40J",
+    "bytes": 5549
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.KWDPKKFO.js": {
+    "sri": "sha384-ul/J0lJI5iYtGRSTG9fTwUCAY+yFt4/gS27DURiydfUjAyGxeJ8FjEqNeoZIwYxo",
+    "bytes": 1401
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.L2PH6XPF.js": {
+    "sri": "sha384-xWGq6HCzqSVtgmQM1DneW9r11CFxF+herW1C8cex9ENSRkQ/OklEPRgg5i0OfLN+",
+    "bytes": 985
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.L6CIKOFQ.js": {
+    "sri": "sha384-wg4Wrg1hka02XpnrU1nb+H+3H8Qrf/eRCjeaNE1rfuSQ1F2rAj4re7yUypGvhzkz",
+    "bytes": 1464
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.LBLI4KS5.js": {
+    "sri": "sha384-cB84vvzJL5RFyiUhZWk8LN0gwFnFq5KGUqu6iOxWQGZBVZAp11jGN02M87ZP1uq6",
+    "bytes": 10475
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.MEATLWHD.js": {
+    "sri": "sha384-9KHomhIUf7DTzR73G6lj9H1nzllrZVs9nV1oWcdI28LNNjJ91pf6fpNmDufo/xcR",
+    "bytes": 71
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.MO2KS3JW.js": {
+    "sri": "sha384-phs38CO8McnvcLyTQfbTHBLf5QKHYxUQPilKYlU7wPGZDIvXRRtkDJbQSLNf7FYy",
+    "bytes": 4752
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.MOCFCD22.js": {
+    "sri": "sha384-07lJL46gvO/f+QHDS3hbpSXB8Wrr5RbKO2brz/abaoM6phLnzdb5eCvJdsKIKZnH",
+    "bytes": 9387
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.MQODJ75V.js": {
+    "sri": "sha384-kxV9h8/uXfyf5gsHG/FxZ/isvjW7/IMZTOCbmadHUb8KUE6+kEaMtdCTSYreEeVv",
+    "bytes": 293
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.PX3HMKF7.js": {
+    "sri": "sha384-AviS2WSrs5GDRqmXDFj+HlS3UokyCAO789c+4xgSj6PIom2GUdYkoeCGJW44rwZh",
+    "bytes": 284
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.PZAN6FPN.js": {
+    "sri": "sha384-vA/ZgysgphWzLRWNCeHfRPnCRJklFKOHZPdPwqzvB6OKB8Nph6QtHlMwOWmDdQG+",
+    "bytes": 917
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.QVJVDGCX.js": {
+    "sri": "sha384-oGh3cLj2O56SCcIH6ojkHaGcJPi4T/caDdKxkucOvOtVMUHY1qmYoq0m6KXNnRTD",
+    "bytes": 10616
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.R7QX4M6R.js": {
+    "sri": "sha384-DHwV0i8WJk9lLvXwL/Rqd3nLVbpWOHZ9ep7TbsaGnPaR7WBYzb1iRGaZFjnjcvnM",
+    "bytes": 1165
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.RKPV5RWB.js": {
+    "sri": "sha384-p33RNe7vbdUeRRz2YJdZ0y+zOTpzB1CahZ+MhWNbP2j1WCoASLmLog5zQSqms9SN",
+    "bytes": 2307
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.RMZ7BVDM.js": {
+    "sri": "sha384-lLtZQdMWLKCJ5ox0ykNjmUdnzofmj/hQTaxndQcF8YoAhW4hsg5nTDqD/SxYU/5F",
+    "bytes": 272
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.RPQJAXXR.js": {
+    "sri": "sha384-YozAS0s5cUry0RRXcRL2bHyqlhiea0YETAXzimIsF5KsyGbf3r4J9Xq11lmfHFf7",
+    "bytes": 588
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.RWNXKUCF.js": {
+    "sri": "sha384-qLOnZJKc/AoXbpr/CRpBQbNKN5kMV17CYh7Sniv+bUqU1ORcOspiHy8uhnPZaT51",
+    "bytes": 2105
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.SKLR37OM.js": {
+    "sri": "sha384-p/uiG/CKMZs21/tI2TX25MdPy3K742pz5zavlRUobT9OnLRfejGo/to9XOScIGQC",
+    "bytes": 308
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.SLTXS4GR.js": {
+    "sri": "sha384-x4Hd2WVRYy1QdmyOg9JcGpvlSjZDvf3q8q6+1MrJK/8EKcXv8uRJKDo/T9dTx0sQ",
+    "bytes": 6831
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.TLFIX76K.js": {
+    "sri": "sha384-fQ21Oz1TW/a94BUA1s1TleTII3j0C6IKpya2KdraXh8NPH6jpaWTeuuIS92w3Yt0",
+    "bytes": 12167
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.UDRJMWVZ.js": {
+    "sri": "sha384-T/ZppiLdoAuSJEtco5liqnRVmuES4lVMTxpubKv/VHAp0cgBdTgpGHAtvYzXdwOD",
+    "bytes": 1336
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.UMPSPH77.js": {
+    "sri": "sha384-NGRn4He/N0fh9QH5sp5QBCZayP/g0daPzWw8ehoQT3Xi2G1oA8fgvMweTK0fJAFP",
+    "bytes": 1247
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.VC3BPUZJ.js": {
+    "sri": "sha384-7jMxPPQcTVyf9rgcq/9X5giFsjPBOesOaSXEvZHPB/h6WowRFXidFw0zjfKEBobE",
+    "bytes": 274
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.VRQU2Y2Z.js": {
+    "sri": "sha384-XHaml5yZEfmLBCKn8YtwgW1BMopUdkRLcHqrhYwL0h5rZwSdIuSZSr7hLE5ZZYBz",
+    "bytes": 4034
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.WDIIGUNP.js": {
+    "sri": "sha384-USG0uXLvX97yb3Bocy1KQ65yBbCrY/68xxdkU9nl9B7OM1BfNOEMJdWKhVy1YaCl",
+    "bytes": 262
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.WLKYECLX.js": {
+    "sri": "sha384-Xo17o/QzuAMRINZqwZEcREHZN6vpnNc1Htd19YRa5kGBja1o1wgNwTOEz9tXDODT",
+    "bytes": 27194
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.YBFCQDTA.js": {
+    "sri": "sha384-Cf9j3moa6G2zqpg6zMQy2+Vh9jsdWjT6PYMCQitZeVZj6FovcLMP/+EnR3gGovHA",
+    "bytes": 308
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.YDQCS2HK.js": {
+    "sri": "sha384-Lo2ZRGECKeH821xF1pXY4u+g9b+WnRPF5wOTKF3XyNeukxSiUKpWsE/imIgkVMei",
+    "bytes": 266
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.YLIESRP2.js": {
+    "sri": "sha384-G9ybkD+rYE7IbzPRZb65LYapRH6gnEwL9jIfzBjhcZyi91008Qaf9pdkouF792hf",
+    "bytes": 10644
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/chunks/chunk.YPRC5XZF.js": {
+    "sri": "sha384-bYnfuva1QddWS1nCofub44XlM7ACu0HD560u3gNVkBPUij7j+0A6Q6dX9S4I2sa/",
+    "bytes": 43217
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/components/button/button.js": {
+    "sri": "sha384-hea2EAcet1jCQWcg4XHLkkmXj2Xm2SS9W6Gt3GEMiNIoINOab0xjtq6EG3aa5zc5",
+    "bytes": 1437
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/components/dialog/dialog.js": {
+    "sri": "sha384-APwI1DUGSdqfYa/FH3Dxepi69MFyn1eEelCbVyfyYY6zS7Hr9jysfy2Fc42zmJgq",
+    "bytes": 1888
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/components/tab-group/tab-group.js": {
+    "sri": "sha384-l7OId3XFPG/Es2E/rFN/4tfPS26qI9UjVlMS9MMmOcXCgAOJXeIdqxlTUwPkQidd",
+    "bytes": 1810
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/components/tab-panel/tab-panel.js": {
+    "sri": "sha384-JVCPdBM1qT0PTBQD8VPTc1pO/KWnV9i4XT3H0KtPXUlw1nzyJHa/maGX36M7+H/Y",
+    "bytes": 498
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/components/tab/tab.js": {
+    "sri": "sha384-mUd5ZYDxdXqQpoiJa6srLuEw2a6Lw3MBWOOeD9tfBLAgIXfL/2Hx4rZlEdej80XT",
+    "bytes": 488
+  },
+  "@awesome.me/webawesome@3.14.0/dist-cdn/styles/themes/default.css": {
+    "sri": "sha384-twy8NsWxJjyu9cLjLe4XWolvF7zHexOmAvSzUAFOtfIInRxoebJtvBGoKBLPvPNS",
+    "bytes": 16773
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/darkColor.js": {
+    "sri": "sha384-X4m7FAT+PqFAl+9OtKW/+op0FOGeNWuQaJ8g8TZ1pVLTPfgdrhyDLTfEPBobaRJG",
+    "bytes": 9451
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/darkColorPalette.js": {
+    "sri": "sha384-5j8D1LsqSrkt5xVAaKKvuWQWmfssGY2cPkPlno6ge3M935ZkVRMFvxIEl6opVKqh",
+    "bytes": 5018
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/highContrastColor.js": {
+    "sri": "sha384-HDhvYw8nne02F2UXqkTVdkkUm8thXwU27JPgPPLmnthGwphG/48jmZ/+mGVvZmr6",
+    "bytes": 9946
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/highContrastColorPalette.js": {
+    "sri": "sha384-hAmj2NkxQ+9OXdQU1JNKxuWRPgZhUGaq9UMh0quQ9Gnamlx+XJjAQPM4yS5Vo3KM",
+    "bytes": 2883
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/lightColor.js": {
+    "sri": "sha384-gS+P/wiStgDSSsFDzZLPCICLmdM5b3oivSwgZk855FcRz5i5CGFMMXc7G+H0QZdA",
+    "bytes": 9426
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/lightColorPalette.js": {
+    "sri": "sha384-HE4YUfyJ3kzw4/zKm1kgEWyvDU9Dl3cq87GvOmE2uWSzFneeJmwOyIHZX3YJcIiy",
+    "bytes": 4080
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/teamsDarkColor.js": {
+    "sri": "sha384-oI8Pz8v5RdtKT/Ze9pSFwkL7XOVqupuqAoi2JDPeoFydvOYoE+guoyOg5+PKz593",
+    "bytes": 9456
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/alias/teamsFontFamilies.js": {
+    "sri": "sha384-LRxxXXlj0jfMoqYwImPewoZKH6zJxsSFWcgYUIjQqt/vvcaSk5xfxz8CB2M/s05r",
+    "bytes": 263
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/borderRadius.js": {
+    "sri": "sha384-uRzvN2TqUVUXD1QSvUubsplG2A+Stf4P2vDdi0KeqH9jHqDD+qv/f/BLXHnRBZGn",
+    "bytes": 383
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/brandColors.js": {
+    "sri": "sha384-M8Yc07N6kEZQcOnTNjzlttfFIbtJ1dTC+3t1lT7Hzfhps8QPCSNTZeWZfzIHYCuO",
+    "bytes": 1366
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/colorPalette.js": {
+    "sri": "sha384-MwgH0spICxkGm9uQvTA+f6qOT1ojVuoPSgfvfJ96okLwYjEnUMaeOs9hx9+s1cUE",
+    "bytes": 907
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/colors.js": {
+    "sri": "sha384-vmhKBhq5lomk1PgOBdojZqtPyS3e3nbNckmtaosuOul9mt6aQS9MoK4/PZUGfM/E",
+    "bytes": 18542
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/curves.js": {
+    "sri": "sha384-fruUgoED6blxFWxcsFhjwqbXxermhOJBaNtDBoo6/p8pY7HnNYWKhCThpFCFkkm6",
+    "bytes": 485
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/durations.js": {
+    "sri": "sha384-YGXRo/D78hIO5uelZdFddziuYfuxqPEy//rkhBKrQ8kGXFynLtty0f/CotGrmJJl",
+    "bytes": 262
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/fonts.js": {
+    "sri": "sha384-m7m3tg0MBJ6n+IROszajotu6cUTvgPBWgKD8Tj/lMSLNmKRUFUBjwtmeiKZO2a5b",
+    "bytes": 1200
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/index.js": {
+    "sri": "sha384-mD+OMSynUy3ohdQAlWd+HlbjM6oVYmFfEUonOScg0rMHYtnuLmkfFyIxkC9kt59Q",
+    "bytes": 1025
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/spacings.js": {
+    "sri": "sha384-qkrzoaeJvSV8pT/9Wm9YC75ZKKVR7bkKXtHbqw0lgJNoNFTw4PmjsYJZQgopygNt",
+    "bytes": 1217
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/strokeWidths.js": {
+    "sri": "sha384-JjlapudoqCIHBdk3hRrsxfzJoIuSpPd1dvNEvfW9GZCPH+/RAnmrl2S8gEvNW1+L",
+    "bytes": 152
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/global/typographyStyles.js": {
+    "sri": "sha384-r3QaWC/Sm8XM0umHSCv3jFAbMZWH7qtbRiG+K1BTlZ/RffTEY6hHjyxBtmjGY3Iy",
+    "bytes": 3564
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/index.js": {
+    "sri": "sha384-wJkXum6FgoiupBrPBtdto51IwjXjGwX1eWpd4Xep+tD4F0GfuYPAgzG0kDvsAQeE",
+    "bytes": 434
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/sharedColorNames.js": {
+    "sri": "sha384-CnQIdRhMEpv3EYzEWobu6vWd5mLuCq3Gm2CNvXjNf7Mm951mKisFZTxC9ZtYj9yT",
+    "bytes": 1247
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/statusColorMapping.js": {
+    "sri": "sha384-Z9t4qfv0U5tHEnNDcPt+ZaHLzbvrrajCSNf4tHxopl/ORFAQ4Svvk6aWZF49ZqnY",
+    "bytes": 108
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themeToTokensObject.js": {
+    "sri": "sha384-kLki+ReeCMqdqFRmQ8axcFJe+/za8kIZDSa5K4sd98NaaQyHG2RGrRJCGJPrLfJr",
+    "bytes": 703
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/index.js": {
+    "sri": "sha384-SkZtd37S7iM1kb5Roy5NNmM0eg+x3T38FhXpqQP+ed41i+AUOioe2wmRCr+MYsSB",
+    "bytes": 193
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/teams/darkTheme.js": {
+    "sri": "sha384-DDygDl4MTEppeitnqCWi1u6ds1vAWLbia+gAAaA2guKX9a1eWn3Vu5vQiyCmzyHJ",
+    "bytes": 412
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/teams/highContrastTheme.js": {
+    "sri": "sha384-mPS4mFn1aK5eABrKy8sEUhYljH+6zc3wyVwbljJoQNkFsH1ft6+gF/NMu40EaoSH",
+    "bytes": 244
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/teams/index.js": {
+    "sri": "sha384-o7D+ByQ21FbdYxEfhEY+LxXH2ytgZflp+q7ldAnpvFnvPkV8lBZwDRZMBGuA5lU9",
+    "bytes": 204
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/teams/lightTheme.js": {
+    "sri": "sha384-EV1pqbMmtupWei67dK+LomasSiZ/mSkULqTcZ49jrT42VJpWVvpHSxG1rTMLtJ00",
+    "bytes": 398
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/web/darkTheme.js": {
+    "sri": "sha384-yXZ021JMYeO35xVA75sGb7uRKOI3NUPVppuNa28uRW9wpjiK2QY8sijRexRuLyEl",
+    "bytes": 177
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/web/index.js": {
+    "sri": "sha384-9leevfkcJF3GxKJycnfXKisuRidqOPLgde6OeuXQZx60sPMLA+cyddWUtTlfRzFE",
+    "bytes": 96
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/themes/web/lightTheme.js": {
+    "sri": "sha384-iBflV8a45H43Guh+PRh6EcVutiMdVMDoSmOFkpjKNk7Jgw9krOxJuRPIX1fcL8u0",
+    "bytes": 181
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/tokens.js": {
+    "sri": "sha384-4GnFFBilVqI6WG3TsJjuEtMKj3B7XVWhnNHX5wu46/olPQAILhzDqPAohMNzq/k5",
+    "bytes": 35073
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/utils/createDarkTheme.js": {
+    "sri": "sha384-N3OYYMhqFHuce28k4mCzIFSa3wYAe9wgIQcMI/DM+fkgg6rBX2Cb2nV6/PmZSH0T",
+    "bytes": 1152
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/utils/createHighContrastTheme.js": {
+    "sri": "sha384-XBlOfHAbH2xCpT3h9120lvo1z2Oqs2uHYC17K3E6BCmR3B0LvCeerLTrGcIry57Y",
+    "bytes": 1166
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/utils/createLightTheme.js": {
+    "sri": "sha384-6gmO1D8rsYFrsR0Lfh24fiVigvWfY+zOdCCKvcuw4FyE8eJL/j+j7OqgR/f1fkly",
+    "bytes": 1155
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/utils/createTeamsDarkTheme.js": {
+    "sri": "sha384-g9QgZndtgNa6PJ2aTQwSLAMET3vlkqJ31e8ruWucNAA2+KB/XxXdRq26cfazB6zj",
+    "bytes": 1162
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/utils/index.js": {
+    "sri": "sha384-qUiv3/6U2QTQrq74OGt3CrD2X15h8lr5+bzVNGNyAfj+Oi4p9vh1iqSyIdBzMk4Z",
+    "bytes": 252
+  },
+  "@fluentui/tokens@1.0.0-alpha.24/lib/utils/shadows.js": {
+    "sri": "sha384-Xw72xdUlC/oLd0/4AP4M1TuFh4tUh+1u+tbxk/+KJyY6lGIL8Co6dtZMS/4QyBbL",
+    "bytes": 618
+  },
+  "@fluentui/web-components@3.1.3/dist/web-components-all.min.js": {
+    "sri": "sha384-Hov9kHqwFrWoh24tAuVNE9xTvJZZb1hIehPcDNfVNjXKYv7ITZles1RdeQiVRHwR",
+    "bytes": 308613
+  },
+  "@picocss/pico@2.1.1/css/pico.min.css": {
+    "sri": "sha384-L1dWfspMTHU/ApYnFiMz2QID/PlP1xCW9visvBdbEkOLkSSWsP6ZJWhPw6apiXxU",
+    "bytes": 83319
+  },
+  "@tailwindcss/browser@4.3.3/dist/index.global.js": {
+    "sri": "sha384-2ql948lIdLcGEE0/qxNiudyTjgauA3RDJERu5xW75kFCvSl5a9odyQYCb6tEjnmB",
+    "bytes": 282289
+  },
+  "antd@5.29.3/dist/antd.min.js": {
+    "sri": "sha384-SOLuE/G6SSyph6I2bGwlviWIiC0+MKVkmd/PFsDOA8yVaQnS0zLTSenRp3PznPXC",
+    "bytes": 1538849
+  },
+  "antd@5.29.3/dist/reset.css": {
+    "sri": "sha384-g9YEh+RjaBJZE0/1Z3yIWpIIwOHnZZ+BtoA4WN+ZrLCbvTY0V87/eZUnhvRanu6D",
+    "bytes": 3683
+  },
+  "bootstrap@5.3.8/dist/css/bootstrap.min.css": {
+    "sri": "sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB",
+    "bytes": 232111
+  },
+  "bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js": {
+    "sri": "sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI",
+    "bytes": 80496
+  },
+  "bulma@1.0.4/css/bulma.min.css": {
+    "sri": "sha384-DCY3M8xLkMu6c9IKcKbe+jHKMjelnwC0p+SBaxfHxoBYZWdJF2X400UdBCgATtAB",
+    "bytes": 677931
+  },
+  "daisyui@5.7.47/daisyui.css": {
+    "sri": "sha384-7aEtEHaaQlvolkHZ6DyoGlsNOFe/zuR0er02iYikX9npKr+C4ANk7t3C7wzeItRf",
+    "bytes": 1138571
+  },
+  "dayjs@1.11.23/dayjs.min.js": {
+    "sri": "sha384-1Ft4/JTNbt7S/44V0himpcjx+YfQ1a6W6SYBJMr94ba6jwZhWoWoLaZsMmtJILgq",
+    "bytes": 7161
+  },
+  "react-dom@18.3.1/umd/react-dom.production.min.js": {
+    "sri": "sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1",
+    "bytes": 131835
+  },
+  "react@18.3.1/umd/react.production.min.js": {
+    "sri": "sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z",
+    "bytes": 10751
+  }
+}

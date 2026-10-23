@@ -1,0 +1,43 @@
+{#- Demo e estados de SKELETON. Comportamento em static/js/demos/skeleton.js -#}
+
+{% macro perfil_esqueleto() %}
+<li class="perfil" aria-hidden="true">
+  <span class="esqueleto esqueleto--avatar"></span>
+  <span class="perfil__linhas"><span class="esqueleto esqueleto--titulo"></span><span class="esqueleto esqueleto--linha esqueleto--curta"></span></span>
+</li>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-skeleton>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · equipe</span>
+  </div>
+  <div class="bancada__area">
+    <div class="fila">
+      <button type="button" class="btn btn--secundario" data-recarregar>Recarregar equipe</button>
+    </div>
+    <ul class="perfis secao__corpo" aria-label="Equipe" aria-busy="true" data-lista>
+      {% for _ in range(4) %}{{ perfil_esqueleto() }}{% endfor %}
+    </ul>
+    <p class="sr-only" role="status" data-status>Carregando equipe…</p>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Repare que nada muda de lugar quando o conteúdo real chega.</p>
+  <template data-modelo-esqueleto>{{ perfil_esqueleto() }}</template>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert><ul class="perfis">{{ perfil_esqueleto() }}</ul></div>
+    <figcaption><strong>Carregando</strong>Mesmo formato e altura do card final. Brilho suave (parado com movimento reduzido).</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <ul class="perfis"><li class="perfil"><span class="perfil__avatar">AM</span><span class="perfil__linhas"><span class="perfil__nome">Ana Moura</span><span class="perfil__cargo">Design</span></span></li></ul>
+    </div>
+    <figcaption><strong>Carregado</strong>O conteúdo ocupa exatamente o espaço reservado.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

@@ -1,0 +1,384 @@
+/* ==========================================================================
+   Componentes ensinados pelo guia (botão, tabs, diálogo, switch…).
+   Vários deles também são usados pelo próprio site.
+   As peças do guia em si (home, prancha, bancada) ficam em guia.css.
+
+   Estados forçados (.is-hover, .is-foco, .is-ativo) existem só para os
+   especimes de "Estados" mostrarem cada estado parado, sem interação.
+   ========================================================================== */
+
+/* Cor de cada categoria, usada junto com o glifo */
+.cat-navegacao { --cor-cat: var(--c-cat-navegacao); }
+.cat-entrada { --cor-cat: var(--c-cat-entrada); }
+.cat-feedback { --cor-cat: var(--c-cat-feedback); }
+.cat-organizacao { --cor-cat: var(--c-cat-organizacao); }
+
+/* ==========================================================================
+   BOTÕES
+   ========================================================================== */
+.btn {
+  --btn-fundo: var(--c-superficie);
+  --btn-texto: var(--c-tinta);
+  --btn-borda: var(--c-linha-forte);
+  --btn-fundo-hover: var(--c-superficie-2);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: var(--alvo-min);
+  padding: 0 var(--e-5);
+  border: 2px solid var(--btn-borda);
+  border-radius: var(--raio);
+  background: var(--btn-fundo);
+  color: var(--btn-texto);
+  font: 600 var(--t-md) / 1 var(--fonte-texto);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--dur) var(--curva),
+    border-color var(--dur) var(--curva),
+    color var(--dur) var(--curva),
+    transform var(--dur-rapida) var(--curva);
+}
+
+.btn:hover,
+.btn.is-hover {
+  background: var(--btn-fundo-hover);
+}
+.btn:active,
+.btn.is-ativo {
+  transform: translateY(1px);
+}
+.btn.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+}
+
+.btn--primario {
+  --btn-fundo: var(--c-acento);
+  --btn-texto: var(--c-sobre-acento);
+  --btn-borda: var(--c-acento);
+  --btn-fundo-hover: var(--c-acento-forte);
+}
+.btn--primario:hover,
+.btn--primario.is-hover {
+  border-color: var(--c-acento-forte);
+}
+
+.btn--secundario {
+  --btn-fundo: transparent;
+  --btn-texto: var(--c-acento);
+  --btn-borda: var(--c-acento);
+  --btn-fundo-hover: var(--c-acento-suave);
+}
+
+.btn--terciario {
+  --btn-fundo: transparent;
+  --btn-texto: var(--c-tinta);
+  --btn-borda: transparent;
+  --btn-fundo-hover: var(--c-superficie-2);
+  padding-inline: var(--e-3);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+.btn--destrutivo {
+  --btn-fundo: var(--c-perigo);
+  --btn-texto: var(--c-sobre-perigo);
+  --btn-borda: var(--c-perigo);
+  --btn-fundo-hover: var(--c-perigo-forte);
+}
+.btn--destrutivo:hover,
+.btn--destrutivo.is-hover {
+  border-color: var(--c-perigo-forte);
+}
+
+.btn--icone {
+  width: var(--alvo-min);
+  padding: 0;
+}
+
+.btn--pequeno {
+  min-height: 2.25rem;
+  padding-inline: var(--e-3);
+  font-size: var(--t-sm);
+}
+
+/* disabled nativo e aria-disabled têm a mesma aparência;
+   a diferença é de comportamento (veja a prancha de botões). */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn:disabled:hover,
+.btn[aria-disabled="true"]:hover {
+  background: var(--btn-fundo);
+}
+
+/* Carregando */
+.btn__spinner {
+  display: none;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+.btn[aria-busy="true"] {
+  cursor: progress;
+}
+.btn[aria-busy="true"] .btn__spinner {
+  display: inline-block;
+}
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn__spinner {
+    animation-duration: 2.5s; /* gira devagar em vez de sumir: ainda comunica "ocupado" */
+  }
+}
+
+/* Botão de tema no topo: sem sublinhado, para não parecer link */
+.topo__acoes .btn--terciario {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   TABS
+   ========================================================================== */
+.tabs__lista {
+  display: flex;
+  gap: var(--e-1);
+  border-bottom: 1px solid var(--c-linha);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.tab {
+  flex: none;
+  min-height: var(--alvo-min);
+  padding: 0 var(--e-4);
+  border: 0;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  border-radius: var(--raio) var(--raio) 0 0;
+  background: none;
+  color: var(--c-tinta-suave);
+  font: 500 var(--t-md) / 1 var(--fonte-texto);
+  cursor: pointer;
+  transition: color var(--dur) var(--curva), background-color var(--dur) var(--curva);
+}
+.tab:hover,
+.tab.is-hover {
+  color: var(--c-tinta);
+  background: var(--c-superficie-2);
+}
+.tab[aria-selected="true"] {
+  color: var(--c-tinta);
+  font-weight: 700;
+  border-bottom-color: var(--c-acento);
+}
+.tab:focus-visible,
+.tab.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: -3px;
+}
+.tab[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.tab[aria-disabled="true"]:hover {
+  background: none;
+  color: var(--c-tinta-suave);
+}
+
+.tabs__painel {
+  padding: var(--e-5) var(--e-1) var(--e-2);
+}
+.tabs__painel:focus-visible {
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   DIALOG (modal)
+   ========================================================================== */
+.dialogo {
+  width: min(30rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  padding: 0;
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+  color: var(--c-tinta);
+  box-shadow: var(--sombra-2);
+}
+.dialogo::backdrop {
+  background: var(--c-backdrop);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dialogo[open] {
+    animation: surgir var(--dur-lenta) var(--curva);
+  }
+  .dialogo[open]::backdrop {
+    animation: esmaecer var(--dur-lenta) var(--curva);
+  }
+}
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+}
+@keyframes esmaecer {
+  from { opacity: 0; }
+}
+
+.dialogo__corpo {
+  padding: var(--e-5);
+}
+.dialogo__topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--e-4);
+}
+.dialogo__titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: var(--t-xl);
+  line-height: 1.2;
+}
+.dialogo__fechar {
+  margin: calc(var(--e-2) * -1) calc(var(--e-2) * -1) 0 0;
+}
+.dialogo__texto {
+  margin-top: var(--e-3);
+  color: var(--c-tinta-suave);
+}
+.dialogo__acoes {
+  display: flex;
+  flex-wrap: wrap-reverse; /* no celular, a ação principal fica em cima */
+  justify-content: flex-end;
+  gap: var(--e-3);
+  padding: var(--e-4) var(--e-5);
+  border-top: 1px solid var(--c-linha);
+  background: var(--c-superficie-2);
+  border-radius: 0 0 var(--raio-lg) var(--raio-lg);
+}
+.dialogo__erro {
+  margin-top: var(--e-4);
+}
+
+/* ==========================================================================
+   SWITCH (checkbox com role="switch")
+   ========================================================================== */
+.switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: var(--alvo-min);
+  cursor: pointer;
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+.switch input {
+  appearance: none;
+  position: relative;
+  flex: none;
+  width: 2.75rem;
+  height: 1.5rem;
+  margin: 0;
+  border: 2px solid var(--c-linha-forte);
+  border-radius: 999px;
+  background: var(--c-superficie-2);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--curva), border-color var(--dur) var(--curva);
+}
+.switch input::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--c-tinta-suave);
+  transition: transform var(--dur) var(--curva), background-color var(--dur) var(--curva);
+}
+.switch input:checked {
+  border-color: var(--c-acento);
+  background: var(--c-acento);
+}
+.switch input:checked::before {
+  background: var(--c-sobre-acento);
+  transform: translateX(1.25rem);
+}
+.switch input:focus-visible {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   MENSAGENS (alert inline, estado vazio)
+   ========================================================================== */
+.aviso {
+  display: flex;
+  gap: var(--e-3);
+  padding: var(--e-3) var(--e-4);
+  border: 1px solid currentColor;
+  border-left-width: 4px;
+  border-radius: var(--raio);
+  font-size: var(--t-sm);
+}
+.aviso p {
+  color: var(--c-tinta);
+}
+.aviso--erro {
+  color: var(--c-perigo);
+  background: var(--c-perigo-suave);
+}
+.aviso--sucesso {
+  color: var(--c-sucesso);
+  background: var(--c-sucesso-suave);
+}
+.aviso--info {
+  color: var(--c-acento);
+  background: var(--c-acento-suave);
+}
+
+.vazio {
+  display: grid;
+  justify-items: center;
+  gap: var(--e-3);
+  padding: var(--e-7) var(--e-4);
+  border: 2px dashed var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  text-align: center;
+  color: var(--c-tinta-suave);
+}
+.vazio__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-lg);
+  font-weight: 700;
+  color: var(--c-tinta);
+}
+
+/* Modo de alto contraste do Windows: garante bordas e foco visíveis */
+@media (forced-colors: active) {
+  .btn,
+  .chip,
+  .tab,
+  .card {
+    border: 1px solid ButtonText;
+  }
+  .tab[aria-selected="true"],
+  .chip[aria-pressed="true"] {
+    border: 3px solid Highlight;
+  }
+}

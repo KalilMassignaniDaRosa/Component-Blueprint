@@ -1,0 +1,63 @@
+{#- Demo e estados de MENU DROPDOWN (padrão "menu button" da WAI-ARIA).
+    Comportamento em static/js/demos/dropdown.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-dropdown>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · lista de arquivos</span>
+  </div>
+  <div class="bancada__area">
+    <div class="fila fila--separada">
+      <div class="fila">
+        {{ icone("arquivo") }}
+        <div>
+          <p class="vizinhos__nome">Relatório Q3.pdf</p>
+          <p class="rotulo-tec">2,4 MB · editado hoje</p>
+        </div>
+      </div>
+
+      <div class="menu-botao" data-menu-botao>
+        <button type="button" class="btn btn--secundario" id="menu-acoes-btn"
+                aria-haspopup="menu" aria-expanded="false" aria-controls="menu-acoes">
+          Ações {{ icone("chevron-baixo", "icone icone--gira") }}
+        </button>
+        <ul class="menu" id="menu-acoes" role="menu" aria-labelledby="menu-acoes-btn" hidden>
+          <li role="none"><button type="button" class="menu__item" role="menuitem" tabindex="-1">{{ icone("lapis") }} Renomear <span class="menu__atalho">F2</span></button></li>
+          <li role="none"><button type="button" class="menu__item" role="menuitem" tabindex="-1">{{ icone("copiar") }} Duplicar</button></li>
+          <li role="none"><button type="button" class="menu__item" role="menuitem" tabindex="-1">{{ icone("caixa") }} Mover para…</button></li>
+          <li role="none"><button type="button" class="menu__item" role="menuitem" tabindex="-1" aria-disabled="true">{{ icone("compartilhar") }} Compartilhar <span class="menu__atalho">sem permissão</span></button></li>
+          <li role="separator" class="menu__separador"></li>
+          <li role="none"><button type="button" class="menu__item menu__item--perigo" role="menuitem" tabindex="-1">{{ icone("lixeira") }} Excluir</button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Abra com Enter, ↓ ou ↑. Digite uma letra para pular até a opção.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <button type="button" class="btn btn--secundario" tabindex="-1">Ações {{ icone("chevron-baixo") }}</button>
+    </div>
+    <figcaption><strong>Fechado</strong>Seta para baixo indica que algo vai abrir; aria-expanded="false".</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <ul class="menu menu--estatico">
+        <li><span class="menu__item">{{ icone("lapis") }} Renomear</span></li>
+        <li><span class="menu__item is-foco">{{ icone("copiar") }} Duplicar</span></li>
+        <li><span class="menu__item is-hover">{{ icone("caixa") }} Mover para…</span></li>
+        <li><span class="menu__item" aria-disabled="true">{{ icone("compartilhar") }} Compartilhar</span></li>
+        <li class="menu__separador"></li>
+        <li><span class="menu__item menu__item--perigo">{{ icone("lixeira") }} Excluir</span></li>
+      </ul>
+    </div>
+    <figcaption><strong>Aberto</strong>De cima para baixo: normal, foco (anel), hover (fundo), desabilitado e destrutivo separado por uma linha.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

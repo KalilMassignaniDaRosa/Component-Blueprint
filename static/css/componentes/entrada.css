@@ -1,0 +1,524 @@
+/* ==========================================================================
+   Componentes de ENTRADA (versões das demos)
+   campos com validação · select / combobox · checkbox, radio e switch ·
+   slider · date picker · autocomplete
+   (botões e switch ficam em components.css, porque o site também os usa)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CAMPO DE FORMULÁRIO: rótulo, dica, entrada e erro
+   -------------------------------------------------------------------------- */
+.campos {
+  display: grid;
+  gap: var(--e-5);
+  max-width: 28rem;
+}
+.campo-form {
+  display: grid;
+  gap: var(--e-1);
+}
+.campo-form__rotulo {
+  font-weight: 600;
+  font-size: var(--t-sm);
+}
+.campo-form__opcional {
+  font-weight: 400;
+  color: var(--c-tinta-suave);
+}
+.campo-form__dica {
+  font-size: var(--t-sm);
+  color: var(--c-tinta-suave);
+}
+.campo-form__erro,
+.campo-form__ok {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-2);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+.campo-form__erro {
+  color: var(--c-perigo);
+}
+.campo-form__ok {
+  color: var(--c-sucesso);
+}
+.campo-form__erro .icone,
+.campo-form__ok .icone {
+  margin-top: 0.15em;
+}
+
+.entrada {
+  width: 100%;
+  min-height: var(--alvo-min);
+  padding: 0 var(--e-3);
+  border: 2px solid var(--c-linha-forte);
+  border-radius: var(--raio);
+  background: var(--c-superficie);
+  color: var(--c-tinta);
+  font: inherit;
+  transition: border-color var(--dur) var(--curva), box-shadow var(--dur) var(--curva);
+}
+.entrada::placeholder {
+  color: var(--c-tinta-suave);
+}
+.entrada:hover,
+.entrada.is-hover {
+  border-color: var(--c-tinta-suave);
+}
+.entrada:focus-visible,
+.entrada.is-foco {
+  border-color: var(--c-acento);
+  outline: 3px solid var(--c-foco);
+  outline-offset: 1px;
+}
+.entrada[aria-invalid="true"] {
+  border-color: var(--c-perigo);
+  box-shadow: inset 4px 0 0 var(--c-perigo); /* marca lateral: não depende só da cor da borda */
+}
+.entrada.is-valida {
+  border-color: var(--c-sucesso);
+}
+.entrada:disabled {
+  background: var(--c-superficie-2);
+  border-style: dashed;
+  color: var(--c-tinta-suave);
+  cursor: not-allowed;
+}
+.entrada[readonly] {
+  background: var(--c-superficie-2);
+}
+
+/* Resumo de erros no topo (lista de links para os campos) */
+.resumo-erros {
+  display: grid;
+  gap: var(--e-2);
+  max-width: 28rem;
+  margin-bottom: var(--e-5);
+}
+.resumo-erros ul {
+  margin: 0;
+  padding-left: var(--e-5);
+}
+.resumo-erros a {
+  color: var(--c-perigo);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   SELECT nativo (só aparência; o comportamento é do navegador)
+   -------------------------------------------------------------------------- */
+.select-nativo {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238c8577' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   COMBOBOX / LISTBOX (select personalizado e autocomplete)
+   -------------------------------------------------------------------------- */
+.combo {
+  position: relative;
+}
+.combo__gatilho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2);
+  text-align: left;
+  cursor: pointer;
+}
+.combo__gatilho .icone {
+  color: var(--c-tinta-suave);
+  transition: transform var(--dur) var(--curva);
+}
+.combo__gatilho[aria-expanded="true"] .icone {
+  transform: rotate(180deg);
+}
+.combo__valor--vazio {
+  color: var(--c-tinta-suave);
+}
+
+.lista-opcoes {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 15rem;
+  margin: 0;
+  padding: var(--e-1);
+  overflow-y: auto;
+  list-style: none;
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+  box-shadow: var(--sombra-2);
+}
+.lista-opcoes--estatica {
+  position: static;
+  box-shadow: var(--sombra-1);
+}
+.opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: 2.5rem;
+  padding: var(--e-1) var(--e-3);
+  border-radius: var(--raio);
+  font-size: var(--t-sm);
+  cursor: pointer;
+}
+.opcao__detalhe {
+  margin-left: auto;
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  color: var(--c-tinta-suave);
+}
+.opcao:hover {
+  background: var(--c-superficie-2);
+}
+/* opção "ativa" = a que está sob o cursor do teclado (aria-activedescendant) */
+.opcao.is-ativa {
+  background: var(--c-acento-suave);
+  color: var(--c-acento-forte);
+  box-shadow: inset 0 0 0 2px var(--c-foco);
+}
+/* opção selecionada: ✓ + negrito */
+.opcao[aria-selected="true"] {
+  font-weight: 700;
+}
+.opcao[aria-selected="true"]::after {
+  content: "✓";
+  margin-left: auto;
+  color: var(--c-acento);
+}
+.opcao[aria-disabled="true"] {
+  color: var(--c-tinta-suave);
+  cursor: not-allowed;
+}
+.opcao mark {
+  background: var(--c-marca-texto);
+  color: var(--c-sobre-marca);
+  border-radius: 2px;
+}
+.opcao--vazia {
+  color: var(--c-tinta-suave);
+  cursor: default;
+}
+
+/* --------------------------------------------------------------------------
+   CHECKBOX e RADIO personalizados (continuam sendo <input> nativos)
+   -------------------------------------------------------------------------- */
+.grupo-escolhas {
+  margin: 0;
+  padding: var(--e-4) var(--e-5);
+  border: 1px solid var(--c-linha);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+}
+.grupo-escolhas legend {
+  padding: 0 var(--e-2);
+  font-weight: 700;
+}
+.grupo-escolhas__lista {
+  display: grid;
+  gap: var(--e-1);
+  margin-top: var(--e-2);
+}
+.grupo-escolhas__sub {
+  padding-left: var(--e-6);
+}
+
+.escolha {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  min-height: var(--alvo-min); /* o rótulo inteiro é o alvo */
+  cursor: pointer;
+  font-size: var(--t-sm);
+}
+.escolha__texto small {
+  display: block;
+  color: var(--c-tinta-suave);
+}
+.escolha input {
+  appearance: none;
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  border: 2px solid var(--c-linha-forte);
+  background: var(--c-superficie);
+  cursor: pointer;
+  transition: background-color var(--dur-rapida), border-color var(--dur-rapida);
+}
+.escolha input[type="checkbox"] {
+  border-radius: var(--raio-sm);
+}
+.escolha input[type="radio"] {
+  border-radius: 50%;
+}
+.escolha input:hover,
+.escolha input.is-hover {
+  border-color: var(--c-tinta);
+}
+.escolha input:focus-visible,
+.escolha input.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 2px;
+}
+.escolha input:checked,
+.escolha input:indeterminate {
+  border-color: var(--c-acento);
+  background: var(--c-acento);
+}
+/* ✓ desenhado com bordas */
+.escolha input[type="checkbox"]:checked::before {
+  content: "";
+  width: 0.35rem;
+  height: 0.65rem;
+  margin-top: -0.15rem;
+  border: solid var(--c-sobre-acento);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+/* indeterminado: um traço */
+.escolha input[type="checkbox"]:indeterminate::before {
+  content: "";
+  width: 0.65rem;
+  height: 2.5px;
+  background: var(--c-sobre-acento);
+}
+.escolha input[type="radio"]:checked {
+  background: var(--c-superficie);
+}
+.escolha input[type="radio"]:checked::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: var(--c-acento);
+}
+.escolha input:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+.escolha:has(input:disabled) {
+  color: var(--c-tinta-suave);
+  cursor: not-allowed;
+}
+.escolha input[aria-invalid="true"] {
+  border-color: var(--c-perigo);
+}
+
+.preferencias {
+  display: grid;
+  gap: var(--e-1);
+}
+.preferencias .switch {
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--e-2) 0;
+  border-bottom: 1px solid var(--c-linha);
+  font-size: var(--t-sm);
+}
+
+/* --------------------------------------------------------------------------
+   SLIDER (input range estilizado)
+   -------------------------------------------------------------------------- */
+.faixa {
+  display: grid;
+  gap: var(--e-2);
+  max-width: 28rem;
+}
+.faixa__topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.faixa__valor {
+  font-family: var(--fonte-mono);
+  font-weight: 600;
+}
+.faixa input[type="range"] {
+  --preenchido: 50%;
+  appearance: none;
+  width: 100%;
+  height: 2rem; /* altura grande = alvo de toque confortável */
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.faixa input[type="range"]::-webkit-slider-runnable-track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--c-acento) var(--preenchido), var(--c-linha-forte) var(--preenchido));
+}
+.faixa input[type="range"]::-moz-range-track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--c-linha-forte);
+}
+.faixa input[type="range"]::-moz-range-progress {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--c-acento);
+}
+.faixa input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: -0.5rem;
+  border: 3px solid var(--c-acento);
+  border-radius: 50%;
+  background: var(--c-superficie);
+  box-shadow: var(--sombra-1);
+}
+.faixa input[type="range"]::-moz-range-thumb {
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 3px solid var(--c-acento);
+  border-radius: 50%;
+  background: var(--c-superficie);
+}
+/* o foco vai no "dedão" do slider, que é o que a pessoa move */
+.faixa input[type="range"]:focus-visible {
+  outline: none;
+}
+.faixa input[type="range"]:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+}
+.faixa input[type="range"]:focus-visible::-moz-range-thumb {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+}
+/* especime "foco" da seção Estados (não dá para forçar :focus-visible por classe) */
+.faixa input[data-foco-especime]::-webkit-slider-thumb {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+}
+.faixa input[data-foco-especime]::-moz-range-thumb {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+}
+.faixa input[type="range"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.faixa__marcas {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  color: var(--c-tinta-suave);
+}
+.amostra-volume {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 2.5rem;
+}
+.amostra-volume span {
+  flex: 1;
+  border-radius: 2px;
+  background: var(--c-linha);
+  transition: background-color var(--dur-rapida);
+}
+.amostra-volume span.is-ligada {
+  background: var(--c-acento);
+}
+
+/* --------------------------------------------------------------------------
+   DATE PICKER (campo + calendário em diálogo)
+   -------------------------------------------------------------------------- */
+.campo-data {
+  display: flex;
+  gap: var(--e-2);
+}
+.campo-data .entrada {
+  flex: 1;
+}
+.calendario {
+  width: min(21rem, calc(100vw - 2rem));
+  padding: var(--e-4);
+}
+.calendario__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-2);
+}
+.calendario__mes {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-lg);
+  font-weight: 700;
+}
+.calendario__grade {
+  width: 100%;
+  margin-top: var(--e-3);
+  border-collapse: collapse;
+  text-align: center;
+}
+.calendario__grade th {
+  padding-bottom: var(--e-2);
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--c-tinta-suave);
+}
+.calendario__grade td {
+  padding: 2px;
+}
+.dia {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 2.25rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  background: none;
+  color: var(--c-tinta);
+  font: 500 var(--t-sm) / 1 var(--fonte-mono);
+  cursor: pointer;
+}
+.dia:hover {
+  background: var(--c-superficie-2);
+}
+.dia:focus-visible,
+.dia.is-foco {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 1px;
+}
+.dia--fora {
+  color: var(--c-tinta-suave);
+  opacity: 0.6;
+}
+/* hoje: anel tracejado (forma), não só cor */
+.dia--hoje {
+  border: 2px dashed var(--c-acento);
+}
+.dia[aria-selected="true"] {
+  background: var(--c-acento);
+  color: var(--c-sobre-acento);
+  font-weight: 700;
+}
+.dia[aria-disabled="true"] {
+  color: var(--c-tinta-suave);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+.calendario__ajuda {
+  margin-top: var(--e-3);
+  font-size: var(--t-xs);
+  color: var(--c-tinta-suave);
+}

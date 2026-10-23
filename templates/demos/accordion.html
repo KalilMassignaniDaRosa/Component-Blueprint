@@ -1,0 +1,67 @@
+{#- Demo e estados de ACCORDION (padrão WAI-ARIA APG: botão dentro de heading).
+    Comportamento em static/js/demos/accordion.js -#}
+
+{% set PERGUNTAS = [
+  ("Qual o prazo de entrega?", "De 5 a 8 dias úteis para capitais e de 7 a 12 para o interior. O prazo começa a contar depois da confirmação do pagamento."),
+  ("Posso trocar um produto?", "Sim, em até 30 dias após o recebimento, desde que o produto esteja sem uso e na embalagem original."),
+  ("Quais formas de pagamento vocês aceitam?", "Cartão de crédito em até 10× sem juros, Pix com 5% de desconto e boleto."),
+  ("Vocês emitem nota fiscal?", "Sim. A nota fiscal eletrônica chega por e-mail no dia do envio."),
+] %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-accordion>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · perguntas frequentes</span>
+    <label class="switch"><input type="checkbox" role="switch" data-um-por-vez> Só um aberto por vez</label>
+  </div>
+  <div class="bancada__area">
+    <div class="acordeao" data-acordeao>
+      {% for pergunta, resposta in PERGUNTAS %}
+      <div class="acordeao__item">
+        <h3 class="acordeao__titulo">
+          <button type="button" class="acordeao__botao" id="acc-btn-{{ loop.index }}"
+                  aria-expanded="{{ 'true' if loop.first else 'false' }}" aria-controls="acc-painel-{{ loop.index }}">
+            {{ pergunta }}<span class="acordeao__marca" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div class="acordeao__painel" id="acc-painel-{{ loop.index }}" role="region"
+             aria-labelledby="acc-btn-{{ loop.index }}" {% if not loop.first %}hidden{% endif %}>
+          <p>{{ resposta }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <p class="rotulo-tec secao__corpo">Alternativa nativa, sem JavaScript: &lt;details&gt;</p>
+    <details class="detalhes">
+      <summary>Como funciona a garantia?</summary>
+      <p>12 meses contra defeitos de fabricação, direto com a loja.</p>
+    </details>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Abra e feche com Enter ou Espaço.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  {% for nome, classe, aberto, texto in [
+    ("Fechado", "", false, "Só o título e o +. aria-expanded=\"false\"."),
+    ("Hover", "is-hover", false, "A linha inteira é o alvo."),
+    ("Foco", "is-foco", false, "Anel de foco interno."),
+    ("Aberto", "", true, "O + vira − e o conteúdo aparece logo abaixo."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="acordeao">
+        <div class="acordeao__item">
+          <span class="acordeao__botao {{ classe }}" aria-expanded="{{ 'true' if aberto else 'false' }}">Posso trocar um produto?<span class="acordeao__marca"></span></span>
+          {% if aberto %}<div class="acordeao__painel"><p>Sim, em até 30 dias.</p></div>{% endif %}
+        </div>
+      </div>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endmacro %}

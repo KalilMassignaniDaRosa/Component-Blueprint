@@ -1,0 +1,73 @@
+{#- Demo e estados de TOAST. Comportamento em static/js/demos/toast.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro toast_estatico(tipo, ic, titulo, texto, acao="") %}
+<div class="toast toast--{{ tipo }} toast--estatico">
+  <span class="toast__icone">{{ icone(ic) }}</span>
+  <div>
+    <p class="toast__titulo">{{ titulo }}</p>
+    <p>{{ texto }}</p>
+    {% if acao %}<div class="toast__acoes"><span class="btn btn--secundario btn--pequeno">{{ acao }}</span></div>{% endif %}
+  </div>
+  <span class="btn btn--terciario btn--icone toast__fechar">{{ icone("fechar") }}</span>
+</div>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-toast>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · caixa de e-mails</span>
+  </div>
+  <div class="bancada__area">
+    <div class="fila">
+      <button type="button" class="btn btn--primario" data-disparar="sucesso">Arquivar conversa</button>
+      <button type="button" class="btn btn--secundario" data-disparar="erro">Enviar sem conexão</button>
+      <button type="button" class="btn btn--secundario" data-disparar="info">Ativar resposta automática</button>
+    </div>
+    <p class="campo-form__dica secao__corpo">Os toasts aparecem no canto inferior direito. Passe o mouse ou o foco por cima: o tempo pausa.</p>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off"></p>
+
+  {#- Região viva: existe VAZIA desde o carregamento; só as inclusões são anunciadas -#}
+  <section aria-label="Notificações">
+    <ol class="toasts" aria-live="polite" aria-relevant="additions" data-toasts></ol>
+  </section>
+
+  {#- Modelo de toast, clonado pelo JS -#}
+  <template data-modelo-toast>
+    <li class="toast">
+      <span class="toast__icone" data-icone></span>
+      <div>
+        <p class="toast__titulo" data-titulo></p>
+        <p data-texto></p>
+        <div class="toast__acoes" data-acoes hidden>
+          <button type="button" class="btn btn--secundario btn--pequeno" data-acao></button>
+        </div>
+      </div>
+      <button type="button" class="btn btn--terciario btn--icone toast__fechar" aria-label="Fechar notificação" data-fechar>{{ icone("fechar") }}</button>
+      <div class="toast__tempo" aria-hidden="true"><span></span></div>
+    </li>
+  </template>
+  <template data-icone="sucesso">{{ icone("sucesso") }}</template>
+  <template data-icone="erro">{{ icone("erro") }}</template>
+  <template data-icone="info">{{ icone("info") }}</template>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ toast_estatico("sucesso", "sucesso", "Conversa arquivada", "Ela está em Arquivados.", "Desfazer") }}</div>
+    <figcaption><strong>Sucesso com ação</strong>Confirma e oferece “Desfazer”, uma alternativa melhor do que perguntar antes.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ toast_estatico("erro", "erro", "Não foi possível enviar", "Sem conexão. Vamos tentar de novo quando ela voltar.") }}</div>
+    <figcaption><strong>Erro</strong>Só para erros sem ação imediata. Erros de formulário ficam no campo.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ toast_estatico("info", "info", "Resposta automática ativada", "Vale até sexta-feira.") }}</div>
+    <figcaption><strong>Informativo</strong>Ícone + palavra + cor: o tipo não depende só da cor da borda.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

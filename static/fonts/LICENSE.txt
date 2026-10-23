@@ -1,0 +1,6 @@
+As fontes desta pasta são distribuídas sob a SIL Open Font License 1.1
+(https://openfontlicense.org). Obtidas dos pacotes Fontsource 5.3.0 (subconjunto latino).
+
+- Bricolage Grotesque: Copyright 2022 The Bricolage Grotesque Project Authors
+- IBM Plex Sans: Copyright © 2017 IBM Corp.
+- JetBrains Mono: Copyright 2020 The JetBrains Mono Project Authors

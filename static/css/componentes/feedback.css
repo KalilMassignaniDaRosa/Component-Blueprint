@@ -1,0 +1,428 @@
+/* ==========================================================================
+   Componentes de FEEDBACK (versões das demos)
+   toast · alert · tooltip · popover · progress · spinner · skeleton
+   (modal fica em components.css; os avisos básicos .aviso também)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   TOAST
+   A região fica fixa no canto e existe desde o carregamento (role="status"),
+   para o leitor de tela anunciar o que for inserido nela.
+   -------------------------------------------------------------------------- */
+.toasts {
+  position: fixed;
+  right: var(--e-4);
+  bottom: var(--e-4);
+  left: var(--e-4);
+  z-index: 80;
+  display: grid;
+  justify-items: end;
+  gap: var(--e-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+@media (min-width: 40rem) {
+  .toasts {
+    left: auto;
+    width: 24rem;
+  }
+}
+.toast {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: var(--e-3);
+  width: 100%;
+  padding: var(--e-3) var(--e-3) var(--e-3) var(--e-4);
+  border: 1px solid var(--c-linha-forte);
+  border-left: 4px solid var(--cor-toast, var(--c-acento));
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+  box-shadow: var(--sombra-2);
+  font-size: var(--t-sm);
+  pointer-events: auto;
+}
+.toast--estatico {
+  box-shadow: var(--sombra-1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .toast:not(.toast--estatico) {
+    animation: toast-entrar var(--dur-lenta) var(--curva);
+  }
+}
+@keyframes toast-entrar {
+  from { opacity: 0; transform: translateY(12px); }
+}
+.toast__icone {
+  margin-top: 0.1rem;
+  color: var(--cor-toast, var(--c-acento));
+}
+.toast__titulo {
+  font-weight: 700;
+}
+.toast__acoes {
+  display: flex;
+  gap: var(--e-2);
+  margin-top: var(--e-2);
+}
+.toast__fechar {
+  width: 2.25rem;
+  min-height: 2.25rem;
+}
+.toast--sucesso { --cor-toast: var(--c-sucesso); }
+.toast--erro { --cor-toast: var(--c-perigo); }
+.toast--info { --cor-toast: var(--c-acento); }
+/* barra de tempo restante: pausa quando o toast está em hover/foco */
+.toast__tempo {
+  grid-column: 1 / -1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--c-linha);
+  overflow: hidden;
+}
+.toast__tempo span {
+  display: block;
+  height: 100%;
+  background: var(--cor-toast, var(--c-acento));
+  transform-origin: left;
+  animation: toast-tempo linear forwards;
+  animation-duration: var(--duracao, 6s);
+}
+.toast:hover .toast__tempo span,
+.toast:focus-within .toast__tempo span {
+  animation-play-state: paused;
+}
+@keyframes toast-tempo {
+  to { transform: scaleX(0); }
+}
+
+/* --------------------------------------------------------------------------
+   ALERT (estende .aviso de components.css)
+   -------------------------------------------------------------------------- */
+.aviso--alerta {
+  color: var(--c-aviso);
+  background: var(--c-aviso-suave);
+}
+.aviso__icone {
+  flex: none;
+  margin-top: 0.1rem;
+}
+.aviso__corpo {
+  flex: 1;
+  display: grid;
+  gap: var(--e-1);
+}
+.aviso__corpo strong {
+  color: var(--c-tinta);
+}
+.aviso__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-top: var(--e-2);
+}
+.aviso__fechar {
+  flex: none;
+  width: 2.25rem;
+  min-height: 2.25rem;
+  margin: calc(var(--e-1) * -1) calc(var(--e-2) * -1) 0 0;
+  color: var(--c-tinta);
+}
+.avisos {
+  display: grid;
+  gap: var(--e-3);
+}
+
+/* --------------------------------------------------------------------------
+   TOOLTIP
+   -------------------------------------------------------------------------- */
+.dica {
+  position: relative;
+  display: inline-flex;
+}
+.dica__balao {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 30;
+  width: max-content;
+  max-width: 16rem;
+  padding: var(--e-2) var(--e-3);
+  border-radius: var(--raio);
+  background: var(--c-tinta);
+  color: var(--c-fundo);
+  font-size: var(--t-sm);
+  line-height: 1.4;
+  text-align: center;
+  transform: translateX(-50%);
+  box-shadow: var(--sombra-1);
+}
+/* setinha apontando para o gatilho */
+.dica__balao::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  border: 6px solid transparent;
+  border-top-color: var(--c-tinta);
+  transform: translateX(-50%);
+}
+.dica__balao kbd {
+  border-color: color-mix(in srgb, var(--c-fundo) 40%, transparent);
+  background: transparent;
+  color: inherit;
+}
+.dica__balao[hidden] {
+  display: none;
+}
+.dica__balao--estatico {
+  position: static;
+  transform: none;
+}
+.dica__balao--estatico::after {
+  display: none;
+}
+/* termo com explicação: sublinhado pontilhado = "tem mais informação aqui" */
+.termo {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+/* --------------------------------------------------------------------------
+   POPOVER (atributo nativo "popover", posicionado por JS)
+   -------------------------------------------------------------------------- */
+.pop {
+  width: min(20rem, calc(100vw - 2rem));
+  margin: 0;
+  padding: var(--e-4);
+  border: 1px solid var(--c-linha-forte);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+  color: var(--c-tinta);
+  box-shadow: var(--sombra-2);
+}
+.pop:popover-open {
+  position: fixed;
+  inset: auto;
+}
+.pop--estatico {
+  display: block;
+  position: static;
+  box-shadow: var(--sombra-1);
+}
+.pop__titulo {
+  font-family: var(--fonte-titulo);
+  font-size: var(--t-lg);
+  font-weight: 700;
+}
+.pop__corpo {
+  display: grid;
+  gap: var(--e-1);
+  margin-top: var(--e-3);
+}
+.pop__acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--e-2);
+  margin-top: var(--e-4);
+}
+
+/* --------------------------------------------------------------------------
+   PROGRESS
+   -------------------------------------------------------------------------- */
+.progresso {
+  display: grid;
+  gap: var(--e-2);
+  max-width: 30rem;
+}
+.progresso__topo {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--e-3);
+  font-size: var(--t-sm);
+}
+.progresso__valor {
+  font-family: var(--fonte-mono);
+  font-weight: 600;
+}
+.progresso progress {
+  appearance: none;
+  width: 100%;
+  height: 0.75rem;
+  border: 1px solid var(--c-linha-forte);
+  border-radius: 999px;
+  background: var(--c-superficie-2);
+  overflow: hidden;
+}
+.progresso progress::-webkit-progress-bar {
+  background: var(--c-superficie-2);
+}
+.progresso progress::-webkit-progress-value {
+  background: var(--c-acento);
+  border-radius: 999px;
+  transition: width var(--dur) linear;
+}
+.progresso progress::-moz-progress-bar {
+  background: var(--c-acento);
+  border-radius: 999px;
+}
+.progresso--sucesso progress::-webkit-progress-value { background: var(--c-sucesso); }
+.progresso--sucesso progress::-moz-progress-bar { background: var(--c-sucesso); }
+.progresso--erro progress::-webkit-progress-value { background: var(--c-perigo); }
+.progresso--erro progress::-moz-progress-bar { background: var(--c-perigo); }
+/* indeterminado: faixa que corre (parada com movimento reduzido) */
+.progresso progress:indeterminate {
+  background: linear-gradient(90deg, var(--c-superficie-2) 0 30%, var(--c-acento) 30% 60%, var(--c-superficie-2) 60%) 0 0 / 200% 100%;
+}
+.progresso progress:indeterminate::-webkit-progress-bar {
+  background: transparent;
+}
+.progresso progress:indeterminate::-moz-progress-bar {
+  background: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .progresso progress:indeterminate {
+    animation: correr 1.4s linear infinite;
+  }
+}
+@keyframes correr {
+  to { background-position: -200% 0; }
+}
+.progresso__detalhe {
+  font-size: var(--t-sm);
+  color: var(--c-tinta-suave);
+}
+
+/* --------------------------------------------------------------------------
+   SPINNER
+   -------------------------------------------------------------------------- */
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid var(--c-linha);
+  border-top-color: var(--c-acento);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+.spinner--grande {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-width: 4px;
+}
+.spinner--pequeno {
+  width: 1rem;
+  height: 1rem;
+  border-width: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.5s;
+  }
+}
+.carregando {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  font-size: var(--t-sm);
+  color: var(--c-tinta-suave);
+}
+.area-carregavel {
+  position: relative;
+  min-height: 10rem;
+  padding: var(--e-4);
+  border: 1px solid var(--c-linha);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+}
+/* sobreposição só na área que está carregando, não na página inteira */
+.area-carregavel__veu {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--c-superficie) 80%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   SKELETON
+   -------------------------------------------------------------------------- */
+.esqueleto {
+  display: block;
+  border-radius: var(--raio);
+  background: var(--c-superficie-2);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .esqueleto {
+    background: linear-gradient(90deg, var(--c-superficie-2) 0%, var(--c-linha) 50%, var(--c-superficie-2) 100%) 0 0 / 200% 100%;
+    animation: brilho 1.4s ease-in-out infinite;
+  }
+}
+@keyframes brilho {
+  to { background-position: -200% 0; }
+}
+.esqueleto--avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+.esqueleto--linha {
+  height: 0.85rem;
+}
+.esqueleto--titulo {
+  height: 1.1rem;
+  width: 60%;
+}
+.esqueleto--curta {
+  width: 40%;
+}
+
+.perfis {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--e-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.perfil {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--e-2) var(--e-3);
+  min-height: 6.5rem; /* mesma altura com skeleton e com conteúdo: nada pula */
+  padding: var(--e-4);
+  border: 1px solid var(--c-linha);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+}
+.perfil__linhas {
+  display: grid;
+  gap: var(--e-2);
+}
+.perfil__avatar {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--c-acento-suave);
+  color: var(--c-acento-forte);
+  font-weight: 700;
+}
+.perfil__nome {
+  font-weight: 700;
+}
+.perfil__cargo {
+  font-size: var(--t-sm);
+  color: var(--c-tinta-suave);
+}

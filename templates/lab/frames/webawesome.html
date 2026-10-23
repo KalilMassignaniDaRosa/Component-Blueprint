@@ -1,0 +1,38 @@
+{% extends "lab/frame.html" %}
+{% import "lab/_textos.html" as t %}
+{#- Web Components: dialog e tab-group trazem foco, Esc e teclado prontos.
+    Só o "abrir" do dialog vem de static/js/lab/frame.js (dialog.open = true). -#}
+
+{% block atributos_html %}class="wa-theme-default wa-light"{% endblock %}
+
+{% block botao %}
+<div class="lab-fila">
+  <wa-button variant="brand">{{ t.primario }}</wa-button>
+  <wa-button variant="neutral" appearance="outlined">{{ t.secundario }}</wa-button>
+  <wa-button variant="danger">{{ t.destrutivo }}</wa-button>
+  <wa-button variant="brand" disabled>{{ t.desabilitado }}</wa-button>
+</div>
+{% endblock %}
+
+{% block modal %}
+<wa-button variant="danger" data-abrir="dlg">{{ t.abrir_modal }}</wa-button>
+{% endblock %}
+
+{% block tabs %}
+<wa-tab-group>
+  {%- for id, rotulo, _ in t.abas %}
+  <wa-tab panel="{{ id }}">{{ rotulo }}</wa-tab>
+  {%- endfor %}
+  {%- for id, _, texto in t.abas %}
+  <wa-tab-panel name="{{ id }}">{{ texto }}</wa-tab-panel>
+  {%- endfor %}
+</wa-tab-group>
+{% endblock %}
+
+{% block depois %}
+<wa-dialog id="dlg" label="{{ t.modal_titulo }}">
+  <p class="lab-sem-margem">{{ t.modal_texto }}</p>
+  <wa-button slot="footer" variant="neutral" appearance="outlined" data-fechar>{{ t.modal_cancelar }}</wa-button>
+  <wa-button slot="footer" variant="danger" data-fechar>{{ t.modal_confirmar }}</wa-button>
+</wa-dialog>
+{% endblock %}

@@ -1,0 +1,77 @@
+{#- Demo e estados de SIDEBAR. Comportamento em static/js/demos/sidebar.js
+    (a lista lateral desta página também é um exemplo real) -#}
+{% from "_macros.html" import icone %}
+
+{% macro grupo(id, rotulo, ic, itens, aberto=false) %}
+<li>
+  <button type="button" class="app-grupo" aria-expanded="{{ 'true' if aberto else 'false' }}" aria-controls="{{ id }}">
+    {{ icone(ic) }}<span class="app-rotulo">{{ rotulo }}</span>{{ icone("chevron-baixo", "icone icone--gira") }}
+  </button>
+  <ul class="app-lateral__sub" id="{{ id }}" {% if not aberto %}hidden{% endif %}>
+    {% for item in itens %}
+    <li><a href="#" class="app-link" data-falso {% if item == "Pedidos" %}aria-current="page"{% endif %}><span class="app-rotulo">{{ item }}</span></a></li>
+    {% endfor %}
+  </ul>
+</li>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-sidebar>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · painel de vendas</span>
+  </div>
+  <div class="bancada__area">
+    <div class="app-painel">
+      <nav class="app-lateral" aria-label="Seções do painel" data-lateral>
+        <ul>
+          <li><a href="#" class="app-link" data-falso>{{ icone("casa") }}<span class="app-rotulo">Visão geral</span></a></li>
+          {{ grupo("grupo-vendas", "Vendas", "carrinho", ["Pedidos", "Clientes", "Devoluções"], aberto=true) }}
+          {{ grupo("grupo-estoque", "Estoque", "caixa", ["Produtos", "Fornecedores"]) }}
+          <li><a href="#" class="app-link" data-falso>{{ icone("usuarios") }}<span class="app-rotulo">Equipe</span></a></li>
+        </ul>
+        <div class="app-lateral__rodape">
+          <button type="button" class="app-grupo" aria-pressed="false" data-recolher>
+            {{ icone("chevron-esq") }}<span class="app-rotulo">Recolher barra</span>
+          </button>
+        </div>
+      </nav>
+      <div class="app-conteudo">
+        <h3 data-titulo>Pedidos</h3>
+        <p>A área de trabalho fica livre; a navegação continua à vista.</p>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Abra e feche os grupos; teste “Recolher barra”.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, atual, texto in [
+    ("Normal", "", false, "Ícone + texto, alinhados à esquerda."),
+    ("Hover", "is-hover", false, "Fundo leve na linha inteira."),
+    ("Foco", "is-foco", false, "Anel de foco interno, para não ser cortado pela borda."),
+    ("Atual", "", true, "Barra lateral + fundo + negrito: três sinais, nenhum só de cor."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <a href="#" tabindex="-1" class="app-link {{ classe }}" {% if atual %}aria-current="page"{% endif %}>{{ icone("carrinho") }}<span>Pedidos</span></a>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="app-grupo" aria-expanded="true">{{ icone("caixa") }}<span>Estoque</span>{{ icone("chevron-baixo", "icone icone--gira") }}</span>
+    </div>
+    <figcaption><strong>Grupo aberto</strong>A seta gira: o estado aparece na forma e em aria-expanded.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="app-lateral is-recolhida"><span class="app-link" aria-current="page">{{ icone("carrinho") }}<span class="app-rotulo">Pedidos</span></span><span class="app-link">{{ icone("caixa") }}<span class="app-rotulo">Estoque</span></span></div>
+    </div>
+    <figcaption><strong>Recolhida</strong>Só ícones na tela; o texto continua acessível ao leitor de tela.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

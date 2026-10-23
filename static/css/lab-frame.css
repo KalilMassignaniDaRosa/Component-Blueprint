@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Layout dos frames do laboratório (/lab/frame/<lib>).
+   Só posição e espaçamento. As classes lab-* não existem em nenhuma
+   biblioteca, então não disputam cor, fonte nem forma com elas; e uma classe
+   basta para vencer os resets de body/main (Bulma, Pico).
+   ========================================================================== */
+body.lab-frame {
+  margin: 0;
+  padding: 16px;
+}
+
+.lab-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 16px;
+  align-items: start;
+  padding: 0;
+}
+
+.lab-celula {
+  min-width: 0;
+  padding: 16px;
+  border: 1px dashed rgb(128 128 128 / 0.5);
+  border-radius: 8px;
+}
+
+.lab-rotulo {
+  margin: 0 0 12px;
+  font: 600 11px/1.2 ui-monospace, "Cascadia Code", Consolas, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.lab-fila {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.lab-nota {
+  margin: 12px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.lab-espaco {
+  padding-top: 12px;
+}
+
+.lab-titulo-modal {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+
+/* Fluent: a tipografia do tema só chega sozinha aos componentes; o texto
+   solto usa os tokens, como faria uma página feita com Fluent. */
+.lab-fluent {
+  font-family: var(--fontFamilyBase);
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  color: var(--colorNeutralForeground1);
+}
+
+.lab-sem-margem {
+  margin: 0;
+}

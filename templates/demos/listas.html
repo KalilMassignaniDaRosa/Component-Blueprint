@@ -1,0 +1,79 @@
+{#- Demo e estados de LISTAS. Comportamento (remover com foco correto e desfazer)
+    em static/js/demos/listas.js -#}
+{% from "_macros.html" import icone %}
+
+{% set ARQUIVOS = [("Relatório Q3.pdf", "2,4 MB · hoje"), ("Contrato assinado.pdf", "860 KB · ontem"), ("Fotos do evento.zip", "48 MB · 12/10"), ("Planilha de custos.xlsx", "120 KB · 09/10")] %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-listas>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · arquivos anexados</span>
+  </div>
+  <div class="bancada__area">
+    <p class="rotulo-tec">Lista com ações</p>
+    <ul class="lista-itens secao__corpo" aria-label="Arquivos anexados" data-lista>
+      {% for nome, meta in ARQUIVOS %}
+      <li>
+        {{ icone("arquivo") }}
+        <span class="lista-itens__texto">
+          <span class="lista-itens__nome">{{ nome }}</span>
+          <span class="lista-itens__meta">{{ meta }}</span>
+        </span>
+        {#- O nome do botão inclui o item: "Remover Relatório Q3.pdf" -#}
+        <button type="button" class="btn btn--terciario btn--icone" aria-label="Remover {{ nome }}" data-remover>{{ icone("lixeira") }}</button>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="vazio secao__corpo" tabindex="-1" data-vazio hidden>
+      <p class="vazio__titulo">Nenhum arquivo anexado</p>
+      <button type="button" class="btn btn--secundario btn--pequeno" data-restaurar>Restaurar arquivos</button>
+    </div>
+    <div class="fila secao__corpo" data-desfazer-caixa hidden>
+      <p data-desfazer-texto></p>
+      <button type="button" class="btn btn--secundario btn--pequeno" data-desfazer>Desfazer</button>
+    </div>
+
+    <div class="duas-colunas secao__corpo">
+      <div>
+        <p class="rotulo-tec">Lista ordenada (a ordem importa)</p>
+        <ol class="lista-ordenada secao__corpo">
+          <li>Desligue o aparelho da tomada.</li>
+          <li>Remova a tampa traseira.</li>
+          <li>Troque a bateria.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="rotulo-tec">Lista de definição (nome → valor)</p>
+        <dl class="lista-definicao secao__corpo">
+          <dt>Peso</dt><dd>17 kg</dd>
+          <dt>Garantia</dt><dd>12 meses</dd>
+          <dt>Origem</dt><dd>Brasil</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Remova um arquivo pelo teclado: o foco vai para o próximo item, não para o topo.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  {% for nome, classe, texto in [
+    ("Normal", "", "Ícone, nome, detalhe e ação, sempre na mesma ordem."),
+    ("Hover", "is-hover", "Fundo leve na linha toda. A ação continua visível (no toque não existe hover)."),
+    ("Selecionado", "is-selecionado", "Barra lateral + fundo, além da cor."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <ul class="lista-itens"><li class="{{ classe }}">{{ icone("arquivo") }}<span class="lista-itens__texto"><span class="lista-itens__nome">Relatório Q3.pdf</span><span class="lista-itens__meta">2,4 MB</span></span><span class="btn btn--terciario btn--icone">{{ icone("lixeira") }}</span></li></ul>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert><div class="vazio"><p class="vazio__titulo">Nenhum arquivo anexado</p></div></div>
+    <figcaption><strong>Vazio</strong>A lista vazia explica o que é aquele espaço.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

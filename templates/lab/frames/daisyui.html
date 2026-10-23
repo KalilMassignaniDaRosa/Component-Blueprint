@@ -1,0 +1,45 @@
+{% extends "lab/frame.html" %}
+{% import "lab/_textos.html" as t %}
+{#- Só o CSS do daisyUI (sem o compilador do Tailwind): valem as classes de
+    componente, não os utilitários. O daisyUI fecha o modal com
+    <form method="dialog">, mas o sandbox do frame bloqueia formulários,
+    então os botões de fechar usam data-fechar (static/js/lab/frame.js). -#}
+
+{% block atributos_html %}data-theme="light"{% endblock %}
+
+{% block botao %}
+<div class="lab-fila">
+  <button type="button" class="btn btn-primary">{{ t.primario }}</button>
+  <button type="button" class="btn btn-outline">{{ t.secundario }}</button>
+  <button type="button" class="btn btn-error">{{ t.destrutivo }}</button>
+  <button type="button" class="btn btn-primary" disabled>{{ t.desabilitado }}</button>
+</div>
+{% endblock %}
+
+{% block modal %}
+<button type="button" class="btn btn-error" data-abrir="dlg" aria-haspopup="dialog">{{ t.abrir_modal }}</button>
+{% endblock %}
+
+{% block tabs %}
+{#- Como na documentação do daisyUI: radio buttons com role="tab" -#}
+<div role="tablist" class="tabs tabs-border" aria-label="{{ t.abas_rotulo }}">
+  {%- for id, rotulo, texto in t.abas %}
+  <input type="radio" name="abas" role="tab" class="tab" aria-label="{{ rotulo }}"{% if loop.first %} checked{% endif %}>
+  <div role="tabpanel" class="tab-content lab-espaco">{{ texto }}</div>
+  {%- endfor %}
+</div>
+{% endblock %}
+
+{% block depois %}
+<dialog id="dlg" class="modal" aria-labelledby="dlg-titulo">
+  <div class="modal-box">
+    <h2 id="dlg-titulo" class="lab-titulo-modal">{{ t.modal_titulo }}</h2>
+    <p>{{ t.modal_texto }}</p>
+    <div class="modal-action">
+      <button type="button" class="btn" data-fechar>{{ t.modal_cancelar }}</button>
+      <button type="button" class="btn btn-error" data-fechar>{{ t.modal_confirmar }}</button>
+    </div>
+  </div>
+  <div class="modal-backdrop" data-fechar></div>
+</dialog>
+{% endblock %}

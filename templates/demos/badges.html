@@ -1,0 +1,56 @@
+{#- Demo e estados de BADGES / TAGS. Comportamento em static/js/demos/badges.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-badges>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · loja de roupas</span>
+  </div>
+  <div class="bancada__area">
+    {#- Contador: o número visual é aria-hidden; o nome completo do botão diz tudo -#}
+    <div class="fila">
+      <span class="com-contador">
+        <button type="button" class="btn btn--secundario btn--icone" aria-label="Notificações, 3 não lidas" data-sino>{{ icone("sino") }}</button>
+        <span class="contador" aria-hidden="true" data-contador>3</span>
+      </span>
+      <button type="button" class="btn btn--terciario btn--pequeno" data-nova>Simular nova notificação</button>
+    </div>
+
+    {#- Tags removíveis (filtros aplicados) -#}
+    <div class="secao__corpo">
+      <p class="rotulo-tec" id="tags-rotulo">Filtros aplicados</p>
+      <ul class="tags secao__corpo" aria-labelledby="tags-rotulo" data-tags>
+        {% for t in ["Azul", "Tamanho M", "Algodão", "Até R$ 150"] %}
+        <li class="tag">{{ t }}<button type="button" class="tag__remover" aria-label="Remover filtro {{ t }}" data-remover>{{ icone("fechar") }}</button></li>
+        {% endfor %}
+      </ul>
+      <p class="campo-form__dica secao__corpo" data-sem-filtros tabindex="-1" hidden>Nenhum filtro aplicado.</p>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status"></p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for tipo, ic, texto, legenda in [
+    ("sucesso", "check", "Pago", "Verde + ✓ + palavra."),
+    ("aviso", "alerta", "Pendente", "Âmbar + ! + palavra."),
+    ("perigo", "fechar", "Atrasado", "Vermelho + ✕ + palavra."),
+    ("info", "info", "Novo", "Informativo, chama atenção sem alarmar."),
+    ("neutro", "arquivo", "Rascunho", "Neutro: status sem urgência."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert><span class="badge badge--{{ tipo }}">{{ icone(ic) }} {{ texto }}</span></div>
+    <figcaption><strong>{{ texto }}</strong>{{ legenda }} Funciona mesmo em escala de cinza.</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="tag">Azul<span class="tag__remover is-foco">{{ icone("fechar") }}</span></span>
+    </div>
+    <figcaption><strong>Tag com foco</strong>O ✕ é um botão próprio, com nome “Remover filtro Azul”.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

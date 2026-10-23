@@ -1,0 +1,53 @@
+{#- Demo e estados de PAGINAÇÃO. A lista e os botões são montados por
+    static/js/demos/paginacao.js; sem JS, aparece a primeira página. -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-paginacao>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · resultados de busca</span>
+  </div>
+  <div class="bancada__area">
+    <h3 class="resultados__titulo" tabindex="-1" data-resumo>Resultados 1–5 de 58</h3>
+    <ul class="resultados" data-lista></ul>
+    <nav class="paginacao" aria-label="Paginação dos resultados">
+      <ul data-paginas></ul>
+    </nav>
+    {#- Conteúdo das setas, clonado pelo JS (evita montar HTML em string) -#}
+    <template data-seta="anterior">{{ icone("chevron-esq") }}<span class="paginacao__seta-texto">Anterior</span></template>
+    <template data-seta="proxima"><span class="paginacao__seta-texto">Próxima</span>{{ icone("chevron-dir") }}</template>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Troque de página: o foco volta para o título da lista.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, atributo, texto in [
+    ("Normal", "", "", "Alvo de 44 × 44 px, mesmo para um número só."),
+    ("Hover", "is-hover", "", "Borda escura e fundo leve."),
+    ("Foco", "is-foco", "", "Anel de foco visível."),
+    ("Atual", "", "current", "aria-current=\"page\" + fundo invertido."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="paginacao__item {{ classe }}" {% if atributo == 'current' %}aria-current="page"{% endif %}>4</span>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <span class="paginacao__item" aria-disabled="true">{{ icone("chevron-esq") }} Anterior</span>
+    </div>
+    <figcaption><strong>Desabilitado</strong>“Anterior” na primeira página: visível, mas sem ação.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="paginacao"><ul><li><span class="paginacao__item">1</span></li><li class="paginacao__reticencias">…</li><li><span class="paginacao__item">12</span></li></ul></div>
+    </div>
+    <figcaption><strong>Reticências</strong>Muitas páginas: primeira, vizinhas da atual e última.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

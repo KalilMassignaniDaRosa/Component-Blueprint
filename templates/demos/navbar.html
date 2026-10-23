@@ -1,0 +1,58 @@
+{#- Demo e estados de NAVBAR. Comportamento em static/js/demos/navbar.js
+    (a navbar do topo deste guia também é um exemplo real) -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-navbar>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · site de uma cafeteria</span>
+    <label class="switch">
+      <input type="checkbox" role="switch" data-estreito>
+      Simular celular
+    </label>
+  </div>
+  <div class="bancada__area">
+    <div class="mini-site" data-mini-site>
+      <header>
+        <nav class="mini-nav" aria-label="Principal (demonstração)" data-mini-nav>
+          <a class="mini-nav__marca" href="#" data-falso>Café Lume</a>
+          <button type="button" class="btn btn--secundario btn--pequeno mini-nav__menu"
+                  aria-expanded="false" aria-controls="mini-nav-lista" data-mini-menu>
+            {{ icone("menu") }} Menu
+          </button>
+          <ul class="mini-nav__lista" id="mini-nav-lista">
+            <li><a href="#" data-falso aria-current="page">Início</a></li>
+            <li><a href="#" data-falso>Cardápio</a></li>
+            <li><a href="#" data-falso>Lojas</a></li>
+            <li><a href="#" data-falso>Contato</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="mini-site__conteudo">
+        <h3 data-mini-titulo>Início</h3>
+        <p>Conteúdo da página. Troque de seção pela navbar.</p>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Clique nos itens. Ligue “Simular celular” para ver o menu recolhido.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, atual, texto in [
+    ("Normal", "", false, "Texto escuro, sem sublinhado: a barra inteira já diz “isto é navegação”."),
+    ("Hover", "is-hover", false, "Fundo leve mostra o alvo inteiro, não só o texto."),
+    ("Foco", "is-foco", false, "Anel de foco de 3 px."),
+    ("Atual", "", true, "aria-current=\"page\" + sublinhado grosso + negrito."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <nav class="mini-nav"><ul class="mini-nav__lista"><li><a href="#" tabindex="-1" class="{{ classe }}" {% if atual %}aria-current="page"{% endif %}>Cardápio</a></li></ul></nav>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endmacro %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icone %}
+{% block titulo %}Ícones · Guia Visual de Componentes de IHC{% endblock %}
+{% block descricao %}O mesmo conceito desenhado por oito coleções de ícones, lado a lado, com busca e aviso de lacunas.{% endblock %}
+
+{% block cabeca %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/laboratorio.css') }}">
+<script type="module" src="{{ url_for('static', filename='js/icones.js') }}"></script>
+{% endblock %}
+
+{% block conteudo %}
+<div class="container lab">
+  <header class="lab__topo">
+    <p class="rotulo-tec">Ícones · {{ icones | length }} conceitos · {{ colecoes | length }} coleções</p>
+    <h1>Comparador de ícones</h1>
+    <p class="lab__intro">
+      O mesmo conceito em cada coleção, no estilo contorno (outline) quando existe;
+      no Font Awesome gratuito, boa parte só existe preenchida (solid).
+      Repare na espessura do traço, nos cantos e na metáfora escolhida:
+      “acessibilidade”, por exemplo, ora é uma pessoa de braços abertos, ora uma cadeira de rodas.
+    </p>
+    <p class="lab__intro">
+      E o <a href="{{ iconify }}" rel="noopener noreferrer">Iconify</a>? Ele não é uma coleção,
+      e sim um agregador: reúne todas as coleções desta tabela (e mais de cem outras) sob uma
+      única API. Use-o quando quiser misturar coleções sem instalar cada pacote.
+    </p>
+  </header>
+
+  {#- Sem <form>: a busca acontece no navegador e fica na URL (?q=) -#}
+  <div class="icones__filtros" role="search" aria-label="Filtrar ícones">
+    <div class="campo">
+      <label class="campo__rotulo" for="busca-icone">Buscar ícone</label>
+      <div class="campo__envoltorio">
+        <span class="campo__icone">{{ icone("busca") }}</span>
+        <input class="campo__entrada" id="busca-icone" type="search" autocomplete="off"
+               spellcheck="false" placeholder="ex.: lixeira, gear, olho"
+               aria-describedby="busca-icone-dica" data-busca-icone>
+        <kbd class="campo__atalho" aria-hidden="true">/</kbd>
+      </div>
+      <span id="busca-icone-dica" class="sr-only">Busca por conceito em português ou pelo nome do ícone em qualquer coleção. Atalho: tecla barra.</span>
+    </div>
+    <p class="contagem" data-contagem aria-hidden="true">{{ icones | length }} de {{ icones | length }}</p>
+  </div>
+
+  <div class="icones__avisos">
+    {#- Preenchido por icones.js com os conceitos visíveis que faltam em alguma coleção -#}
+    <div class="aviso aviso--alerta" data-aviso-falta hidden>
+      <span>{{ icone("alerta") }}</span>
+      <div>
+        <p><strong data-aviso-falta-titulo></strong></p>
+        <ul data-aviso-falta-lista></ul>
+      </div>
+    </div>
+    <div class="aviso aviso--erro" data-aviso-erro hidden>
+      <span>{{ icone("erro") }}</span>
+      <p data-aviso-erro-texto></p>
+    </div>
+  </div>
+
+  <div class="icones__rolagem" role="region" aria-labelledby="tabela-icones-legenda" tabindex="0">
+    <table class="icones__tabela">
+      <caption id="tabela-icones-legenda" class="sr-only">Cada linha é um conceito; cada coluna, uma coleção de ícones</caption>
+      <thead>
+        <tr>
+          <th scope="col">Conceito</th>
+          {%- for col in colecoes %}
+          <th scope="col">
+            <a href="{{ col.site }}" rel="noopener noreferrer">{{ col.nome }}</a>
+            <span class="icones__versao">{{ col.versao }} · {{ col.licenca }}</span>
+          </th>
+          {%- endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for rotulo, extra, nomes in icones %}
+        {%- set faltam = [] %}
+        {%- for col in colecoes %}{% if nomes[loop.index0] is none %}{% set _ = faltam.append(col.nome) %}{% endif %}{% endfor %}
+        <tr data-icone data-rotulo="{{ rotulo }}" data-faltam="{{ faltam | join(', ') }}"
+            data-texto="{{ rotulo }} {{ extra }} {{ nomes | reject('none') | join(' ') }}">
+          <th scope="row">
+            {{ rotulo }}
+            {%- if faltam %}
+            <span class="icones__falta-linha">falta em {{ faltam | length }} coleç{{ "ão" if faltam | length == 1 else "ões" }}</span>
+            {%- endif %}
+          </th>
+          {%- for col in colecoes %}
+          {%- set nome = nomes[loop.index0] %}
+          <td>
+            {%- if nome %}
+            <div class="icones__celula" data-celula data-colecao="{{ col.nome }}">
+              <img class="icones__img" src="{{ url_icone(col, nome) }}" alt="" width="28" height="28"
+                   loading="lazy" decoding="async" referrerpolicy="no-referrer">
+              <span class="icones__nome">{{ nome.split("/")[-1] }}</span>
+            </div>
+            {%- else %}
+            <span class="icones__falta">{{ icone("alerta") }} não existe</span>
+            {%- endif %}
+          </td>
+          {%- endfor %}
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vazio" data-vazio hidden>
+    <p class="vazio__titulo">Nenhum ícone encontrado</p>
+    <p>Nada corresponde a “<span data-vazio-termo></span>”. Tente um sinônimo ou o nome em inglês.</p>
+    <button type="button" class="btn btn--secundario" data-limpar>Limpar busca</button>
+  </div>
+</div>
+{% endblock %}

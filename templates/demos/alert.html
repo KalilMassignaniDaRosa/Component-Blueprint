@@ -1,0 +1,82 @@
+{#- Demo e estados de ALERT. Comportamento em static/js/demos/alert.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro alerta(tipo, ic, titulo, texto, fechavel=false, acao="") %}
+<div class="aviso aviso--{{ tipo }}">
+  <span class="aviso__icone">{{ icone(ic) }}</span>
+  <div class="aviso__corpo">
+    <p><strong>{{ titulo }}</strong> {{ texto }}</p>
+    {% if acao %}<div class="aviso__acoes"><button type="button" class="btn btn--secundario btn--pequeno" tabindex="-1">{{ acao }}</button></div>{% endif %}
+  </div>
+  {% if fechavel %}<span class="btn btn--terciario btn--icone aviso__fechar">{{ icone("fechar") }}</span>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-alert>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · finalizar compra</span>
+  </div>
+  <div class="bancada__area">
+    <div class="avisos">
+      {#- Presente desde o carregamento: conteúdo normal, sem role -#}
+      <div class="aviso aviso--info" data-aviso-info>
+        <span class="aviso__icone">{{ icone("info") }}</span>
+        <div class="aviso__corpo">
+          <p><strong>Informação:</strong> pedidos feitos até as 14h saem no mesmo dia.</p>
+        </div>
+        <button type="button" class="btn btn--terciario btn--icone aviso__fechar" aria-label="Fechar aviso sobre prazo de envio" data-fechar>{{ icone("fechar") }}</button>
+      </div>
+
+      {#- Aqui entram os alerts criados depois (role="alert") -#}
+      <div class="avisos" data-alvo></div>
+
+      <div class="fila">
+        <button type="button" class="btn btn--primario" data-pagar>Pagar R$ 189,90</button>
+        <label class="switch"><input type="checkbox" role="switch" data-recusar checked> Simular cartão recusado</label>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off"></p>
+
+  <template data-modelo-erro>
+    <div class="aviso aviso--erro" role="alert">
+      <span class="aviso__icone">{{ icone("erro") }}</span>
+      <div class="aviso__corpo">
+        <p><strong>Erro: pagamento recusado.</strong> O banco não autorizou o cartão final 4242. Nada foi cobrado.</p>
+        <div class="aviso__acoes">
+          <button type="button" class="btn btn--secundario btn--pequeno" data-outro>Usar outro cartão</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <template data-modelo-sucesso>
+    <div class="aviso aviso--sucesso" role="status">
+      <span class="aviso__icone">{{ icone("sucesso") }}</span>
+      <div class="aviso__corpo"><p><strong>Sucesso:</strong> pagamento aprovado. Pedido nº 48213.</p></div>
+    </div>
+  </template>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ alerta("info", "info", "Informação:", "o sistema ficará fora do ar domingo, das 2h às 4h.", fechavel=true) }}</div>
+    <figcaption><strong>Informação</strong>Contexto útil, pode ser fechado.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ alerta("sucesso", "sucesso", "Sucesso:", "seus dados foram atualizados.") }}</div>
+    <figcaption><strong>Sucesso</strong>Confirma algo importante que deve continuar visível.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ alerta("alerta", "alerta", "Atenção:", "você está vendo dados de ontem. A sincronização está atrasada.") }}</div>
+    <figcaption><strong>Aviso</strong>Algo merece cuidado, mas não impede continuar.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ alerta("erro", "erro", "Erro:", "pagamento recusado. Nada foi cobrado.", acao="Usar outro cartão") }}</div>
+    <figcaption><strong>Erro</strong>Diz o problema, tranquiliza (“nada foi cobrado”) e oferece a saída.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

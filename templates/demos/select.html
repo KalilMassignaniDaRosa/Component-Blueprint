@@ -1,0 +1,89 @@
+{#- Demo e estados de SELECT / COMBOBOX. O combobox personalizado segue o padrão
+    "select-only combobox" da WAI-ARIA APG; comportamento em static/js/demos/select.js -#}
+{% from "_macros.html" import icone %}
+
+{% set PLANOS = [
+  ("gratis", "Grátis", "R$ 0"),
+  ("pessoal", "Pessoal", "R$ 19"),
+  ("equipe", "Equipe", "R$ 49"),
+  ("empresa", "Empresa", "R$ 129"),
+  ("antigo", "Legado (descontinuado)", "n/d"),
+] %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-select>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · configurações da conta</span>
+  </div>
+  <div class="bancada__area">
+    <div class="duas-colunas">
+      {#- 1. Nativo: o recomendado na maioria dos casos -#}
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="sel-estado">Estado <span class="campo-form__opcional">(select nativo)</span></label>
+        <select class="entrada select-nativo" id="sel-estado" data-nativo>
+          <option value="">Escolha…</option>
+          <option>Bahia</option>
+          <option>Minas Gerais</option>
+          <option>Paraná</option>
+          <option>Pernambuco</option>
+          <option>Rio de Janeiro</option>
+          <option>Rio Grande do Sul</option>
+          <option>São Paulo</option>
+        </select>
+        <p class="campo-form__dica">No celular abre o seletor do sistema. Teclado e leitor de tela já funcionam.</p>
+      </div>
+
+      {#- 2. Personalizado: quando cada opção precisa de mais que texto -#}
+      <div class="campo-form">
+        <span class="campo-form__rotulo" id="combo-rotulo">Plano <span class="campo-form__opcional">(combobox personalizado)</span></span>
+        <div class="combo" data-combo>
+          <div class="entrada combo__gatilho" role="combobox" tabindex="0" id="combo-gatilho"
+               aria-labelledby="combo-rotulo combo-gatilho" aria-haspopup="listbox"
+               aria-expanded="false" aria-controls="combo-lista">
+            <span class="combo__valor" data-valor>Pessoal</span>{{ icone("chevron-baixo") }}
+          </div>
+          <ul class="lista-opcoes" role="listbox" id="combo-lista" aria-labelledby="combo-rotulo" tabindex="-1" hidden>
+            {% for valor, nome, preco in PLANOS %}
+            <li class="opcao" role="option" id="opcao-{{ valor }}" aria-selected="{{ 'true' if valor == 'pessoal' else 'false' }}"
+                {% if valor == 'antigo' %}aria-disabled="true"{% endif %}>
+              <span>{{ nome }}</span><span class="opcao__detalhe">{{ preco }}/mês</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <p class="campo-form__dica">Digite uma letra para pular até a opção.</p>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Compare os dois só com o teclado.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="entrada combo__gatilho"><span class="combo__valor combo__valor--vazio">Escolha um plano…</span>{{ icone("chevron-baixo") }}</div>
+    </div>
+    <figcaption><strong>Vazio</strong>Texto de convite em tom suave; o rótulo continua fora, acima.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="entrada combo__gatilho is-foco"><span>Pessoal</span>{{ icone("chevron-baixo") }}</div>
+    </div>
+    <figcaption><strong>Foco</strong>Mesmo anel de foco dos outros campos.</figcaption>
+  </figure>
+  <figure class="especime especime--largo">
+    <div class="especime__palco" inert>
+      <ul class="lista-opcoes lista-opcoes--estatica">
+        <li class="opcao"><span>Grátis</span><span class="opcao__detalhe">R$ 0</span></li>
+        <li class="opcao is-ativa"><span>Pessoal</span><span class="opcao__detalhe">R$ 19</span></li>
+        <li class="opcao" aria-selected="true"><span>Equipe</span></li>
+        <li class="opcao" aria-disabled="true"><span>Legado (descontinuado)</span></li>
+      </ul>
+    </div>
+    <figcaption><strong>Aberto</strong>Opção ativa (cursor do teclado, com anel), selecionada (✓ + negrito) e desabilitada: três estados diferentes, nenhum só de cor.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

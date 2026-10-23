@@ -1,0 +1,93 @@
+{#- Demo e estados de MODAL. Comportamento em static/js/demos/modal.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-modal>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · lista de projetos</span>
+    <label class="switch">
+      <input type="checkbox" role="switch" data-simular-falha>
+      Simular falha de rede
+    </label>
+  </div>
+
+  <div class="bancada__area">
+    <div class="fila fila--separada" data-projeto>
+      <div>
+        <p class="vizinhos__nome">Relatório Q3</p>
+        <p class="rotulo-tec">14 arquivos · editado há 2 dias</p>
+      </div>
+      <button type="button" class="btn btn--destrutivo" data-abrir aria-haspopup="dialog">
+        {{ icone("lixeira") }} Excluir projeto…
+      </button>
+    </div>
+
+    {#- Resultado após fechar o diálogo, com "Desfazer" (controle e liberdade) -#}
+    <div class="aviso aviso--sucesso" data-resultado hidden>
+      <p><strong>Projeto excluído.</strong> Você ainda pode desfazer.</p>
+      <button type="button" class="btn btn--secundario btn--pequeno" data-desfazer>Desfazer</button>
+    </div>
+  </div>
+
+  <p class="bancada__rodape registro" data-registro aria-live="off">Abra o diálogo e feche de jeitos diferentes: botão, <kbd>Esc</kbd> ou clique fora.</p>
+
+  {#- O diálogo de verdade. showModal() o coloca na "camada superior"
+      e torna o resto da página inerte. -#}
+  <dialog class="dialogo" data-dialogo aria-labelledby="dlg-titulo" aria-describedby="dlg-texto">
+    <div class="dialogo__corpo">
+      <div class="dialogo__topo">
+        <h2 class="dialogo__titulo" id="dlg-titulo">Excluir “Relatório Q3”?</h2>
+        <button type="button" class="btn btn--terciario btn--icone dialogo__fechar" aria-label="Fechar" value="fechar">{{ icone("fechar") }}</button>
+      </div>
+      <p class="dialogo__texto" id="dlg-texto">O projeto e seus 14 arquivos serão apagados para todos os membros. Esta ação não pode ser desfeita depois de 30 segundos.</p>
+      <div class="aviso aviso--erro dialogo__erro" role="alert" data-erro hidden>
+        <p><strong>Não foi possível excluir.</strong> Verifique sua conexão e tente de novo.</p>
+      </div>
+    </div>
+    <div class="dialogo__acoes">
+      <button type="button" class="btn btn--secundario" value="cancelar" autofocus>Cancelar</button>
+      <button type="button" class="btn btn--destrutivo" value="excluir" data-confirmar>
+        <span class="btn__spinner" aria-hidden="true"></span>
+        <span data-rotulo>Excluir projeto</span>
+      </button>
+    </div>
+  </dialog>
+</div>
+{% endmacro %}
+
+
+{% macro dialogo_estatico(erro=false, carregando=false, foco="cancelar") %}
+<div class="dialogo dialogo--estatico">
+  <div class="dialogo__corpo">
+    <p class="dialogo__titulo">Excluir “Relatório Q3”?</p>
+    <p class="dialogo__texto">Esta ação não pode ser desfeita.</p>
+    {% if erro %}
+    <div class="aviso aviso--erro dialogo__erro"><p><strong>Não foi possível excluir.</strong> Tente de novo.</p></div>
+    {% endif %}
+  </div>
+  <div class="dialogo__acoes">
+    <button type="button" tabindex="-1" class="btn btn--secundario btn--pequeno {% if foco == 'cancelar' %}is-foco{% endif %}" {% if carregando %}disabled{% endif %}>Cancelar</button>
+    <button type="button" tabindex="-1" class="btn btn--destrutivo btn--pequeno" {% if carregando %}aria-busy="true"{% endif %}>
+      <span class="btn__spinner"></span>{{ "Excluindo…" if carregando else ("Tentar de novo" if erro else "Excluir") }}
+    </button>
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ dialogo_estatico() }}</div>
+    <figcaption><strong>Aberto</strong>Foco inicial na opção segura (Cancelar). Enter por reflexo não apaga nada.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ dialogo_estatico(carregando=true, foco="") }}</div>
+    <figcaption><strong>Processando</strong>Mantém o diálogo aberto até a resposta. O botão mostra o progresso e Cancelar fica bloqueado.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>{{ dialogo_estatico(erro=true, foco="") }}</div>
+    <figcaption><strong>Erro</strong>O erro aparece dentro do diálogo (role="alert"), perto da ação, e o rótulo vira “Tentar de novo”.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

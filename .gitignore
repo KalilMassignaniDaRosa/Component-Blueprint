@@ -1,0 +1,35 @@
+# Segredos e ambiente local (o .env.example vai para o git; os outros, não)
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+env/
+instance/
+
+# Claude Code (configurações locais, memória, sessões)
+.claude/
+CLAUDE.local.md
+
+# Python e caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.cache/
+*.log
+
+# Testes no navegador (playwright-cli)
+.playwright-cli/
+.playwright-mcp/
+test-results/
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

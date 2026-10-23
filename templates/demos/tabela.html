@@ -1,0 +1,91 @@
+{#- Demo e estados de TABELA (ordenável, padrão WAI-ARIA APG "Sortable Table", com filtro).
+    Comportamento em static/js/demos/tabela.js -#}
+{% from "_macros.html" import icone %}
+
+{% set PEDIDOS = [
+  ("48213", "Ana Moura", "2026-10-18", 189.90, "Enviado"),
+  ("48207", "Bruno Lima", "2026-10-17", 54.00, "Entregue"),
+  ("48199", "Carla Dias", "2026-10-15", 1290.00, "Pendente"),
+  ("48190", "Davi Rocha", "2026-10-14", 320.50, "Entregue"),
+  ("48184", "Elisa Prado", "2026-10-12", 79.90, "Cancelado"),
+  ("48176", "Fábio Nunes", "2026-10-11", 642.00, "Enviado"),
+  ("48170", "Gabi Torres", "2026-10-09", 25.00, "Entregue"),
+] %}
+{% set STATUS = {"Enviado": ("info", "seta-dir"), "Entregue": ("sucesso", "check"), "Pendente": ("aviso", "alerta"), "Cancelado": ("perigo", "fechar")} %}
+
+{% macro cabecalho(chave, rotulo, tipo="texto", classe="") %}
+<th scope="col" class="{{ classe }}" data-coluna="{{ chave }}" data-tipo="{{ tipo }}">
+  <button type="button" class="ordenar">{{ rotulo }} {{ icone("ordenar") }}</button>
+</th>
+{% endmacro %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-tabela>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · pedidos recentes</span>
+  </div>
+  <div class="bancada__area">
+    <div class="tabela-ferramentas">
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="tab-filtro">Filtrar por cliente ou status</label>
+        <input class="entrada" id="tab-filtro" type="search" autocomplete="off" data-filtro>
+      </div>
+      <p class="contagem" data-contagem aria-hidden="true">{{ PEDIDOS | length }} de {{ PEDIDOS | length }}</p>
+    </div>
+
+    <div class="tabela-contorno" role="region" aria-labelledby="tab-legenda" tabindex="0">
+      <table class="tabela" data-tabela>
+        <caption id="tab-legenda">Pedidos recentes <span class="sr-only" data-ordem-sr>, sem ordenação</span></caption>
+        <thead>
+          <tr>
+            {{ cabecalho("numero", "Pedido", "numero") }}
+            {{ cabecalho("cliente", "Cliente") }}
+            {{ cabecalho("data", "Data", "data") }}
+            {{ cabecalho("valor", "Valor", "numero", "num") }}
+            {{ cabecalho("status", "Status") }}
+          </tr>
+        </thead>
+        <tbody data-corpo>
+          {% for numero, cliente, data, valor, status in PEDIDOS %}
+          {% set cor, ic = STATUS[status] %}
+          <tr data-numero="{{ numero }}" data-cliente="{{ cliente }}" data-data="{{ data }}" data-valor="{{ valor }}" data-status="{{ status }}">
+            <th scope="row"><span class="rotulo-tec">#{{ numero }}</span></th>
+            <td>{{ cliente }}</td>
+            <td>{{ data[8:10] }}/{{ data[5:7] }}/{{ data[:4] }}</td>
+            <td class="num">{{ "R$ {:,.2f}".format(valor).replace(",", "X").replace(".", ",").replace("X", ".") }}</td>
+            <td><span class="badge badge--{{ cor }}">{{ icone(ic) }} {{ status }}</span></td>
+          </tr>
+          {% endfor %}
+          <tr class="tabela-vazia" data-vazia hidden><td colspan="5">Nenhum pedido corresponde ao filtro. <button type="button" class="btn btn--terciario btn--pequeno" data-limpar>Limpar filtro</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sr-only" role="status" data-anuncio></p>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Clique num cabeçalho para ordenar; de novo para inverter.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, sort, classe, texto in [
+    ("Ordenável", "", "", "Seta dupla apagada: dá para ordenar por aqui."),
+    ("Crescente", "ascending", "", "aria-sort=\"ascending\" e seta em destaque."),
+    ("Foco", "", "is-foco", "O cabeçalho é um botão de verdade."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <table class="tabela tabela--especime"><thead><tr><th {% if sort %}aria-sort="{{ sort }}"{% endif %}><span class="ordenar {{ classe }}">Valor {{ icone("ordenar") }}</span></th></tr></thead></table>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <table class="tabela tabela--especime"><tbody><tr class="tabela-vazia"><td>Nenhum pedido corresponde ao filtro.</td></tr></tbody></table>
+    </div>
+    <figcaption><strong>Vazio</strong>A tabela não some: uma linha explica e oferece limpar o filtro.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

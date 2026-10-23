@@ -1,0 +1,113 @@
+{#- Demo e estados de BOTÕES. Comportamento em static/js/demos/botoes.js -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-botoes>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · editor de projeto</span>
+    <label class="switch">
+      <input type="checkbox" role="switch" data-alvos>
+      Mostrar alvos de toque
+    </label>
+  </div>
+
+  <div class="bancada__area" data-area>
+    {#- Hierarquia: um primário, alternativas e o destrutivo separado à esquerda -#}
+    <div class="fila fila--separada">
+      <button type="button" class="btn btn--destrutivo" data-excluir>
+        {{ icone("lixeira") }} Excluir rascunho
+      </button>
+      <div class="fila">
+        <button type="button" class="btn btn--terciario">Ver histórico</button>
+        <button type="button" class="btn btn--secundario">Cancelar</button>
+        <button type="button" class="btn btn--primario" data-salvar>
+          <span class="btn__spinner" aria-hidden="true"></span>
+          <span data-rotulo>Salvar alterações</span>
+        </button>
+      </div>
+    </div>
+
+    {#- Só ícone: o nome vem do aria-label -#}
+    <div class="fila">
+      <span class="rotulo-tec">Só ícone →</span>
+      <button type="button" class="btn btn--secundario btn--icone" aria-label="Mais opções">{{ icone("mais") }}</button>
+      <button type="button" class="btn btn--secundario btn--icone" aria-label="Copiar link">{{ icone("copiar") }}</button>
+      <button type="button" class="btn btn--secundario btn--icone" aria-label="Fechar painel">{{ icone("fechar") }}</button>
+    </div>
+
+    {#- disabled vs aria-disabled: navegue com Tab e veja a diferença -#}
+    <div class="fila">
+      <span class="rotulo-tec">Bloqueados →</span>
+      <button type="button" class="btn btn--primario" disabled>Publicar (disabled)</button>
+      <button type="button" class="btn btn--primario" aria-disabled="true"
+              aria-describedby="motivo-publicar" data-publicar>Publicar (aria-disabled)</button>
+    </div>
+    <p class="secao__intro" id="motivo-publicar">Para publicar, o projeto precisa de um título.</p>
+  </div>
+
+  {#- O registro é lido pelo leitor de tela (role="status") -#}
+  <p class="bancada__rodape registro" role="status" data-registro></p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+{%- set variantes = [("Primário", "btn--primario", "Salvar"), ("Secundário", "btn--secundario", "Cancelar"), ("Destrutivo", "btn--destrutivo", "Excluir")] %}
+{%- set colunas = [("Normal", ""), ("Hover", "is-hover"), ("Foco", "is-foco"), ("Pressionado", "is-ativo"), ("Desabilitado", "disabled"), ("Carregando", "busy")] %}
+<div class="matriz" role="region" aria-label="Matriz de estados (rolável)" tabindex="0">
+  <table>
+    <caption class="rotulo-tec">Matriz de estados · variante × estado</caption>
+    <thead>
+      <tr>
+        <th scope="col">Variante</th>
+        {% for nome, _ in colunas %}<th scope="col">{{ nome }}</th>{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for nome_v, classe, rotulo in variantes %}
+      <tr>
+        <th scope="row">{{ nome_v }}</th>
+        {% for nome_e, estado in colunas %}
+        <td>
+          <span class="sr-only">{{ nome_v }}, {{ nome_e | lower }}</span>
+          {#- inert: ilustração, fora da ordem de Tab e do leitor de tela -#}
+          <div inert>
+            <button type="button" tabindex="-1"
+                    class="btn btn--pequeno {{ classe }} {% if estado.startswith('is-') %}{{ estado }}{% endif %}"
+                    {% if estado == 'disabled' %}disabled{% endif %}
+                    {% if estado == 'busy' %}aria-busy="true"{% endif %}>
+              <span class="btn__spinner"></span>{{ rotulo }}{% if estado == 'busy' %}…{% endif %}
+            </button>
+          </div>
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="especimes secao__corpo">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <button type="button" class="btn btn--secundario btn--icone" tabindex="-1">{{ icone("fechar") }}</button>
+    </div>
+    <figcaption><strong>Só ícone</strong>Precisa de aria-label. Sem ele, o leitor de tela anuncia apenas “botão”.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <button type="button" class="btn btn--terciario" tabindex="-1">Ver histórico</button>
+    </div>
+    <figcaption><strong>Terciário</strong>Ação de baixa ênfase. O sublinhado mantém a aparência clicável sem competir com o primário.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="vazio">
+        <p class="vazio__titulo">Nenhum rascunho</p>
+        <button type="button" class="btn btn--primario btn--pequeno" tabindex="-1">Criar o primeiro</button>
+      </div>
+    </div>
+    <figcaption><strong>Estado vazio</strong>Botão como saída de uma tela vazia: diz qual é o próximo passo.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

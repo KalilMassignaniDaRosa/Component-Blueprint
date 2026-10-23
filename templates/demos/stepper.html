@@ -1,0 +1,65 @@
+{#- Demo e estados de STEPPER. Comportamento em static/js/demos/stepper.js -#}
+{% from "_macros.html" import icone %}
+
+{% set ETAPAS = ["Conta", "Entrega", "Pagamento", "Revisão"] %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-stepper>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · checkout</span>
+  </div>
+  <div class="bancada__area">
+    <ol class="stepper" aria-label="Etapas do checkout" data-etapas>
+      {% for nome in ETAPAS %}
+      <li class="stepper__etapa" {% if loop.first %}aria-current="step"{% endif %}>
+        <span class="stepper__marca" aria-hidden="true">{{ loop.index }}</span>
+        <span class="stepper__nome">{{ nome }}</span>
+        <span class="stepper__estado">{{ "atual" if loop.first else "pendente" }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <section class="etapa-painel" aria-labelledby="etapa-titulo">
+      <h3 id="etapa-titulo" tabindex="-1" data-etapa-titulo>Etapa 1 de 4: Conta</h3>
+      <div data-etapa-corpo>
+        {#- Só a etapa 1 tem um campo; serve para mostrar o erro ao tentar avançar -#}
+        <div class="campo-form" data-etapa="0">
+          <label class="campo-form__rotulo" for="stepper-email">E-mail</label>
+          <input class="entrada" id="stepper-email" type="email" autocomplete="email"
+                 aria-describedby="stepper-email-erro" data-email>
+          <p class="campo-form__erro" id="stepper-email-erro" data-erro hidden>{{ icone("erro") }} Informe um e-mail para continuar.</p>
+        </div>
+        <p data-etapa="1" hidden>Rua das Flores, 120 · São Paulo (endereço salvo).</p>
+        <p data-etapa="2" hidden>Cartão final 4242 (cartão salvo).</p>
+        <p data-etapa="3" hidden>Tudo certo. Confira e conclua o pedido.</p>
+      </div>
+      <div class="etapa-acoes">
+        <button type="button" class="btn btn--secundario" data-voltar disabled>{{ icone("seta-esq") }} Voltar</button>
+        <button type="button" class="btn btn--primario" data-avancar><span data-rotulo>Avançar</span> {{ icone("seta-dir") }}</button>
+      </div>
+    </section>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status"></p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, classe, marca, estado, texto in [
+    ("Concluída", "is-feita", "✓", "concluída", "Marca preenchida com ✓ e a palavra “concluída”."),
+    ("Atual", "", "2", "atual", "aria-current=\"step\", borda grossa e halo."),
+    ("Futura", "", "3", "pendente", "Contorno neutro, número e “pendente”."),
+    ("Com erro", "is-erro", "!", "corrigir", "Ao voltar para corrigir: cor de erro + “!” + texto."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <ol class="stepper"><li class="stepper__etapa {{ classe }}" {% if nome == 'Atual' %}aria-current="step"{% endif %}>
+        <span class="stepper__marca">{{ marca }}</span><span class="stepper__nome">Entrega</span><span class="stepper__estado">{{ estado }}</span>
+      </li></ol>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endmacro %}

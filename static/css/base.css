@@ -1,0 +1,540 @@
+/* ==========================================================================
+   Base: reset, tipografia, layout e a "moldura" do site
+   (topo, breadcrumb, sidebar, índice da prancha, rodapé).
+   Mobile first: os estilos sem media query valem para telas pequenas.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 5rem; /* âncoras não ficam escondidas sob o topo fixo */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--c-fundo);
+  /* papel milimetrado: duas grades sobrepostas */
+  background-image:
+    linear-gradient(var(--c-grade) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-grade) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--c-tinta);
+  font-family: var(--fonte-texto);
+  font-size: var(--t-md);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p,
+ul,
+ol {
+  margin: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--c-acento);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--fonte-mono);
+  font-size: 0.9em;
+}
+
+kbd {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0.05em 0.45em;
+  border: 1px solid var(--c-linha-forte);
+  border-bottom-width: 3px;
+  border-radius: var(--raio-sm);
+  background: var(--c-superficie);
+  font-size: var(--t-sm);
+  text-align: center;
+  white-space: nowrap;
+}
+
+:not(pre) > code {
+  padding: 0.1em 0.35em;
+  border-radius: var(--raio-sm);
+  background: var(--c-superficie-2);
+}
+
+::selection {
+  background: var(--c-marca-texto);
+  color: var(--c-sobre-marca);
+}
+
+/* Foco visível e consistente em todo o site (WCAG 2.4.7 / 2.4.13).
+   Só aparece na navegação por teclado graças ao :focus-visible. */
+:focus-visible {
+  outline: 3px solid var(--c-foco);
+  outline-offset: 3px;
+  border-radius: var(--raio-sm);
+}
+
+/* Elementos que recebem foco por script (ex.: <main> no "pular para o conteúdo") */
+[tabindex="-1"]:focus {
+  outline: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Visível só para leitores de tela */
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--largura-max);
+  margin-inline: auto;
+  padding-inline: var(--e-4);
+}
+@media (min-width: 48rem) {
+  .container {
+    padding-inline: var(--e-6);
+  }
+}
+
+/* Rótulo técnico em mono caixa-alta: a "voz" de prancha do guia */
+.rotulo-tec {
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-tinta-suave);
+}
+
+.icone {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+}
+
+/* --------------------------------------------------------------------------
+   Pular para o conteúdo
+   -------------------------------------------------------------------------- */
+.pular {
+  position: absolute;
+  top: var(--e-2);
+  left: var(--e-2);
+  z-index: 100;
+  padding: var(--e-3) var(--e-4);
+  border-radius: var(--raio);
+  background: var(--c-tinta);
+  color: var(--c-fundo);
+  font-weight: 600;
+  transform: translateY(-200%);
+}
+.pular:focus {
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Topo / navbar
+   -------------------------------------------------------------------------- */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--c-fundo) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--c-linha);
+}
+
+.topo__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-2) var(--e-4);
+  min-height: 4rem;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-3);
+  margin-right: auto;
+  min-height: var(--alvo-min);
+  color: var(--c-tinta);
+  text-decoration: none;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: var(--t-lg);
+  letter-spacing: -0.01em;
+}
+.marca__selo {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid var(--c-tinta);
+  border-radius: 50%;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transform: rotate(-8deg);
+}
+.marca__nome-longo {
+  display: none;
+}
+/* Em telas estreitas o texto some da tela, mas continua para o leitor de tela */
+@media (max-width: 29.99rem) {
+  .so-largo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+@media (min-width: 30rem) {
+  .marca__nome-longo {
+    display: inline;
+  }
+}
+
+.topo__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+.topo__nav {
+  flex-basis: 100%;
+  padding-bottom: var(--e-3);
+}
+/* Com JS, o menu móvel começa fechado. Sem JS, ele fica sempre visível. */
+.js .topo__nav:not(.is-aberto) {
+  display: none;
+}
+
+.topo__nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  list-style: none;
+  padding: 0;
+}
+
+.topo__nav a {
+  display: flex;
+  align-items: center;
+  min-height: var(--alvo-min);
+  padding: 0 var(--e-3);
+  border-radius: var(--raio);
+  color: var(--c-tinta);
+  font-weight: 500;
+  text-decoration: none;
+}
+.topo__nav a:hover {
+  background: var(--c-superficie-2);
+}
+.topo__nav a[aria-current="page"] {
+  background: var(--c-tinta);
+  color: var(--c-fundo);
+}
+
+.topo__menu-btn {
+  display: none;
+}
+.js .topo__menu-btn {
+  display: inline-flex;
+}
+
+@media (min-width: 48rem) {
+  .topo__barra {
+    flex-wrap: nowrap;
+  }
+  .topo__nav,
+  .js .topo__nav:not(.is-aberto) {
+    display: block;
+    flex-basis: auto;
+    padding: 0;
+    order: 0;
+  }
+  .topo__nav ul {
+    flex-direction: row;
+  }
+  .js .topo__menu-btn {
+    display: none;
+  }
+  .topo__acoes {
+    order: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Breadcrumb (componente "breadcrumbs" sendo usado de verdade)
+   -------------------------------------------------------------------------- */
+.trilha {
+  border-bottom: 1px solid var(--c-linha);
+}
+.trilha ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--e-1);
+  list-style: none;
+  padding-block: var(--e-2); /* só vertical: o lateral vem da .container */
+  font-size: var(--t-sm);
+}
+.trilha li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-1);
+}
+/* O separador é decorativo: vem do CSS, então o leitor de tela não o lê */
+.trilha li + li::before {
+  content: "/";
+  color: var(--c-tinta-suave);
+  font-family: var(--fonte-mono);
+  padding-inline: var(--e-1);
+}
+.trilha a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-min);
+  padding-inline: var(--e-1);
+  color: var(--c-tinta-suave);
+}
+.trilha a:hover {
+  color: var(--c-tinta);
+}
+.trilha [aria-current="page"] {
+  color: var(--c-tinta);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Conteúdo e rodapé
+   -------------------------------------------------------------------------- */
+main {
+  flex: 1;
+}
+
+.rodape {
+  margin-top: var(--e-9);
+  border-top: 1px solid var(--c-linha);
+  background: var(--c-superficie);
+  font-size: var(--t-sm);
+  color: var(--c-tinta-suave);
+}
+.rodape__conteudo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--e-4);
+  padding-block: var(--e-6);
+}
+
+/* --------------------------------------------------------------------------
+   Layout da prancha (página de componente)
+   sidebar | conteúdo | índice. As colunas aparecem conforme a largura.
+   -------------------------------------------------------------------------- */
+.prancha {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--e-6);
+  padding-top: var(--e-6);
+}
+
+.prancha__lateral {
+  order: 2; /* no celular, a lista de componentes vai para o fim */
+}
+.prancha__indice {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .prancha {
+    grid-template-columns: 14rem minmax(0, 1fr);
+    gap: var(--e-7);
+  }
+  .prancha__lateral {
+    order: 0;
+  }
+}
+@media (min-width: 80rem) {
+  .prancha {
+    grid-template-columns: 14rem minmax(0, 1fr) 12rem;
+  }
+  .prancha__indice {
+    display: block;
+  }
+}
+
+/* Sidebar: <details> no celular, lista sempre aberta no desktop */
+.sidebar {
+  border: 1px solid var(--c-linha);
+  border-radius: var(--raio-lg);
+  background: var(--c-superficie);
+}
+.sidebar > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--alvo-min);
+  padding: var(--e-2) var(--e-4);
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+.sidebar > summary::-webkit-details-marker {
+  display: none;
+}
+.sidebar > summary::after {
+  content: "+";
+  font-family: var(--fonte-mono);
+  font-size: var(--t-lg);
+}
+.sidebar[open] > summary::after {
+  content: "−";
+}
+.sidebar__nav {
+  padding: 0 var(--e-2) var(--e-4);
+}
+.sidebar__grupo {
+  margin-top: var(--e-4);
+  padding-inline: var(--e-2);
+}
+.sidebar__grupo .glifo {
+  color: var(--cor-cat);
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--e-1);
+}
+.sidebar a {
+  display: flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 var(--e-2);
+  border-radius: var(--raio-sm);
+  font-size: var(--t-sm);
+  color: var(--c-tinta);
+  text-decoration: none;
+}
+.sidebar a:hover {
+  background: var(--c-superficie-2);
+}
+.sidebar a[aria-current="page"] {
+  background: var(--c-acento-suave);
+  color: var(--c-acento-forte);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--c-acento);
+}
+
+@media (min-width: 64rem) {
+  .sidebar {
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    border: 0;
+    background: none;
+  }
+  .sidebar > summary {
+    display: none;
+  }
+  .sidebar__nav {
+    padding: 0;
+  }
+  .sidebar__grupo:first-child {
+    margin-top: 0;
+  }
+}
+
+/* Índice "Nesta prancha" */
+.indice {
+  position: sticky;
+  top: 5rem;
+  font-size: var(--t-sm);
+}
+.indice ol {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--e-3);
+  border-left: 1px solid var(--c-linha);
+}
+.indice a {
+  display: flex;
+  gap: var(--e-2);
+  padding: var(--e-1) var(--e-3);
+  margin-left: -1px;
+  border-left: 2px solid transparent;
+  color: var(--c-tinta-suave);
+  text-decoration: none;
+}
+.indice a:hover {
+  color: var(--c-tinta);
+}
+.indice a[aria-current="location"] {
+  border-left-color: var(--c-acento);
+  color: var(--c-tinta);
+  font-weight: 600;
+}
+.indice .num {
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  padding-top: 0.2em;
+}

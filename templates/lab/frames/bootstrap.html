@@ -1,0 +1,51 @@
+{% extends "lab/frame.html" %}
+{% import "lab/_textos.html" as t %}
+
+{% block botao %}
+<div class="lab-fila">
+  <button type="button" class="btn btn-primary">{{ t.primario }}</button>
+  <button type="button" class="btn btn-outline-secondary">{{ t.secundario }}</button>
+  <button type="button" class="btn btn-danger">{{ t.destrutivo }}</button>
+  <button type="button" class="btn btn-primary" disabled>{{ t.desabilitado }}</button>
+</div>
+{% endblock %}
+
+{% block modal %}
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#dlg">{{ t.abrir_modal }}</button>
+{% endblock %}
+
+{% block tabs %}
+<ul class="nav nav-tabs" role="tablist" aria-label="{{ t.abas_rotulo }}">
+  {%- for id, rotulo, _ in t.abas %}
+  <li class="nav-item" role="presentation">
+    <button type="button" class="nav-link{% if loop.first %} active{% endif %}" id="aba-{{ id }}" role="tab"
+            data-bs-toggle="tab" data-bs-target="#painel-{{ id }}" aria-controls="painel-{{ id }}"
+            aria-selected="{{ 'true' if loop.first else 'false' }}">{{ rotulo }}</button>
+  </li>
+  {%- endfor %}
+</ul>
+<div class="tab-content pt-3">
+  {%- for id, _, texto in t.abas %}
+  <div class="tab-pane fade{% if loop.first %} show active{% endif %}" id="painel-{{ id }}" role="tabpanel"
+       aria-labelledby="aba-{{ id }}" tabindex="0"><p class="mb-0">{{ texto }}</p></div>
+  {%- endfor %}
+</div>
+{% endblock %}
+
+{% block depois %}
+<div class="modal fade" id="dlg" tabindex="-1" aria-labelledby="dlg-titulo" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="dlg-titulo">{{ t.modal_titulo }}</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body"><p class="mb-0">{{ t.modal_texto }}</p></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ t.modal_cancelar }}</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{ t.modal_confirmar }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

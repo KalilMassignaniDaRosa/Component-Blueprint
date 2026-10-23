@@ -1,0 +1,86 @@
+{#- Demo e estados de INPUTS COM VALIDAÇÃO. Comportamento em static/js/demos/inputs.js
+    Não há <form> nem envio: o botão só valida no navegador. Num site real,
+    o servidor valida tudo de novo (a validação do navegador pode ser burlada). -#}
+{% from "_macros.html" import icone %}
+
+{% macro demo() %}
+<div class="bancada" data-demo-inputs>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · criar conta</span>
+  </div>
+  <div class="bancada__area">
+    {#- Resumo de erros: aparece ao tentar "Criar conta" com problemas -#}
+    <div class="aviso aviso--erro resumo-erros" tabindex="-1" data-resumo hidden>
+      <p><strong data-resumo-titulo></strong></p>
+      <ul data-resumo-lista></ul>
+    </div>
+
+    <div class="campos">
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="in-nome">Nome completo</label>
+        <input class="entrada" id="in-nome" type="text" autocomplete="name" data-campo
+               data-regra="nome" aria-describedby="in-nome-erro">
+        <p class="campo-form__erro" id="in-nome-erro" data-erro hidden></p>
+      </div>
+
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="in-email">E-mail</label>
+        <input class="entrada" id="in-email" type="email" autocomplete="email" inputmode="email"
+               spellcheck="false" data-campo data-regra="email" aria-describedby="in-email-dica in-email-erro">
+        <p class="campo-form__dica" id="in-email-dica">Usaremos só para avisos da sua conta.</p>
+        <p class="campo-form__erro" id="in-email-erro" data-erro hidden></p>
+      </div>
+
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="in-senha">Senha</label>
+        <input class="entrada" id="in-senha" type="password" autocomplete="new-password"
+               data-campo data-regra="senha" aria-describedby="in-senha-dica in-senha-erro">
+        <p class="campo-form__dica" id="in-senha-dica">Mínimo de 8 caracteres, com pelo menos um número.</p>
+        <p class="campo-form__erro" id="in-senha-erro" data-erro hidden></p>
+      </div>
+
+      <div class="campo-form">
+        <label class="campo-form__rotulo" for="in-tel">Celular <span class="campo-form__opcional">(opcional)</span></label>
+        <input class="entrada" id="in-tel" type="tel" autocomplete="tel" inputmode="tel"
+               data-campo data-regra="telefone" aria-describedby="in-tel-dica in-tel-erro">
+        <p class="campo-form__dica" id="in-tel-dica">Com DDD. Pode digitar com ou sem traços e parênteses.</p>
+        <p class="campo-form__erro" id="in-tel-erro" data-erro hidden></p>
+      </div>
+
+      <div class="fila">
+        <button type="button" class="btn btn--primario" data-enviar>Criar conta</button>
+        <button type="button" class="btn btn--terciario" data-limpar>Limpar</button>
+      </div>
+    </div>
+  </div>
+  <template data-icone-erro>{{ icone("erro") }}</template>
+  <p class="bancada__rodape registro" data-registro role="status">Preencha e saia de cada campo (Tab). Ou clique em “Criar conta” com tudo vazio.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes especimes--amplos">
+  {% for nome, classe, valor, attrs, texto in [
+    ("Vazio", "", "", "", "Rótulo sempre visível acima. O placeholder nunca substitui o rótulo."),
+    ("Hover", "is-hover", "", "", "A borda escurece: indica que o campo responde."),
+    ("Foco", "is-foco", "ana@", "", "Borda de acento + anel de foco. A pessoa sabe onde está digitando."),
+    ("Preenchido válido", "is-valida", "ana@exemplo.com", "", "Confirmação discreta, sem festa: borda e mensagem curta."),
+    ("Erro", "", "ana@", "invalido", "aria-invalid, marca lateral, ícone e texto que diz como corrigir."),
+    ("Desabilitado", "", "ana@exemplo.com", "disabled", "Borda tracejada e fundo rebaixado. Prefira explicar por que está bloqueado."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="campo-form campos">
+        <span class="campo-form__rotulo">E-mail</span>
+        <input class="entrada {{ classe }}" value="{{ valor }}" tabindex="-1" aria-label="E-mail ({{ nome }})"
+               {% if attrs == 'invalido' %}aria-invalid="true"{% endif %} {% if attrs == 'disabled' %}disabled{% endif %}>
+        {% if attrs == 'invalido' %}<p class="campo-form__erro">{{ icone("erro") }} Inclua o domínio, por exemplo: ana@exemplo.com</p>{% endif %}
+        {% if classe == 'is-valida' %}<p class="campo-form__ok">{{ icone("sucesso") }} Tudo certo</p>{% endif %}
+      </div>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endmacro %}

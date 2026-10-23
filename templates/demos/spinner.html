@@ -1,0 +1,44 @@
+{#- Demo e estados de SPINNER. Comportamento em static/js/demos/spinner.js -#}
+
+{% macro demo() %}
+<div class="bancada" data-demo-spinner>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · últimos pedidos</span>
+    <label class="switch"><input type="checkbox" role="switch" data-rapido> Resposta rápida (200 ms)</label>
+  </div>
+  <div class="bancada__area">
+    <div class="fila">
+      <button type="button" class="btn btn--primario" data-carregar>Carregar pedidos</button>
+    </div>
+    <div class="area-carregavel secao__corpo" data-area aria-busy="false">
+      <ul class="resultados" data-lista>
+        <li><span>Toque em “Carregar pedidos”.</span></li>
+      </ul>
+      <div class="area-carregavel__veu" data-veu hidden>
+        <div class="carregando"><span class="spinner spinner--grande" aria-hidden="true"></span> Carregando pedidos…</div>
+      </div>
+    </div>
+    {#- O texto vai para o leitor de tela; o desenho é aria-hidden -#}
+    <p class="sr-only" role="status" data-status></p>
+  </div>
+  <p class="bancada__rodape registro" data-registro aria-live="off">Com “Resposta rápida”, o spinner nem chega a aparecer: ele só surge depois de 300 ms.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  <figure class="especime">
+    <div class="especime__palco" inert><div class="carregando"><span class="spinner spinner--pequeno"></span> Salvando…</div></div>
+    <figcaption><strong>Inline</strong>Junto do texto, no lugar da ação.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert><button type="button" class="btn btn--primario" aria-busy="true" tabindex="-1"><span class="btn__spinner"></span> Enviando…</button></div>
+    <figcaption><strong>No botão</strong>O próprio botão mostra que está trabalhando.</figcaption>
+  </figure>
+  <figure class="especime">
+    <div class="especime__palco" inert><div class="carregando"><span class="spinner spinner--grande"></span> Carregando pedidos…</div></div>
+    <figcaption><strong>Área</strong>Cobre só a parte que carrega, sempre com texto.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

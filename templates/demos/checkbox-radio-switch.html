@@ -1,0 +1,95 @@
+{#- Demo e estados de CHECKBOX, RADIO e SWITCH. São todos <input> nativos com aparência
+    própria. Comportamento (indeterminado, efeito imediato) em static/js/demos/checkbox-radio-switch.js -#}
+
+{% macro demo() %}
+<div class="bancada" data-demo-escolhas>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · preferências</span>
+  </div>
+  <div class="bancada__area">
+    <div class="duas-colunas">
+      {#- CHECKBOX: escolhas independentes, com "selecionar todos" indeterminado -#}
+      <fieldset class="grupo-escolhas">
+        <legend>Notificações por e-mail</legend>
+        <div class="grupo-escolhas__lista">
+          <label class="escolha"><input type="checkbox" data-todos> <span class="escolha__texto">Todas</span></label>
+          <div class="grupo-escolhas__sub">
+            <label class="escolha"><input type="checkbox" data-item checked> <span class="escolha__texto">Pedidos</span></label>
+            <label class="escolha"><input type="checkbox" data-item> <span class="escolha__texto">Promoções</span></label>
+            <label class="escolha"><input type="checkbox" data-item> <span class="escolha__texto">Novidades</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      {#- RADIO: uma escolha só. As setas mudam a opção dentro do grupo. -#}
+      <fieldset class="grupo-escolhas">
+        <legend>Frete</legend>
+        <div class="grupo-escolhas__lista">
+          <label class="escolha"><input type="radio" name="frete" value="normal" checked> <span class="escolha__texto">Normal <small>5 a 8 dias úteis · grátis</small></span></label>
+          <label class="escolha"><input type="radio" name="frete" value="expresso"> <span class="escolha__texto">Expresso <small>1 a 2 dias úteis · R$ 24,90</small></span></label>
+          <label class="escolha"><input type="radio" name="frete" value="retirada" disabled> <span class="escolha__texto">Retirar na loja <small>indisponível neste CEP</small></span></label>
+        </div>
+      </fieldset>
+    </div>
+
+    {#- SWITCH: efeito imediato, sem botão "Salvar" -#}
+    <fieldset class="grupo-escolhas secao__corpo">
+      <legend>Aparência da prévia</legend>
+      <div class="preferencias">
+        <label class="switch">Modo compacto <input type="checkbox" role="switch" data-compacto></label>
+        <label class="switch">Mostrar imagens <input type="checkbox" role="switch" checked data-imagens></label>
+      </div>
+      <p class="campo-form__dica secao__corpo" data-previa>Prévia: espaçamento normal, com imagens.</p>
+    </fieldset>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Marque só alguns itens: “Todas” fica indeterminado (–).</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="matriz" role="region" aria-label="Estados de checkbox, radio e switch (rolável)" tabindex="0">
+  <table>
+    <caption class="rotulo-tec">Controle × estado</caption>
+    <thead>
+      <tr><th scope="col">Controle</th><th scope="col">Desmarcado</th><th scope="col">Marcado</th><th scope="col">Hover</th><th scope="col">Foco</th><th scope="col">Desabilitado</th><th scope="col">Erro</th></tr>
+    </thead>
+    <tbody>
+      {% for nome, tipo in [("Checkbox", "checkbox"), ("Radio", "radio")] %}
+      <tr>
+        <th scope="row">{{ nome }}</th>
+        {% for estado in ["", "checked", "is-hover", "is-foco", "disabled", "erro"] %}
+        <td>
+          <span class="sr-only">{{ nome }} {{ estado or "desmarcado" }}</span>
+          <div inert><label class="escolha"><input type="{{ tipo }}" tabindex="-1"
+            class="{{ estado if estado.startswith('is-') }}"
+            {% if estado == 'checked' %}checked{% endif %}
+            {% if estado == 'disabled' %}disabled{% endif %}
+            {% if estado == 'erro' %}aria-invalid="true"{% endif %}></label></div>
+        </td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+      <tr>
+        <th scope="row">Switch</th>
+        {% for estado in ["", "checked", "", "", "disabled", ""] %}
+        <td>
+          {% if loop.index in [3, 4, 6] %}<span class="rotulo-tec">—</span>{% else %}
+          <span class="sr-only">Switch {{ estado or "desligado" }}</span>
+          <div inert><label class="switch"><input type="checkbox" role="switch" tabindex="-1" {% if estado == 'checked' %}checked{% endif %} {% if estado == 'disabled' %}disabled{% endif %}></label></div>
+          {% endif %}
+        </td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="especimes secao__corpo">
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <label class="escolha"><input type="checkbox" tabindex="-1" data-indeterminado-especime> <span>Todas</span></label>
+    </div>
+    <figcaption><strong>Indeterminado</strong>“Alguns marcados”: um traço em vez do ✓. O leitor de tela anuncia “misto”.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

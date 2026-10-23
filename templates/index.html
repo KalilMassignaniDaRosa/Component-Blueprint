@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% from "_macros.html" import icone %}
+
+{% block cabeca %}
+<script type="module" src="{{ url_for('static', filename='js/busca.js') }}"></script>
+{% endblock %}
+
+{% block conteudo %}
+{%- set total = componentes | length %}
+<div class="container">
+
+  <section class="hero" aria-labelledby="hero-titulo">
+    <div>
+      <p class="rotulo-tec">Guia vivo · {{ total }} componentes · {{ categorias | length }} categorias</p>
+      <h1 class="hero__titulo" id="hero-titulo">Cada componente de interface, <mark>medido e explicado</mark>.</h1>
+      <p class="hero__texto">
+        O que é, quando usar, quando evitar, como funciona no teclado e qual
+        princípio de IHC está por trás. Tudo com exemplos que funcionam de verdade,
+        inclusive a navegação deste site.
+      </p>
+    </div>
+
+    {#- Desenho técnico: o CTA é o próprio espécime, com as cotas do que o torna bom. -#}
+    <figure class="cotas" aria-labelledby="cotas-legenda">
+      <figcaption class="rotulo-tec cotas__legenda" id="cotas-legenda">Fig. 00 · Anatomia de um bom botão</figcaption>
+      <div class="cotas__alvo">
+        <a class="btn btn--primario" href="{{ url_for('componente', slug='botoes') }}">
+          Começar pelos botões {{ icone("seta-dir") }}
+        </a>
+        <span class="cota cota--altura" aria-hidden="true">≥44</span>
+        <span class="cota cota--topo" aria-hidden="true">rótulo = verbo + objeto</span>
+        <span class="cota cota--lado" aria-hidden="true">contraste ≥ 7:1</span>
+        <span class="cota cota--baixo" aria-hidden="true">foco visível · 3px</span>
+      </div>
+    </figure>
+  </section>
+
+  {#- Busca + filtro. Não há <form>: nada é enviado ao servidor.
+      O filtro acontece no navegador e fica refletido na URL (?q=&cat=),
+      para o link poder ser compartilhado. -#}
+  <div class="filtros" role="search" aria-label="Filtrar componentes">
+    <div class="campo">
+      <label class="campo__rotulo" for="busca">Buscar componente</label>
+      <div class="campo__envoltorio">
+        <span class="campo__icone">{{ icone("busca") }}</span>
+        <input class="campo__entrada" id="busca" type="search" autocomplete="off"
+               spellcheck="false" placeholder="ex.: modal, teclado, Fitts"
+               aria-describedby="busca-dica" data-busca>
+        <kbd class="campo__atalho" aria-hidden="true">/</kbd>
+      </div>
+      <span id="busca-dica" class="sr-only">Atalho: tecla barra. Os resultados atualizam enquanto você digita.</span>
+    </div>
+
+    <fieldset class="chips">
+      <legend>Categoria</legend>
+      <div class="chips__lista">
+        <button type="button" class="chip" aria-pressed="true" data-cat="">Todas</button>
+        {% for chave, cat in categorias.items() %}
+        <button type="button" class="chip cat-{{ chave }}" aria-pressed="false" data-cat="{{ chave }}">
+          <span class="glifo" aria-hidden="true">{{ cat.glifo }}</span> {{ cat.nome }}
+        </button>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <p class="contagem" data-contagem aria-hidden="true">{{ total }} de {{ total }}</p>
+  </div>
+
+  {% for chave, cat in categorias.items() %}
+  <section class="grupo cat-{{ chave }}" aria-labelledby="grupo-{{ chave }}" data-grupo="{{ chave }}">
+    <div class="grupo__cabecalho">
+      <h2 class="grupo__titulo" id="grupo-{{ chave }}">
+        <span class="glifo" aria-hidden="true">{{ cat.glifo }}</span> {{ cat.nome }}
+      </h2>
+      <p class="grupo__descricao">{{ cat.descricao }}</p>
+    </div>
+
+    <ul class="cards" role="list">
+      {% for c in componentes if c.categoria == chave %}
+      <li data-card data-cat="{{ c.categoria }}" data-texto="{{ c.nome }} {{ c.resumo }} {{ c.busca_extra }} {% for p in c.principios %}{{ p.nome }} {% endfor %}">
+        <article class="card">
+          <div class="card__topo">
+            <span class="rotulo-tec">Nº {{ '%02d' % c.numero }}</span>
+            <span class="card__glifo" aria-hidden="true">{{ cat.glifo }}</span>
+          </div>
+          <h3 class="card__titulo"><a href="{{ url_for('componente', slug=c.slug) }}">{{ c.nome }}</a></h3>
+          <p class="card__resumo">{{ c.resumo }}</p>
+          <div class="card__rodape">
+            <span class="card__principio">{{ c.principios[0].nome }}</span>
+            <span class="cta-seta" aria-hidden="true">abrir →</span>
+          </div>
+        </article>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+
+  {#- Estado vazio: aparece quando a busca não encontra nada -#}
+  <div class="vazio grupo" data-vazio hidden>
+    <p class="vazio__titulo">Nenhum componente encontrado</p>
+    <p>Nada corresponde a “<span data-vazio-termo></span>” nessa categoria. Tente outro termo ou veja todas as categorias.</p>
+    <button type="button" class="btn btn--secundario" data-limpar>Limpar filtros</button>
+  </div>
+</div>
+{% endblock %}

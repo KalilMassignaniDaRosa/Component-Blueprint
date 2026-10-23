@@ -1,0 +1,97 @@
+{#- Demo e estados de TABS. A lógica é o módulo reutilizável static/js/tabs.js;
+    static/js/demos/tabs.js só adiciona o registro de teclas e o modo manual. -#}
+
+{% macro demo() %}
+<div class="bancada" data-demo-tabs>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · página de produto</span>
+    <label class="switch">
+      <input type="checkbox" role="switch" data-modo-manual>
+      Ativação manual
+    </label>
+  </div>
+
+  <div class="bancada__area">
+    <div data-tabs id="tabs-demo">
+      <div class="tabs__lista" role="tablist" aria-label="Detalhes do produto">
+        <button type="button" class="tab" role="tab" id="demo-aba-1" aria-controls="demo-painel-1" aria-selected="true">Visão geral</button>
+        <button type="button" class="tab" role="tab" id="demo-aba-2" aria-controls="demo-painel-2" aria-selected="false" tabindex="-1">Especificações</button>
+        <button type="button" class="tab" role="tab" id="demo-aba-3" aria-controls="demo-painel-3" aria-selected="false" tabindex="-1">Avaliações</button>
+        <button type="button" class="tab" role="tab" id="demo-aba-4" aria-controls="demo-painel-4" aria-selected="false" tabindex="-1" aria-disabled="true">Garantia (em breve)</button>
+      </div>
+
+      <div class="tabs__painel" role="tabpanel" id="demo-painel-1" aria-labelledby="demo-aba-1" tabindex="0">
+        <p><strong>Cadeira Ergo 2.</strong> Encosto em malha, apoio lombar regulável e braços 4D. Pensada para jornadas longas de trabalho.</p>
+      </div>
+      <div class="tabs__painel" role="tabpanel" id="demo-painel-2" aria-labelledby="demo-aba-2" tabindex="0" hidden>
+        <table class="tabela-simples">
+          <tbody>
+            <tr><th scope="row">Altura do assento</th><td>44–54 cm</td></tr>
+            <tr><th scope="row">Carga máxima</th><td>130 kg</td></tr>
+            <tr><th scope="row">Peso</th><td>17 kg</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tabs__painel" role="tabpanel" id="demo-painel-3" aria-labelledby="demo-aba-3" tabindex="0" hidden>
+        {#- Estado vazio dentro de um painel -#}
+        <div class="vazio">
+          <p class="vazio__titulo">Ainda não há avaliações</p>
+          <p>Quem comprar poderá avaliar depois da entrega.</p>
+        </div>
+      </div>
+      <div class="tabs__painel" role="tabpanel" id="demo-painel-4" aria-labelledby="demo-aba-4" tabindex="0" hidden>
+        <p>Conteúdo indisponível.</p>
+      </div>
+    </div>
+  </div>
+
+  {#- Registro visual das teclas. Não é anunciado (aria-live="off"):
+      o leitor de tela já anuncia a aba focada. -#}
+  <div class="bancada__rodape registro" aria-live="off">
+    <span class="rotulo-tec">Registro:</span>
+    <span data-registro>clique numa aba ou use as setas.</span>
+  </div>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {%- set casos = [
+    ("Inativa", "", "false", "Rótulo com 6.4:1 de contraste. Discreto, mas legível."),
+    ("Hover", "is-hover", "false", "Fundo sutil indica que é clicável. Nunca é a única pista."),
+    ("Foco", "is-foco", "false", "Anel de 3px dentro da aba. Aparece só na navegação por teclado."),
+    ("Selecionada", "", "true", "Sublinhado de 3px + negrito. Forma e peso, não só cor."),
+    ("Desabilitada", "", "false", "aria-disabled: continua focável para que a pessoa saiba que existe."),
+  ] %}
+  {% for nome, classe, selecionada, texto in casos %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="tabs__lista">
+        <span class="tab {{ classe }}" aria-selected="{{ selecionada }}" {% if nome == 'Desabilitada' %}aria-disabled="true"{% endif %}>Especificações</span>
+      </div>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="vazio"><p class="vazio__titulo">Sem itens</p></div>
+    </div>
+    <figcaption><strong>Painel vazio</strong>A aba não some: o painel explica por que está vazio.</figcaption>
+  </figure>
+  <figure class="especime especime--largo">
+    <div class="especime__palco" inert>
+      <div class="tabs__lista">
+        <span class="tab" aria-selected="false">Resumo</span>
+        <span class="tab" aria-selected="true">Atividade</span>
+        <span class="tab" aria-selected="false">Membros</span>
+        <span class="tab" aria-selected="false">Integrações</span>
+        <span class="tab" aria-selected="false">Faturamento</span>
+        <span class="tab" aria-selected="false">Configurações avançadas</span>
+      </div>
+    </div>
+    <figcaption><strong>Transbordo</strong>Em telas estreitas a lista rola na horizontal em vez de quebrar em duas linhas. Se a rolagem vira regra, troque por um menu.</figcaption>
+  </figure>
+</div>
+{% endmacro %}

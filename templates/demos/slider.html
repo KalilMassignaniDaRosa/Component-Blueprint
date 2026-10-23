@@ -1,0 +1,61 @@
+{#- Demo e estados de SLIDER. São <input type="range"> nativos com aparência própria;
+    static/js/demos/slider.js só atualiza o valor exibido e o aria-valuetext. -#}
+
+{% macro demo() %}
+<div class="bancada" data-demo-slider>
+  <div class="bancada__barra">
+    <span class="rotulo-tec">Bancada · player de música</span>
+  </div>
+  <div class="bancada__area">
+    <div class="duas-colunas">
+      <div class="faixa">
+        <div class="faixa__topo">
+          <label class="campo-form__rotulo" for="sl-volume">Volume</label>
+          <output class="faixa__valor" for="sl-volume" data-saida="volume">60%</output>
+        </div>
+        <input type="range" id="sl-volume" min="0" max="100" step="5" value="60" data-faixa="volume">
+        <div class="amostra-volume" aria-hidden="true" data-barras>
+          {% for i in range(10) %}<span></span>{% endfor %}
+        </div>
+      </div>
+
+      <div class="faixa">
+        <div class="faixa__topo">
+          <label class="campo-form__rotulo" for="sl-graves">Graves</label>
+          <output class="faixa__valor" for="sl-graves" data-saida="graves">0 dB</output>
+        </div>
+        <input type="range" id="sl-graves" min="-6" max="6" step="1" value="0" data-faixa="graves">
+        <div class="faixa__marcas" aria-hidden="true"><span>−6</span><span>0</span><span>+6</span></div>
+        {#- Slider + campo numérico: para quem quer o valor exato -#}
+        <div class="campo-form secao__corpo">
+          <label class="campo-form__rotulo" for="sl-graves-num">Valor exato (dB)</label>
+          <input class="entrada" id="sl-graves-num" type="number" min="-6" max="6" step="1" value="0" data-numero>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="bancada__rodape registro" data-registro role="status">Use as setas, Page Up/Down, Home e End no slider.</p>
+</div>
+{% endmacro %}
+
+
+{% macro estados() %}
+<div class="especimes">
+  {% for nome, valor, extra, texto in [
+    ("Mínimo", 0, "", "Trilho vazio, dedão no começo. O valor aparece em texto."),
+    ("Meio", 50, "", "Parte preenchida com 3:1 contra o trilho."),
+    ("Foco", 70, "foco", "Anel de foco no dedão, que é o que se move."),
+    ("Desabilitado", 30, "disabled", "Meio transparente. Explique por que está bloqueado."),
+  ] %}
+  <figure class="especime">
+    <div class="especime__palco" inert>
+      <div class="faixa">
+        <input type="range" value="{{ valor }}" tabindex="-1" aria-label="{{ nome }}" data-especime-faixa
+               {% if extra == 'disabled' %}disabled{% endif %} {% if extra == 'foco' %}data-foco-especime{% endif %}>
+      </div>
+    </div>
+    <figcaption><strong>{{ nome }}</strong>{{ texto }}</figcaption>
+  </figure>
+  {% endfor %}
+</div>
+{% endmacro %}
